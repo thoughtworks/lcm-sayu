@@ -52,4 +52,4 @@ jobs:
           command: ./gradlew build -Dquarkus.package.type=native
           no_output_timeout: 30m
       - store_artifacts:
-          path:build/lcm-sayu-1.0.0-SNAPSHOT-runner
+          path: build/lcm-sayu-1.0.0-SNAPSHOT-runner
