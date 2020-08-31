@@ -9,5 +9,5 @@ RUN make build
 FROM scratch
 
 WORKDIR /app
-COPY --from=builder /app/build/pain-control-1.0.0-SNAPSHOT-runner ./pain-control
-CMD ["./pain-control"]  
+COPY --from=builder /app/build/pain-control-1.0.0-SNAPSHOT-runner ./lcm-sayu
+CMD ["./lcm-sayu"]
