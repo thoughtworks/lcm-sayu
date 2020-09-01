@@ -2,6 +2,13 @@
 # Native Quarkus CircleCI configuration file
 #
 version: 2.1
+commands:
+  restore_repo:
+    description: "Restore repo from cache"
+    steps:
+      - restore_cache:
+          keys:
+            - cache-repo
 executors:
   linux-executor:
     machine: true
@@ -19,9 +26,15 @@ jobs:
   build:
     executor: linux-executor
     steps:
+      - restore_repo
+
       # Checkout the source code
       # ########################
       - checkout
+      - save_cache:
+          paths:
+            - .
+          key: cache-repo
 
       - openjdk-install/openjdk:
           version: 11
@@ -54,6 +67,8 @@ jobs:
   native:
     executor: linux-executor
     steps:
+      - restore_repo
+
       - openjdk-install/openjdk:
           version: 11
 
