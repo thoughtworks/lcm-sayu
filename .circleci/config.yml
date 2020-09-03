@@ -13,7 +13,7 @@ executors:
   graalvm-java11:
     docker:
       - image: oracle/graalvm-ce:20.2.0-java11
-    resource_class: medium+
+    resource_class: medium
     working_directory: ~/repo
     environment:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
