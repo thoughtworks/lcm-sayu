@@ -53,7 +53,7 @@ jobs:
   native:
     executor: graalvm-java11
     steps:
-      - restore_repo
+      - checkout
 
       # Restore any files we may have cached
       # ########################
