@@ -73,6 +73,10 @@ jobs:
           name: Install native-image
           command: gu install native-image
 
+      - run:
+          name: Print directory
+          command: ls -l
+
       # Perform a native Quarkus build and verify
       # ########################
       - run:
