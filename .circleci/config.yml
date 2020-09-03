@@ -80,7 +80,7 @@ jobs:
       # ########################
       - run:
           name: Build (Native)
-          command: ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static -Dquarkus.native.native-image-xmx=15000m
+          command: ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static -Dquarkus.native.native-image-xmx=20000m
           no_output_timeout: 30m
       - store_artifacts:
           path: build/lcm-sayu-1.0.0-SNAPSHOT-runner
