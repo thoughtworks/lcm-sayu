@@ -19,11 +19,14 @@ executors:
       TERM: dumb
       # Set the GRAALVM_HOME env variable to the location where we will be installing GraalVM
       GRAALVM_HOME: /home/circleci/repo/.graalvm
+  graalvm-java11:
+    docker:
+      - image: circleci/openjdk:11.0.1-jdk
 orbs:
   openjdk-install: cloudesire/openjdk-install@1.2.3
 jobs:
   build:
-    executor: linux-executor
+    executor: graalvm-java11
     steps:
       - restore_repo
 
@@ -34,9 +37,6 @@ jobs:
           paths:
             - .
           key: cache-repo
-
-      - openjdk-install/openjdk:
-          version: 11
 
       # Restore any files we may have cached
       # ########################
