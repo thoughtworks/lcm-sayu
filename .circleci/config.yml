@@ -10,17 +10,20 @@ commands:
           keys:
             - cache-repo
 executors:
-  graalvm-java11:
-    docker:
-      - image: oracle/graalvm-ce:20.2.0-java11
+  linux-executor:
+    machine: true
     resource_class: medium
     working_directory: ~/repo
     environment:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
       TERM: dumb
+      # Set the GRAALVM_HOME env variable to the location where we will be installing GraalVM
+      GRAALVM_HOME: /home/circleci/repo/.graalvm
+orbs:
+  openjdk-install: cloudesire/openjdk-install@1.2.3
 jobs:
   build:
-    executor: graalvm-java11
+    executor: linux-executor
     steps:
       - restore_repo
 
@@ -32,35 +35,14 @@ jobs:
             - .
           key: cache-repo
 
-      # Restore any files we may have cached
-      # ########################
-      - restore_cache:
-          keys:
-            - gradle-dependencies-native
-      # Cache the maven dependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: gradle-dependencies-native
-
-      - run:
-          name: Build (jar)
-          command: ./gradlew quarkusBuild
-
-      - store_artifacts:
-          path: build/libs/lcm-sayu-1.0.0-SNAPSHOT.jar
-
-  native:
-    executor: graalvm-java11
-    steps:
-      - checkout
+      - openjdk-install/openjdk:
+          version: 11
 
       # Restore any files we may have cached
       # ########################
       - restore_cache:
           keys:
             - gradle-dependencies-native
-
       # Cache the maven dependencies
       - save_cache:
           paths:
@@ -70,18 +52,47 @@ jobs:
       # Install GraalVM and native-image, needed for a native Quarkus build
       # ########################
       - run:
-          name: Install native-image
-          command: gu install native-image
-
+          name: Install GraalVM
+          command: curl https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-linux-amd64-20.2.0.tar.gz -O -J -L && tar xfz graalvm-ce-java11-linux-amd64-20.2.0.tar.gz && mv graalvm-ce-java11-20.2.0 .graalvm && rm graalvm-ce-java11-linux-amd64-20.2.0.tar.gz
       - run:
-          name: Print directory
-          command: ls -l
+          name: Build (jar)
+          command: ./gradlew quarkusBuild
+      - store_artifacts:
+          path: build/libs/lcm-sayu-1.0.0-SNAPSHOT.jar
+
+  native:
+    executor: linux-executor
+    steps:
+      - restore_repo
+
+      - openjdk-install/openjdk:
+          version: 11
+
+      # Restore any files we may have cached
+      # ########################
+      - restore_cache:
+          keys:
+            - gradle-dependencies-native
+      # Cache the maven dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: gradle-dependencies-native
+
+      # Install GraalVM and native-image, needed for a native Quarkus build
+      # ########################
+      - run:
+          name: Install GraalVM
+          command: curl https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-linux-amd64-20.2.0.tar.gz -O -J -L && tar xfz graalvm-ce-java11-linux-amd64-20.2.0.tar.gz && mv graalvm-ce-java11-20.2.0 .graalvm && rm graalvm-ce-java11-linux-amd64-20.2.0.tar.gz
+      - run:
+          name: Install native-image
+          command: $GRAALVM_HOME/bin/gu install native-image
 
       # Perform a native Quarkus build and verify
       # ########################
       - run:
           name: Build (Native)
-          command: ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static -Dquarkus.native.native-image-xmx=6000m
+          command: ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static
           no_output_timeout: 30m
       - store_artifacts:
           path: build/lcm-sayu-1.0.0-SNAPSHOT-runner
