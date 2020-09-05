@@ -2,6 +2,11 @@
 # Native Quarkus CircleCI configuration file
 #
 version: 2.1
+orbs:
+  openjdk-install: cloudesire/openjdk-install@1.2.3
+  aws-cli: circleci/aws-cli@0.1.4
+  aws-ecs: circleci/aws-ecs@0.0.10
+
 commands:
   restore_repo:
     description: "Restore repo from cache"
@@ -9,6 +14,12 @@ commands:
       - restore_cache:
           keys:
             - cache-repo
+  restore_image_file:
+    description: "Restore docker image file from cache"
+    steps:
+      - restore_cache:
+          keys:
+            - native-build-binary
 executors:
   linux-executor:
     machine: true
@@ -22,8 +33,7 @@ executors:
   graalvm-java11:
     docker:
       - image: oracle/graalvm-ce:20.2.0-java11
-orbs:
-  openjdk-install: cloudesire/openjdk-install@1.2.3
+
 jobs:
   build:
     executor: graalvm-java11
@@ -91,8 +101,30 @@ jobs:
           name: Build (Native)
           command: ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static
           no_output_timeout: 15m
+
+      - save_cache:
+          paths:
+            - ~/build/lcm-sayu-1.0.0-SNAPSHOT-runner
+          key: native-build-binary
+
       - store_artifacts:
           path: build/lcm-sayu-1.0.0-SNAPSHOT-runner
+
+  create-docker-image:
+    docker:
+      - image: registry.access.redhat.com/ubi8/ubi-minimal:8.1
+    steps:
+      - restore_image_file
+      - setup_remote_docker
+      - run:
+          name: Build docker image
+          command: |
+            docker build -t lcm-sayu -f src/main/docker/Dockerfile.native-image
+      - run:
+          name: Save image to an archive
+          command: |
+            mkdir docker-image
+            docker save -o docker-image/image.tar lcm-sayu
 
 workflows:
   version: 2
@@ -102,3 +134,6 @@ workflows:
         - native:
             requires:
               - build
+        - create-docker-image:
+            requires:
+              - native
