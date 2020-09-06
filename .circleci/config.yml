@@ -115,6 +115,8 @@ jobs:
       - image: alpine:latest
     steps:
       - checkout
+      - run:
+          - command: mkdir build
       - restore_image_file
       - setup_remote_docker
       - run:
