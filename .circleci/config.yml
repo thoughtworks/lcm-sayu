@@ -121,6 +121,8 @@ jobs:
           name: Install Docker client
           command: apk add docker-cli
       - run:
+          command: ls -l
+      - run:
           name: Build docker image
           command: |
             docker build -t lcm-sayu -f repo/src/main/docker/Dockerfile.native-image
