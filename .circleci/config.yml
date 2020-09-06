@@ -112,7 +112,7 @@ jobs:
 
   create-docker-image:
     docker:
-      - image: registry.access.redhat.com/ubi8/ubi-minimal:8.1
+      - image: alpine:latest
     steps:
       - restore_image_file
       - setup_remote_docker
