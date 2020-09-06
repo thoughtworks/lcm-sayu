@@ -1,0 +1,6 @@
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.1
+WORKDIR /app/
+COPY lcm-sayu-1.0.0-SNAPSHOT-runner /app/lcm-sayu
+RUN chmod 775 /app/lcm-sayu
+EXPOSE 8080
+CMD ["./lcm-sayu"]
