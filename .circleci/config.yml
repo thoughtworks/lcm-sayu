@@ -113,8 +113,9 @@ jobs:
   create-docker-image:
     docker:
       - image: alpine:latest
+      - working_directory: ~/repo
     steps:
-      - restore_repo
+      - checkout
       - restore_image_file
       - setup_remote_docker
       - run:
