@@ -125,7 +125,7 @@ jobs:
       - run:
           name: Build docker image
           command: |
-            docker build -f src/main/docker/Dockerfile.native-image -t lcm-sayu
+            docker build -f src/main/docker/Dockerfile.native-image -t lcm-sayu build
       - run:
           name: Save image to an archive
           command: |
