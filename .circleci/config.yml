@@ -114,6 +114,7 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
+      - restore_repo
       - restore_image_file
       - setup_remote_docker
       - run:
