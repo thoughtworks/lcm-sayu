@@ -70,7 +70,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: build
+          at: .
       - setup_remote_docker
       - run:
           command: ls -l build
