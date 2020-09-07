@@ -7,19 +7,6 @@ orbs:
   aws-cli: circleci/aws-cli@0.1.4
   aws-ecs: circleci/aws-ecs@0.0.10
 
-commands:
-  restore_repo:
-    description: "Restore repo from cache"
-    steps:
-      - restore_cache:
-          keys:
-            - cache-repo
-  restore_image_file:
-    description: "Restore docker image file from cache"
-    steps:
-      - restore_cache:
-          keys:
-            - native-build-binary
 executors:
   linux-executor:
     machine: true
@@ -28,7 +15,6 @@ executors:
     environment:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
       TERM: dumb
-      # Set the GRAALVM_HOME env variable to the location where we will be installing GraalVM
       GRAALVM_HOME: /home/circleci/repo/.graalvm
   graalvm-java11:
     docker:
@@ -38,77 +24,47 @@ jobs:
   build:
     executor: graalvm-java11
     steps:
-      - restore_repo
-
-      # Checkout the source code
       - checkout
-      - save_cache:
-          paths:
-            - .
-          key: cache-repo
-
-      # Restore any files we may have cached
       - restore_cache:
-          keys:
-            - gradle-dependencies-native
-      # Cache the gradle dependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: gradle-dependencies-native
-
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - run:
           name: Build (jar)
           command: ./gradlew quarkusBuild
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - store_artifacts:
           path: build/libs/lcm-sayu-1.0.0-SNAPSHOT.jar
 
   native:
     executor: linux-executor
     steps:
-      - restore_repo
-      - run:
-          command: ls -l
-
+      - checkout
       - openjdk-install/openjdk:
           version: 11
-
-      # Restore any files we may have cached
-      # ########################
       - restore_cache:
-          keys:
-            - gradle-dependencies-native
-      # Cache the maven dependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: gradle-dependencies-native
-      - run:
-          command: ls -l
-
-      # Install GraalVM and native-image, needed for a native Quarkus build
-      # ########################
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - run:
           name: Install GraalVM
           command: curl https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-linux-amd64-20.2.0.tar.gz -O -J -L && tar xfz graalvm-ce-java11-linux-amd64-20.2.0.tar.gz && mv graalvm-ce-java11-20.2.0 .graalvm && rm graalvm-ce-java11-linux-amd64-20.2.0.tar.gz
       - run:
           name: Install native-image
           command: $GRAALVM_HOME/bin/gu install native-image
-
-      # Perform a native Quarkus build and verify
-      # ########################
       - run:
           name: Build (Native)
           command: ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static
           no_output_timeout: 15m
       - run:
           command: ls -l
-
-      - save_cache:
+      - persist_to_workspace:
+          root: .
           paths:
             - build/lcm-sayu-1.0.0-SNAPSHOT-runner
-          key: native-build-binary
-
       - store_artifacts:
           path: build/lcm-sayu-1.0.0-SNAPSHOT-runner
 
@@ -117,13 +73,14 @@ jobs:
       - image: alpine:latest
     steps:
       - checkout
-      - restore_image_file
+      - attach_workspace:
+          at: build
       - setup_remote_docker
+      - run:
+          command: ls -l build
       - run:
           name: Install Docker client
           command: apk add docker-cli
-      - run:
-          command: ls -l
       - run:
           name: Build docker image
           command: |
