@@ -104,7 +104,7 @@ jobs:
 
       - save_cache:
           paths:
-            - ~/build/lcm-sayu-1.0.0-SNAPSHOT-runner
+            - build/lcm-sayu-1.0.0-SNAPSHOT-runner
           key: native-build-binary
 
       - store_artifacts:
@@ -115,8 +115,6 @@ jobs:
       - image: alpine:latest
     steps:
       - checkout
-      - run:
-          command: mkdir build
       - restore_image_file
       - setup_remote_docker
       - run:
