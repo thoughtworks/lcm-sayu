@@ -125,6 +125,8 @@ jobs:
       - run:
           command: ls -l
       - run:
+          command:  ls -l build
+      - run:
           name: Build docker image
           command: |
             docker build -f src/main/docker/Dockerfile.native-image -t lcm-sayu build
