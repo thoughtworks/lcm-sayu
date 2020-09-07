@@ -41,7 +41,6 @@ jobs:
       - restore_repo
 
       # Checkout the source code
-      # ########################
       - checkout
       - save_cache:
           paths:
@@ -49,18 +48,15 @@ jobs:
           key: cache-repo
 
       # Restore any files we may have cached
-      # ########################
       - restore_cache:
           keys:
             - gradle-dependencies-native
-      # Cache the maven dependencies
+      # Cache the gradle dependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: gradle-dependencies-native
 
-      # Install GraalVM and native-image, needed for a native Quarkus build
-      # ########################
       - run:
           name: Build (jar)
           command: ./gradlew quarkusBuild
@@ -71,6 +67,8 @@ jobs:
     executor: linux-executor
     steps:
       - restore_repo
+      - run:
+          command: ls -l
 
       - openjdk-install/openjdk:
           version: 11
@@ -85,6 +83,8 @@ jobs:
           paths:
             - ~/.gradle
           key: gradle-dependencies-native
+      - run:
+          command: ls -l
 
       # Install GraalVM and native-image, needed for a native Quarkus build
       # ########################
@@ -101,6 +101,8 @@ jobs:
           name: Build (Native)
           command: ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static
           no_output_timeout: 15m
+      - run:
+          command: ls -l
 
       - save_cache:
           paths:
@@ -122,8 +124,6 @@ jobs:
           command: apk add docker-cli
       - run:
           command: ls -l
-      - run:
-          command:  ls -l build
       - run:
           name: Build docker image
           command: |
