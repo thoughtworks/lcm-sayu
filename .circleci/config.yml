@@ -86,6 +86,38 @@ jobs:
           command: |
             mkdir docker-image
             docker save -o docker-image/image.tar lcm-sayu
+      - persist_to_workspace:
+          root: .
+          paths:
+            - docker-image
+  deploy-docker-image:
+    docker:
+      - image: alpine:latest
+    environment:
+      AWS_DEFAULT_OUTPUT: json
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: .
+      - aws-cli/install
+      - aws-cli/configure:
+          aws-access-key-id: "$AWS_ACCESS_KEY_ID"
+          aws-region: "$AWS_DEFAULT_REGION"
+      - run:
+          name: Load image
+          command: |
+            docker load --input docker-image/image.tar
+      - run:
+          name: Setup common environment variables
+          command: |
+            echo 'export ECS_CLUSTER_NAME="${AWS_RESOURCE_NAME_PREFIX}-cluster"' >> $BASH_ENV
+            echo 'export ECS_SERVICE_NAME="${AWS_RESOURCE_NAME_PREFIX}-service"' >> $BASH_ENV
+            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}"' >> $BASH_ENV
+      - run:
+          name: Push image
+          command: |
+            eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+            docker push $FULL_IMAGE_NAME
 
 workflows:
   version: 2
