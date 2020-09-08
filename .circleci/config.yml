@@ -90,6 +90,7 @@ jobs:
           root: .
           paths:
             - docker-image
+
   deploy-docker-image:
     docker:
       - image: alpine:latest
@@ -130,3 +131,6 @@ workflows:
         - create-docker-image:
             requires:
               - native
+        - deploy-docker-image:
+            requires:
+              - create-docker-image
