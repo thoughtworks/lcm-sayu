@@ -93,7 +93,7 @@ jobs:
 
   deploy-docker-image:
     docker:
-      - image: alpine:latest
+      - image: circleci/python:3.6.1
     environment:
       AWS_DEFAULT_OUTPUT: json
     steps:
