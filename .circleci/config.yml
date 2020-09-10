@@ -68,13 +68,14 @@ jobs:
     docker:
       - image: circleci/python:3.6.1
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - setup_remote_docker
       - run:
           name: Setup common environment variables
           command: |
-            FULL_IMAGE_NAME=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${CIRCLE_SHA1}
+            FULL_IMAGE_NAME=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}
             echo $FULL_IMAGE_NAME
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
             echo 'export FULL_IMAGE_NAME=$FULL_IMAGE_NAME' >> $BASH_ENV
