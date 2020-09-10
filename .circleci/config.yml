@@ -68,12 +68,9 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      - checkout
       - attach_workspace:
           at: .
       - setup_remote_docker
-      - run:
-          command: ls -l build
       - run:
           name: Install Docker client
           command: apk add docker-cli
@@ -82,6 +79,8 @@ jobs:
           command: |
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
             echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${CIRCLE_SHA1}"' >> $BASH_ENV
+      - run:
+          command: echo $FULL_IMAGE_NAME
       - run:
           name: Build docker image
           command: |
