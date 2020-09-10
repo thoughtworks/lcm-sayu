@@ -75,6 +75,9 @@ jobs:
           name: Install Docker client
           command: apk add docker-cli
       - run:
+          name: Install bash
+          command: apk add --no-cache bash
+      - run:
           name: Setup common environment variables
           command: |
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
