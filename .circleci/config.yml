@@ -73,23 +73,14 @@ jobs:
           at: .
       - setup_remote_docker
       - run:
-          name: Setup common environment variables
-          command: |
-            FULL_IMAGE_NAME=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}
-            echo $FULL_IMAGE_NAME
-            echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
-            echo 'export FULL_IMAGE_NAME=$FULL_IMAGE_NAME' >> $BASH_ENV
-      - run:
-          command: echo ${FULL_IMAGE_NAME}
-      - run:
           name: Build docker image
           command: |
-            docker build -f src/main/docker/Dockerfile.native-image -t ${FULL_IMAGE_NAME} build
+            docker build -f src/main/docker/Dockerfile.native-image -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1} build
       - run:
           name: Save image to an archive
           command: |
             mkdir docker-image
-            docker save -o docker-image/image.tar $FULL_IMAGE_NAME
+            docker save -o docker-image/image.tar ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}
       - persist_to_workspace:
           root: .
           paths:
