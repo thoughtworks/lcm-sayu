@@ -48,6 +48,9 @@ jobs:
           name: Install native-image
           command: $GRAALVM_HOME/bin/gu install native-image
       - run:
+          name: Install yarn
+          command: curl -o- -L https://yarnpkg.com/install.sh | bash
+      - run:
           name: Build (Native)
           command: |
             @npx yarn --cwd ui install
