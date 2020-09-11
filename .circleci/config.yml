@@ -60,9 +60,9 @@ jobs:
       - run:
           name: Build (Native)
           command: |
-            @npx yarn --cwd ui install
-            @npx yarn --cwd ui deploy
-            @cp -rf ui/static src/main/resources/META-INF/resources/static
+            npx yarn --cwd ui install
+            npx yarn --cwd ui deploy
+            cp -rf ui/static src/main/resources/META-INF/resources/static
             ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static
           no_output_timeout: 15m
       - persist_to_workspace:
