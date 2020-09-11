@@ -51,8 +51,6 @@ jobs:
           name: Build (Native)
           command: ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static
           no_output_timeout: 15m
-      - run:
-          command: ls -l
       - persist_to_workspace:
           root: .
           paths:
@@ -85,7 +83,7 @@ jobs:
           paths:
             - docker-image
 
-  deploy-docker-image:
+  push-docker-image:
     docker:
       - image: circleci/python:3.6.1
     environment:
@@ -123,6 +121,6 @@ workflows:
         - create-docker-image:
             requires:
               - native
-        - deploy-docker-image:
+        - push-docker-image:
             requires:
               - create-docker-image
