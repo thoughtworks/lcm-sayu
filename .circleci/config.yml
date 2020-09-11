@@ -73,9 +73,12 @@ jobs:
           at: .
       - setup_remote_docker
       - run:
+          name: Copy Dockerfile to build dir
+          command: cp src/main/docker/Dockerfile.native-image ~/project/build/
+      - run:
           name: Build docker image
           command: |
-            docker build -f src/main/docker/Dockerfile.native-image -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1} build
+            docker build -f build/Dockerfile.native-image -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1} build
       - run:
           name: Save image to an archive
           command: |
