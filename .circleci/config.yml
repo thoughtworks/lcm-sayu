@@ -51,6 +51,13 @@ jobs:
           name: Install yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
       - run:
+          name: Install npm
+          command: |
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install v8.11.3
+            nvm alias default v8.11.3
+      - run:
           name: Build (Native)
           command: |
             @npx yarn --cwd ui install
