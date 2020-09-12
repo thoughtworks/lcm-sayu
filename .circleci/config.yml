@@ -58,6 +58,8 @@ jobs:
             nvm install v14.10.1
             nvm alias default v14.10.1
       - run:
+          command: npm version
+      - run:
           name: Build (Native)
           command: |
             npx yarn --cwd ui install
