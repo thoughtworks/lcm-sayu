@@ -1,4 +1,16 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.1
+ARG username
+ARG password
+ARG url
+ARG port
+ARG name
+
+ENV DB_USERNAME=$username
+ENV DB_PASSWORD=$password
+ENV DB_URL=$url
+ENV DB_PORT=$port
+ENV DB_NAME=$name
+
 WORKDIR /app/
 COPY lcm-sayu-1.0.0-SNAPSHOT-runner /app/lcm-sayu
 RUN chmod 775 /app/lcm-sayu
