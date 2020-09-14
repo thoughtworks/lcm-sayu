@@ -98,7 +98,7 @@ jobs:
           name: Save image to an archive
           command: |
             mkdir docker-image
-            docker save -o docker-image/image.tar ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}
+            docker save -o docker-image/image.tar ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:latest
       - persist_to_workspace:
           root: .
           paths:
@@ -124,7 +124,7 @@ jobs:
       - run:
           name: Setup common environment variables
           command: |
-            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1}"' >> $BASH_ENV
+            echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:latest"' >> $BASH_ENV
       - run:
           name: Push image
           command: |
