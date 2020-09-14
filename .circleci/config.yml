@@ -93,7 +93,7 @@ jobs:
       - run:
           name: Build docker image
           command: |
-            docker build --build-arg username=${DB_USERNAME} --build-arg password=${DB_PASSWORD} --build-arg url=${DB_URL} --build-arg port=${DB_PORT} --build-arg name=${DB_NAME} -f build/Dockerfile.native-image -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:${CIRCLE_SHA1} build
+            docker build --build-arg username=${DB_USERNAME} --build-arg password=${DB_PASSWORD} --build-arg url=${DB_URL} --build-arg port=${DB_PORT} --build-arg name=${DB_NAME} -f build/Dockerfile.native-image -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:latest build
       - run:
           name: Save image to an archive
           command: |
