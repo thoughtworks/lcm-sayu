@@ -70,7 +70,7 @@ jobs:
             npx yarn --cwd ui install
             npx yarn --cwd ui deploy
             cp -rf ui/static src/main/resources/META-INF/resources/static
-            ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.additional-build-args=--static
+            ./gradlew build -Dquarkus.package.type=native
           no_output_timeout: 15m
       - persist_to_workspace:
           root: .
