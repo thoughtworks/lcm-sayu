@@ -15,4 +15,5 @@ WORKDIR /app/
 COPY lcm-sayu-1.0.0-SNAPSHOT-runner /app/lcm-sayu
 RUN chmod 775 /app/lcm-sayu
 EXPOSE 8080
+USER root
 CMD ["./lcm-sayu"]
