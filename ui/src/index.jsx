@@ -1,6 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
-import App from "./App";
-
-ReactDOM.render(<App />, document.getElementById("app"));
+import {SymptomManagement} from "./SymptomManagement/SymptomManagement";
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+ReactDOM.render(
+    <React.StrictMode>
+        <Router history={history}>
+            <SymptomManagement />
+        </Router>
+    </React.StrictMode>,
+    document.getElementById('app')
+ );
