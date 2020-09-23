@@ -31,6 +31,24 @@ module.exports = (env, options) => {
           exclude: /node_modules/,
           loader: "babel-loader",
         },
+        // Load images.
+        			{
+        				test: /\.(gif|jpe?g|png)$/,
+        				loader: 'url-loader?limit=25000',
+        				query: {
+        					limit: 10000,
+        					name: 'static/media/images/[name].[hash:8].[ext]'
+        				}
+        			},
+        			{
+        				test: /\.scss$/,
+        				loaders: ['style-loader', 'css-loader', 'sass-loader', 'resolve-url-loader?sourceMap', 'sass-loader?sourceMap'],
+        				include: path.resolve(__dirname, '../../')
+        			},
+        			{
+        				test: /\.css$/,
+        				loader: 'style!css?importLoaders=1'
+        			},
       ],
     },
     plugins: [

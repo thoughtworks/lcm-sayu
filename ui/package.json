@@ -9,11 +9,15 @@
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
+    "css-loader": "^4.3.0",
+    "file-loader": "^6.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
+    "style-loader": "^1.2.1",
     "styled-components": "^5.1.1",
-    "swr": "^0.2.3"
+    "swr": "^0.2.3",
+    "url-loader": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
