@@ -33,7 +33,7 @@ module.exports = (env, options) => {
         },
         // Load images.
         			{
-        				test: /\.(gif|jpe?g|png)$/,
+        				test: /\.(gif|jpe?g|png|svg)$/,
         				loader: 'url-loader?limit=25000',
         				query: {
         					limit: 10000,
