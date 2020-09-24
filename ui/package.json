@@ -10,6 +10,7 @@
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
     "css-loader": "^4.3.0",
+    "emotion-theming": "^10.0.27",
     "file-loader": "^6.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
