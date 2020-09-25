@@ -8,26 +8,34 @@ function WelcomeSayu() {
   return (
     <Flex direction="column" align="center">
       <Image src={logo}></Image>
-      <Text fontSize="md"
+      <Text fontSize={["lg", "lg", "lg", "xl"]}
        fontWeight="bold">
        SAYU
       </Text>
       <Stack isInline align="center" marginTop={5}>
-         <Text fontWeight="bold">Hola</Text>
+         <Text fontWeight="bold"
+               fontSize={["lg", "lg", "lg", "xl"]}>
+               Hola
+          </Text>
           <Image src={wavingHand} />
       </Stack>
       <Text marginTop={5}
-        marginLeft={10}
-        fontSize="s">
+        marginLeft={[10, 12, 14, 16]}
+        marginRight={[10, 12, 14, 16]}
+        fontSize={["sm", "md", "lg", "xl"]}>
         Registra diariamente tus síntomas y podremos analizar mejor tu tratamiento
       </Text>
-      <Stack  align="center" width="90%" marginTop={5} marginLeft={10} marginRight={10}>
+      <Stack  align="center"
+              width="90%"
+              marginTop={10}
+              marginLeft={10}
+              marginRight={10}>
           <CustomButton
             backgroundColor="lightGreen"
             color="white"
             hover={{ backgroundColor: "lightGrey" }}
             onClick={() => {
-              history.push("/escala-caritas");
+              history.push("/");
             }}
             label="Registra síntomas aquí"
           />
