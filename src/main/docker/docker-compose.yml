@@ -6,7 +6,7 @@ services:
       - DB_PASSWORD=postgres
       - DB_URL=postgres
       - DB_PORT=5432
-      - DB_NAME=paincontrol
+      - DB_NAME=lcmsayudb
     image: lcm-sayu
     ports:
       - "80:80"
@@ -18,4 +18,4 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: paincontrol
+      POSTGRES_DB: lcmsayudb
