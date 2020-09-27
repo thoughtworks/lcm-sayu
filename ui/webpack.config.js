@@ -31,6 +31,7 @@ module.exports = (env, options) => {
           exclude: /node_modules/,
           loader: "babel-loader",
         },
+
         // Load images.
         			{
         				test: /\.(gif|jpe?g|png|svg)$/,
@@ -47,8 +48,20 @@ module.exports = (env, options) => {
         			},
         			{
         				test: /\.css$/,
-        				loader: 'style!css?importLoaders=1'
+        				loader: 'style-loader!css-loader'
         			},
+        			{
+                            test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+                            use: [
+                              {
+                                loader: 'url-loader?limit=100000',
+                                options: {
+                                  name: '[name].[ext]',
+                                  outputPath: 'fonts/'
+                                }
+                              }
+                            ]
+                    },
       ],
     },
     plugins: [

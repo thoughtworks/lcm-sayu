@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "AmaticSC-Bold";
+  src: local("AmaticSC-Bold"),
+    url("./AmaticSC/amaticsc-bold-webfont.woff2") format("woff2"),
+    url("./AmaticSC/amaticsc-bold-webfont.woff") format("woff"),
+    url("./AmaticSC/AmaticSC-Bold.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AmaticSC-Regular";
+  src: local("AmaticSC-Regular"),
+    url("./AmaticSC/amaticsc-regular-webfont.woff2")format("woff2"),
+    url("./AmaticSC/amaticsc-regular-webfont.woff") format("woff"),
+    url("./AmaticSC/AmaticSC-Regular.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
