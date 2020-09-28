@@ -11,8 +11,8 @@ const customTheme = {
   },
   fonts: {
     ...theme.fonts,
-    heading: "AmaticSC-Bold",
-    body: "AmaticSC-Regular",
+    heading: "Roboto-Bold",
+    body: "Roboto-Regular",
   },
 };
 
