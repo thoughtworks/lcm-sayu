@@ -5,7 +5,8 @@
   "version": "1.0.0",
   "scripts": {
     "deploy": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "watch": "webpack --mode development --watch",
+    "test": "react-scripts test"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
@@ -26,6 +27,7 @@
     "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.0.0",
     "copy-webpack-plugin": "^6.0.2",
+    "cypress": "^5.2.0",
     "terser-webpack-plugin": "^2.3.2",
     "webpack": "4.41.5",
     "webpack-clean-obsolete-chunks": "^0.4.0",

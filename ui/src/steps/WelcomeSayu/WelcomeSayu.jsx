@@ -8,10 +8,7 @@ function WelcomeSayu() {
   return (
     <Flex direction="column" align="center">
       <Image src={logo}></Image>
-      <Text
-        fontSize={["lg", "lg", "lg", "xl"]}
-        fontWeight="bold"
-      >
+      <Text fontSize={["lg", "lg", "lg", "xl"]} fontWeight="bold">
         SAYU
       </Text>
       <Stack isInline align="center" marginTop={5}>
