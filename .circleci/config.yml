@@ -135,13 +135,25 @@ workflows:
   version: 2
   buildjar-and-buildnative:
     jobs:
-        - build
+        - build:
+            filters:
+              branches:
+                only: master
         - native:
+            filters:
+              branches:
+                only: master
             requires:
               - build
         - create-docker-image:
+            filters:
+              branches:
+                only: master
             requires:
               - native
         - push-docker-image:
+            filters:
+              branches:
+                only: master
             requires:
               - create-docker-image
