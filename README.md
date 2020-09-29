@@ -25,5 +25,5 @@ make build
 ## Running Cypress headless
 
 ```
-./node_modules/.bin/cypress open
+node_modules/.bin/cypress open
 ```
