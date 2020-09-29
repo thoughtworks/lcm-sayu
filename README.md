@@ -17,13 +17,13 @@ make dev
 make build
 ```
 
-## Running Cypress with UI
-
-```
-./node_modules/.bin/cypress run
-```
 ## Running Cypress headless
 
 ```
-node_modules/.bin/cypress open
+cypress_headless
+```
+## Running Cypress with UI
+
+```
+cypress_ui
 ```
