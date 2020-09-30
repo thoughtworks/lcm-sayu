@@ -155,7 +155,7 @@ workflows:
                 only: master
             requires:
               - native
-        - push-docker-image:
+        - push-docker-image-and-update:
             filters:
               branches:
                 only: master
