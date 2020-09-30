@@ -31,12 +31,49 @@ module.exports = (env, options) => {
           exclude: /node_modules/,
           loader: "babel-loader",
         },
+
+        // Load images.
+        {
+          test: /\.(gif|jpe?g|png|svg)$/,
+          loader: "url-loader?limit=25000",
+          query: {
+            limit: 10000,
+            name: "static/media/images/[name].[hash:8].[ext]",
+          },
+        },
+        {
+          test: /\.scss$/,
+          loaders: [
+            "style-loader",
+            "css-loader",
+            "sass-loader",
+            "resolve-url-loader?sourceMap",
+            "sass-loader?sourceMap",
+          ],
+          include: path.resolve(__dirname, "../../"),
+        },
+        {
+          test: /\.css$/,
+          loader: "style-loader!css-loader",
+        },
+        {
+          test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+            {
+              loader: "url-loader?limit=100000",
+              options: {
+                name: "[name].[ext]",
+                outputPath: "fonts/",
+              },
+            },
+          ],
+        },
       ],
     },
     plugins: [
       new CopyPlugin({ patterns: [{ from: "img", to: "img" }] }),
       new LiveReloadPlugin({ appendScriptTag: true, ignore: !devMode }),
       new CleanObsoleteChunks(),
-    ]
+    ],
   };
 };

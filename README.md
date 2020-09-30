@@ -16,3 +16,14 @@ make dev
 ```
 make build
 ```
+
+## Running Cypress headless
+
+```
+cypress_headless
+```
+## Running Cypress with UI
+
+```
+cypress_ui
+```
