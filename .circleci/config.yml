@@ -130,6 +130,10 @@ jobs:
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push $FULL_IMAGE_NAME
+      - run:
+          name: Update ECS service
+          command: |
+            eval $(aws --region $AWS_DEFAULT_REGION ecs update-service --force-new-deployment --service lcm-sayu-service-dev --cluster lcm-sayu-cluster-dev)
 
 workflows:
   version: 2
