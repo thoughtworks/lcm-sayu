@@ -104,7 +104,7 @@ jobs:
           paths:
             - docker-image
 
-  push-docker-image:
+  push-docker-image-and-update:
     docker:
       - image: circleci/python:3.6.1
     environment:
@@ -133,7 +133,7 @@ jobs:
       - run:
           name: Update ECS service
           command: |
-            eval $(aws --region $AWS_DEFAULT_REGION ecs update-service --force-new-deployment --service lcm-sayu-service-dev --cluster lcm-sayu-cluster-dev)
+            aws --region $AWS_DEFAULT_REGION ecs update-service --force-new-deployment --service lcm-sayu-service-dev --cluster lcm-sayu-cluster-dev
 
 workflows:
   version: 2
