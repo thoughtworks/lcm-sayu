@@ -13,7 +13,7 @@ services:
     depends_on:
       - postgres
   postgres:
-    image: postgres
+    image: library/postgres:13
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
