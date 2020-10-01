@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider } from "emotion-theming";
 import { CSSReset } from "@chakra-ui/core";
-import { customTheme } from "./theme/customTheme";
+import { customTheme } from "./theme/CustomTheme";
 import { SymptomManagement } from "./SymptomManagement/SymptomManagement";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 ReactDOM.render(
