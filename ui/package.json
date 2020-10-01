@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.35",
+    "@emotion/styled": "^10.0.27",
     "css-loader": "^4.3.0",
     "emotion-theming": "^10.0.27",
     "file-loader": "^6.1.0",
