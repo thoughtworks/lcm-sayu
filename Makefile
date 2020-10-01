@@ -15,8 +15,13 @@ clean:
 		build \
 		ui/static \
 		src/main/resources/META-INF/resources/static
+
 cypress_ui:
 	ui/node_modules/.bin/cypress open
 
 cypress_headless:
 	./ui/node_modules/.bin/cypress run
+
+docker-local:
+	@docker build --rm -t lcm-sayu .
+	@cd src/main/docker && docker-compose up
