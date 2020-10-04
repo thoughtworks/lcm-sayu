@@ -5,6 +5,7 @@ import { CustomButton } from "../../components/CustomButton/CustomButton";
 import logo from "./../../assets/images/sayu_logo.svg";
 import wavingHand from "./../../assets/images/waving_hand_emoji.svg";
 function WelcomeSayu() {
+  const history = useHistory();
   return (
     <Flex direction="column" align="center">
       <Image src={logo}></Image>
@@ -38,7 +39,7 @@ function WelcomeSayu() {
           color="white"
           hover={{ backgroundColor: "lightGrey" }}
           onClick={() => {
-            history.push("/");
+            history.push("/face-scale-screen");
           }}
           label="Registra síntomas aquí"
         />
