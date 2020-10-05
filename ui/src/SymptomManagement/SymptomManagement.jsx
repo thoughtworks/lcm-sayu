@@ -4,7 +4,7 @@ import { FaceScaleScreen } from "./../steps/FaceScaleScreen/FaceScaleScreen";
 import { SymptomsRegistry } from "./../steps/SymptomsRegistry/SymptomsRegistry";
 import { Route, Switch } from "react-router-dom";
 function SymptomManagement() {
-  const [painValue, setPainValue] = useState("faceOne");
+  const [painValue, setPainValue] = useState("faceZero");
   return (
       <Switch>
         <Route exact path={"/"}>
