@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, Image } from "@chakra-ui/core";
 import { useHistory } from "react-router-dom";
 import faceOne from "./../../assets/images/faces/FaceOne.svg";
 
-function FaceScaleScreen() {
+function FaceScaleScreen({ setPainValue }) {
   const history = useHistory();
-  const [painValue, setPainValue] = useState("faceOne");
   return (
   <>
     <Text>Cuéntale a Sayu cómo te sientes hoy</Text>
-     <button onClick={() => { setPainValue("FaceOne"); history.push("/");}}>
+     <button onClick={() => { setPainValue("FaceOne"); history.push("/symptoms-registry");}}>
            <Image src={faceOne} />
      </button>
   </>
