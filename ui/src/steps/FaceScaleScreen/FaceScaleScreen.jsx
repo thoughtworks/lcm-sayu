@@ -8,7 +8,7 @@ function FaceScaleScreen() {
   const [painValue, setPainValue] = useState("faceOne");
   return (
   <>
-    <Text>Cuéntale hoy a Sayu cómo te sientes hoy</Text>
+    <Text>Cuéntale a Sayu cómo te sientes hoy</Text>
      <button onClick={() => { setPainValue("FaceOne"); history.push("/");}}>
            <Image src={faceOne} />
      </button>
