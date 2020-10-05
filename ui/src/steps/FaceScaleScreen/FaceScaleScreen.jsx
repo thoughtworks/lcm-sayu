@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Image } from "@chakra-ui/core";
 import { useHistory } from "react-router-dom";
+import BackArrow from '../../assets/images/BackArrow.svg';
 import FaceZero from "./../../assets/images/faces/FaceZero.svg";
 import FaceTwo from "./../../assets/images/faces/FaceTwo.svg";
 import FaceFour from "./../../assets/images/faces/FaceFour.svg";
@@ -11,6 +12,9 @@ function FaceScaleScreen({ setPainValue }) {
   const history = useHistory();
   return (
   <>
+    <button onClick={() => {history.push("/");}}>
+        <Image src={BackArrow} />
+    </button>
     <Text>Cuéntale a Sayu cómo te sientes hoy</Text>
      <button onClick={() => { setPainValue("FaceZero"); history.push("/symptoms-registry");}}>
            <Image src={FaceZero} />
