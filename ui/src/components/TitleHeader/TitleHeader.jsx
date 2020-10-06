@@ -11,7 +11,7 @@ function TitleHeader(){
             <Image src={BackArrow} />
        </button>
        <Text>Cuéntale a Sayu cómo te sientes hoy</Text>
-       <Text>Registro de dolor</Text>
+       <Text fontWeight="bold">Registro de dolor</Text>
     </>
     );
 }
