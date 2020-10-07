@@ -16,7 +16,7 @@ const painInformation={
     'FaceEight':{name:'Duele mucho', icon:<Image src={FaceEight}/>},
     'FaceTen':{name:'El peor dolor', icon:<Image src={FaceTen}/>},
  }
- function SymptomBox(props){
+ function PainBox(props){
      return(
      <Box border='1px solid' borderRadius='4px' padding='1em'>
           <Flex justifyContent={'space-between'}>
@@ -27,5 +27,5 @@ const painInformation={
      );
 
  }
- export {SymptomBox};
+ export {PainBox};
 

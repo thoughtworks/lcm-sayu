@@ -1,5 +1,5 @@
 import React from "react";
-import { SymptomBox } from "../../components/SymptomBox/SymptomBox";
+import { PainBox } from "../../components/PainBox/PainBox";
 import { TitleHeader } from "../../components/TitleHeader/TitleHeader";
 import { useHistory } from "react-router-dom";
 function SymptomsRegistry({ painValue }) {
@@ -7,7 +7,7 @@ function SymptomsRegistry({ painValue }) {
   return (
     <>
       <TitleHeader />
-      <SymptomBox painValue={painValue} />
+      <PainBox painValue={painValue} />
     </>
   );
 }
