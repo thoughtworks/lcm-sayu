@@ -14,12 +14,12 @@ function FaceScaleScreen({ setPainValue }) {
         cara que mejor describa cuánto te duele ahora"
       </Text>
       <Stack isInline marginTop={20}>
-        <FaceButton painValue="faceZero" />
-        <FaceButton painValue="faceTwo" />
-        <FaceButton painValue="faceFour" />
-        <FaceButton painValue="faceSix" />
-        <FaceButton painValue="faceEight" />
-        <FaceButton painValue="faceTen" />
+        <FaceButton painValue="faceZero" setPainValue={setPainValue} />
+        <FaceButton painValue="faceTwo" setPainValue={setPainValue} />
+        <FaceButton painValue="faceFour" setPainValue={setPainValue}/>
+        <FaceButton painValue="faceSix" setPainValue={setPainValue}/>
+        <FaceButton painValue="faceEight" setPainValue={setPainValue}/>
+        <FaceButton painValue="faceTen" setPainValue={setPainValue}/>
       </Stack>
     </>
   );
