@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Image, Stack, Box } from "@chakra-ui/core";
 import { TitleHeader } from "../../components/TitleHeader/TitleHeader";
+import { FaceButton } from "../../components/FaceButton/FaceButton";
 import { useHistory } from "react-router-dom";
 import FaceZero from "./../../assets/images/faces/FaceZero.svg";
 import FaceTwo from "./../../assets/images/faces/FaceTwo.svg";
@@ -18,6 +19,7 @@ function FaceScaleScreen({ setPainValue }) {
         cara que mejor describa cuánto te duele ahora"
       </Text>
       <Stack isInline marginTop={20}>
+        {/*<FaceButton painValue="FaceZero" />*/}
         <Box>
           <button
             onClick={() => {
@@ -30,56 +32,66 @@ function FaceScaleScreen({ setPainValue }) {
           <Text>0</Text>
           <Text>Sin dolor</Text>
         </Box>
-        <button
-          onClick={() => {
-            setPainValue("FaceTwo");
-            history.push("/symptoms-registry");
-          }}
-        >
-          <Image src={FaceTwo} />
+        <Box>
+          <button
+            onClick={() => {
+              setPainValue("FaceTwo");
+              history.push("/symptoms-registry");
+            }}
+          >
+            <Image src={FaceTwo} />
+          </button>
           <Text>2</Text>
           <Text>Duele un poco</Text>
-        </button>
-        <button
-          onClick={() => {
-            setPainValue("FaceFour");
-            history.push("/symptoms-registry");
-          }}
-        >
-          <Image src={FaceFour} />
+        </Box>
+        <Box>
+          <button
+            onClick={() => {
+              setPainValue("FaceFour");
+              history.push("/symptoms-registry");
+            }}
+          >
+            <Image src={FaceFour} />
+          </button>
           <Text>4</Text>
           <Text>Duele un poco más</Text>
-        </button>
-        <button
-          onClick={() => {
-            setPainValue("FaceSix");
-            history.push("/symptoms-registry");
-          }}
-        >
-          <Image src={FaceSix} />
+        </Box>
+        <Box>
+          <button
+            onClick={() => {
+              setPainValue("FaceSix");
+              history.push("/symptoms-registry");
+            }}
+          >
+            <Image src={FaceSix} />
+          </button>
           <Text>6</Text>
           <Text>Duele aún más</Text>
-        </button>
-        <button
-          onClick={() => {
-            setPainValue("FaceEight");
-            history.push("/symptoms-registry");
-          }}
-        >
-          <Image src={FaceEight} />
+        </Box>
+        <Box>
+          <button
+            onClick={() => {
+              setPainValue("FaceEight");
+              history.push("/symptoms-registry");
+            }}
+          >
+            <Image src={FaceEight} />
+          </button>
           <Text>8</Text>
           <Text>Duele mucho</Text>
-        </button>
-        <button
-          onClick={() => {
-            setPainValue("FaceTen");
-            history.push("/symptoms-registry");
-          }}
-        >
-          <Image src={FaceTen} />
+        </Box>
+        <Box>
+          <button
+            onClick={() => {
+              setPainValue("FaceTen");
+              history.push("/symptoms-registry");
+            }}
+          >
+            <Image src={FaceTen} />
+          </button>
           <Text>10</Text>
           <Text>El peor dolor</Text>
-        </button>
+        </Box>
       </Stack>
     </>
   );
