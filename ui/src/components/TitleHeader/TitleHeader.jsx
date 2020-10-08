@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 function TitleHeader() {
   const history = useHistory();
   return (
-    <>
+    <Box marginTop={5} marginLeft={8} marginRight={8}>
       <Flex justify="space-between">
         <button
           onClick={() => {
@@ -25,12 +25,18 @@ function TitleHeader() {
         </button>
       </Flex>
       <Flex direction="column">
-        <Text marginTop={5}>Cuéntale a Sayu cómo te sientes hoy</Text>
-        <Text fontWeight="bold" marginTop={5}>
+        <Text marginTop={5} fontSize={["md", "lg", "lg", "xl"]}>
+          Cuéntale a Sayu cómo te sientes hoy
+        </Text>
+        <Text
+          fontWeight="bold"
+          marginTop={5}
+          fontSize={["sm", "md", "md", "lg"]}
+        >
           Registro de dolor
         </Text>
       </Flex>
-    </>
+    </Box>
   );
 }
 export { TitleHeader };
