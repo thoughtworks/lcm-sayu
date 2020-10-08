@@ -1,19 +1,18 @@
 module.exports = {
   testEnvironment: "jsdom",
   roots: ["<rootDir>"],
-  moduleFileExtensions: ["js", "ts", "tsx", "json"],
-  testMatch: ["<rootDir>/__tests__/steps/WelcomeSayu\\.test\\.jsx"],
+  moduleFileExtensions: ["js", "jsx", "json"],
+  testMatch: ["<rootDir>/__tests__/**/*\\.test\\.js"],
   testPathIgnorePatterns: [
     "<rootDir>[/\\\\](node_modules|cypress|__mocks__)[/\\\\]",
   ],
-  transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$"],
   watchPlugins: [
     "jest-watch-typeahead/filename",
     "jest-watch-typeahead/testname",
   ],
   moduleNameMapper: {
     "\\.(css|less|sass|scss)$": "identity-obj-proxy",
-    "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMocks.ts",
+    "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMocks.js",
   },
   setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
   collectCoverageFrom: ["**/*.{js,jsx}", "!**/node_modules/**"],
