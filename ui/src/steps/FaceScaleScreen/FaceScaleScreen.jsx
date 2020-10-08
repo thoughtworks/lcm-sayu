@@ -8,7 +8,7 @@ function FaceScaleScreen({ setPainValue }) {
   const history = useHistory();
   return (
     <>
-      <TitleHeader />
+      <TitleHeader backArrowRoute="/" closeRoute="/" />
       <Box marginLeft={8} marginRight={8}>
         <Text fontSize={["sm", "md", "md", "lg"]}>
           Muéstrale a tu hijo/hija este dibujo y explícale lo siguiente: "Elige

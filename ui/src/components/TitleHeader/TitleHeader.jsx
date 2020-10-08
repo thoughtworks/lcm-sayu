@@ -4,21 +4,21 @@ import BackArrow from "../../assets/images/BackArrow.svg";
 import CloseIcon from "../../assets/images/CloseIcon.svg";
 import { useHistory } from "react-router-dom";
 
-function TitleHeader() {
+function TitleHeader(props) {
   const history = useHistory();
   return (
     <Box marginTop={5} marginLeft={8} marginRight={8}>
       <Flex justify="space-between">
         <button
           onClick={() => {
-            history.push("/");
+            history.push(props.backArrowRoute);
           }}
         >
           <Image src={BackArrow} />
         </button>
         <button
           onClick={() => {
-            history.push("/");
+            history.push(props.closeRoute);
           }}
         >
           <Image src={CloseIcon} />

@@ -7,7 +7,7 @@ function SymptomsRegistry({ painValue }) {
   const history = useHistory();
   return (
     <>
-      <TitleHeader />
+      <TitleHeader backArrowRoute="/face-scale-screen" closeRoute="/" />
       <PainBox painValue={painValue} />
     </>
   );
