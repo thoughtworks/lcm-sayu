@@ -8,6 +8,7 @@ const customTheme = {
     lightGrey: "#728095",
     white: "#FFFFFF",
     black: "#000000",
+    blue: "#616EE4",
   },
   fonts: {
     ...theme.fonts,

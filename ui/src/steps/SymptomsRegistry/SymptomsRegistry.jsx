@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "@chakra-ui/core";
 import { PainBox } from "../../components/PainBox/PainBox";
 import { TitleHeader } from "../../components/TitleHeader/TitleHeader";
 import { useHistory } from "react-router-dom";
