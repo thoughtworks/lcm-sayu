@@ -21,10 +21,10 @@ function SymptomsRegistry({ painValue }) {
           <Slider symptomValue='Cansancio'/>
         </Box>
         <Box>
-          <Slider symptomValue='Nausea'/>
+          <Slider symptomValue='Náusea'/>
         </Box>
         <Box>
-          <Slider symptomValue='Depresion'/>
+          <Slider symptomValue='Depresión'/>
         </Box>
         <Box>
           <Slider symptomValue='Ansiedad'/>

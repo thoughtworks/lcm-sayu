@@ -11,8 +11,8 @@ import {
 
   const symptonInfo={
     'Cansancio':{min:'Sin cansancio', max:'Máximo cansancio'},
-    'Nausea':{min:'Sin náusea', max:'Máxima nausea'},
-    'Depresion':{min:'Sin depresión', max:'Máxima depresión'},
+    'Náusea':{min:'Sin náusea', max:'Máxima náusea'},
+    'Depresión':{min:'Sin depresión', max:'Máxima depresión'},
     'Ansiedad':{min:'Sin ansiedad', max:'Máxima ansiedad'},
     'Somnolencia':{min:'Sin somnolencia', max:'Máxima somnolencia'},
     'Apetito':{min:'Buen apetito', max:'Sin apetito'},
@@ -31,7 +31,7 @@ import {
               <Text fontFamily="heading">
                 {symptomValue}
               </Text>
-              <Text color="lightPurple">
+              <Text color="lightPurple" fontFamily="heading">
                 {sliderValue}
               </Text>
             </Stack>
