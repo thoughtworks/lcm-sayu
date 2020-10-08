@@ -9,12 +9,12 @@ import FaceEight from "./../../assets/images/faces/FaceEight.svg";
 import FaceTen from "./../../assets/images/faces/FaceTen.svg";
 
 const faceInfo = {
-  faceZero: { img: FaceZero, number: "0", description: "Sin dolor", click: "FaceZero"},
+  faceZero: { img: FaceZero, number: "0", description: "No duele", click: "FaceZero"},
   faceTwo: { img: FaceTwo, number: "2", description: "Duele un poco",click: "FaceTwo"},
   faceFour: { img: FaceFour, number: "4", description: "Duele un poco más", click: "FaceFour" },
-  faceSix: { img: FaceSix, number: "6", description: "Duele aún más", click: "FaceSix" },
-  faceEight: { img: FaceEight, number: "8", description: "Duele mucho", click: "FaceEight" },
-  faceTen: { img: FaceTen, number: "10", description: "El peor dolor", click: "FaceTen" },
+  faceSix: { img: FaceSix, number: "6", description: "Duele mucho", click: "FaceSix" },
+  faceEight: { img: FaceEight, number: "8", description: "Duele mucho más", click: "FaceEight" },
+  faceTen: { img: FaceTen, number: "10", description: "Duele al máximo", click: "FaceTen" },
 };
 function FaceButton({ painValue, setPainValue }) {
   const history = useHistory();

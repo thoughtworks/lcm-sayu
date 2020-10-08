@@ -26,7 +26,7 @@ function TitleHeader(props) {
       </Flex>
       <Flex direction="column">
         <Text marginTop={5} fontSize={["md", "lg", "lg", "xl"]}>
-          Cuéntale a Sayu cómo te sientes hoy
+          Cuéntale a sayu cómo te sientes hoy
         </Text>
         <Text
           fontWeight="bold"
