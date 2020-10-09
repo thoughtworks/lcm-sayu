@@ -1,37 +1,47 @@
+import WelcomeSayu from '../page-objects/WelcomeSayu'
+import FaceScaleScreen from '../page-objects/FaceScaleScreen'
+import SymptomsRegistry from '../page-objects/SymptomsRegistry'
+
 describe("Enter and record pain and symptoms", function () {
   it("Enter and record pain and symptoms", () => {
-    cy.visit("/");
-    cy.contains("Registra síntomas aquí").click();
-    cy.contains("Duele un poco más").click();
+    const welcomeSayu = new WelcomeSayu();
+    const faceScaleScreen = new FaceScaleScreen();
+    const symptomsRegistry = new SymptomsRegistry();
+
+    welcomeSayu.visit();
+    welcomeSayu.clickRegisterSymptomsButton();
+
+    faceScaleScreen.clickPainLevel("Duele un poco más");
+
     cy.contains("Duele un poco más");
     cy.contains("¿Tienes otros síntomas?");
     cy.contains(" Regístralos considerando que 0 es ausencia del síntoma y 10 es la mayor intensidad de este.");
 
-    cy.get("#Cansancio").siblings('[role="slider"]').type('{rightarrow}'.repeat(3));
-    cy.contains("Cansancio").children().children().last('p').should('contain', '3');
+    symptomsRegistry.slideSymptom("Cansancio", 3);
+    symptomsRegistry.getLevelNumber("Cansancio").should('contain', 3);
 
-    cy.get("#Nausea").siblings('[role="slider"]').type('{rightarrow}'.repeat(10));
-    cy.contains("Nausea").children().children().last('p').should('contain', '10');
+    symptomsRegistry.slideSymptom("Náusea", 10);
+    symptomsRegistry.getLevelNumber("Náusea").should('contain', 10);
 
-    cy.get("#Depresion").siblings('[role="slider"]').type('{rightarrow}'.repeat(8));
-    cy.contains("Depresion").children().children().last('p').should('contain', '8');
+    symptomsRegistry.slideSymptom("Depresión", 8);
+    symptomsRegistry.getLevelNumber("Depresión").should('contain', 8);
 
-    cy.get("#Ansiedad").siblings('[role="slider"]').type('{rightarrow}'.repeat(1));
-    cy.contains("Ansiedad").children().children().last('p').should('contain', '1');
+    symptomsRegistry.slideSymptom("Ansiedad", 1);
+    symptomsRegistry.getLevelNumber("Ansiedad").should('contain', 1);
 
-    cy.get("#Somnolencia").siblings('[role="slider"]').type('{rightarrow}'.repeat(5));
-    cy.contains("Somnolencia").children().children().last('p').should('contain', '5');
+    symptomsRegistry.slideSymptom("Somnolencia", 5);
+    symptomsRegistry.getLevelNumber("Somnolencia").should('contain', 5);
 
-    cy.get("#Apetito").siblings('[role="slider"]').type('{rightarrow}'.repeat(6));
-    cy.contains("Apetito").children().children().last('p').should('contain', '6');
+    symptomsRegistry.slideSymptom("Apetito", 6);
+    symptomsRegistry.getLevelNumber("Apetito").should('contain', 6);
 
-    cy.get("#Bienestar\\/Malestar").siblings('[role="slider"]').type('{rightarrow}'.repeat(4));
-    cy.contains("Bienestar/Malestar").children().children().last('p').should('contain', '4');
+    symptomsRegistry.slideSymptom("Bienestar\\/Malestar", 4);
+    symptomsRegistry.getLevelNumber("Bienestar/Malestar").should('contain', 4);
 
-    cy.get("#Falta\\ de\\ aire").siblings('[role="slider"]').type('{rightarrow}'.repeat(7));
-    cy.contains("Falta de aire").children().children().last('p').should('contain', '7');
+    symptomsRegistry.slideSymptom("Falta\\ de\\ aire", 7);
+    symptomsRegistry.getLevelNumber("Falta de aire").should('contain', 7);
 
-    cy.get("#Dificultad\\ para\\ dormir").siblings('[role="slider"]');
-    cy.contains("Dificultad para dormir").children().children().last('p').should('contain', '0');
+    symptomsRegistry.slideSymptom("Dificultad\\ para\\ dormir", 3);
+    symptomsRegistry.getLevelNumber("Dificultad para dormir").should('contain', 3);
   });
 });
