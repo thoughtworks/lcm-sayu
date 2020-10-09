@@ -46,8 +46,8 @@ import {
             <Text>10</Text>
           </Stack>
           <Flex justifyContent={'space-between'} mt={5}>
-            <Text as="sub" color="lightGrey">{symptonInfo[symptomValue].min}</Text>
-            <Text as="sub" color="lightGrey">{symptonInfo[symptomValue].max}</Text>
+            <Text fontSize="xs" color="lightGrey">{symptonInfo[symptomValue].min}</Text>
+            <Text fontSize="xs" color="lightGrey">{symptonInfo[symptomValue].max}</Text>
           </Flex>
         </FormControl>
       </Box>);
