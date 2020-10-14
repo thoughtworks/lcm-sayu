@@ -15,7 +15,7 @@ const painInformation = {
   FaceEight: { name: "Duele mucho", icon: <Image src={FaceEight} /> },
   FaceTen: { name: "El peor dolor", icon: <Image src={FaceTen} /> },
 };
-function PainBox(props) {
+function PainBox({ painValue }) {
   return (
     <Box
       border="1px solid"
@@ -27,8 +27,8 @@ function PainBox(props) {
       color="blue"
     >
       <Flex direction="column" align="center">
-        <Text>{painInformation[props.painValue].icon}</Text>
-        <Text>{painInformation[props.painValue].name}</Text>
+        <Text>{painInformation[painValue].icon}</Text>
+        <Text>{painInformation[painValue].name}</Text>
       </Flex>
     </Box>
   );

@@ -14,7 +14,7 @@ module.exports = {
     "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/test/__mocks__/fileMocks.js",
   },
   setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
-  collectCoverageFrom: ["src/**/*.{js,jsx}", "!**/node_modules/**", "!src/styles/**", "!src/theme/**", "!src/index.jsx"],
+  collectCoverageFrom: ["src/**/*.{js,jsx}", "!**/node_modules/**", "!src/styles/**", "!src/theme/**", "!src/index.jsx", "!**/styles.js"],
   moduleDirectories: ["node_modules", "."],
   coverageThreshold: {
     global: {
