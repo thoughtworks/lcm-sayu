@@ -9,10 +9,14 @@ function SymptomManagement() {
   return (
     <Switch>
       <Route exact path={"/"}>
-        <WelcomeSayu />
+        <Page>
+          <WelcomeSayu />
+        </Page>
       </Route>
       <Route exact path={"/face-scale-screen"}>
-        <FaceScaleScreen painValue={painValue} setPainValue={setPainValue} />
+        <Page>
+          <FaceScaleScreen painValue={painValue} setPainValue={setPainValue} />
+        </Page>
       </Route>
       <Route exact path={"/symptoms-registry"}>
         <Page>

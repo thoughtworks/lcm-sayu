@@ -20,8 +20,6 @@ function WelcomeSayu() {
       </Stack>
       <Text
         marginTop={5}
-        marginLeft={[10, 12, 14, 16]}
-        marginRight={[10, 12, 14, 16]}
         fontSize={["sm", "md", "lg", "xl"]}
       >
         Registra diariamente tus síntomas y podremos analizar mejor tu
@@ -31,8 +29,6 @@ function WelcomeSayu() {
         align="center"
         width="90%"
         marginTop={10}
-        marginLeft={10}
-        marginRight={10}
       >
         <CustomButton
           backgroundColor="lightGreen"

@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 function TitleHeader(props) {
   const history = useHistory();
   return (
-    <Box marginTop={5} marginLeft={8} marginRight={8}>
+    <Box marginTop={5}>
       <Flex justify="space-between">
         <button
           onClick={() => {

@@ -22,8 +22,6 @@ function PainBox({ painValue }) {
       borderRadius="4px"
       padding="1em"
       marginTop={3}
-      marginLeft={8}
-      marginRight={8}
       color="blue"
     >
       <Flex direction="column" align="center">
