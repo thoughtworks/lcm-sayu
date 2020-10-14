@@ -12,11 +12,11 @@ jest.mock("react-router-dom", () => ({
 describe("<SymptomsRegistry />", ()=>{
 
     beforeEach(()=>{
-        /*  render(
+        render(
             <ThemeProvider>
-              <FaceScaleScreen setPainValue={setPainValueMock} painValue="faceZero" />
+                <SymptomsRegistry  painValue="FaceZero"/>
             </ThemeProvider>
-          ); */
+        );
           jest.clearAllMocks();
         });
     afterEach(cleanup);})
