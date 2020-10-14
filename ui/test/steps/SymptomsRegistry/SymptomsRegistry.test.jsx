@@ -19,15 +19,32 @@ describe("<SymptomsRegistry />", ()=>{
         );
           jest.clearAllMocks();
         });
-    afterEach(cleanup);})
+
+    afterEach(cleanup);
+
     test("Should render pain box info", ()=>{
-        render(
-            <ThemeProvider>
-                <SymptomsRegistry  painValue="FaceZero"/>
-            </ThemeProvider>
-        );
         const painBoxDescription = screen.getByText(/sin dolor/i);
         expect(painBoxDescription).toBeInTheDocument();
     });
 
-
+    test("should show title message", () => {
+        const introMessage = screen.getByText(/Cuéntale a sayu cómo te sientes hoy/i)
+        expect(introMessage).toBeInTheDocument()
+    });
+    
+    test("should show symptoms message", () => {
+        const moreSymptomsMessage = screen.getByText(/¿Tienes otros síntomas?/i)
+        expect(moreSymptomsMessage).toBeInTheDocument()
+        const registerSymptomsMessage = screen.getByText(/Regístralos considerando que 0 es ausencia del síntoma y 10 es la mayor intensidad de este./i)
+        expect(registerSymptomsMessage).toBeInTheDocument()
+    });
+    
+    test("should show Cansancio symptom", () => {
+        const cansancioText = screen.getByText(/^Cansancio$/i);
+        expect(cansancioText).toBeInTheDocument();
+        const minCansancioText = screen.getByText(/Sin cansancio/i);
+        expect(minCansancioText).toBeInTheDocument();
+        const maxCansancioText = screen.getByText(/Máximo Cansancio/i);
+        expect(maxCansancioText).toBeInTheDocument();
+    });
+})
