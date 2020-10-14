@@ -1,16 +1,15 @@
 import React from "react";
 import { Text, Stack, Box } from "@chakra-ui/core";
 import { Slider } from '../../components/SymptomSlider/SymptomSlider';
-import { SymptomBox } from "../../components/SymptomBox/SymptomBox";
+import { PainBox } from "../../components/PainBox/PainBox";
 import { TitleHeader } from "../../components/TitleHeader/TitleHeader";
 import { useHistory } from "react-router-dom";
 function SymptomsRegistry({ painValue }) {
   const history = useHistory();
   return (
     <>
-      <TitleHeader />
-
-      <SymptomBox painValue={painValue} />
+      <TitleHeader backArrowRoute="/face-scale-screen" closeRoute="/" />
+      <PainBox painValue={painValue} />
 
       <Text fontSize="md" mb="8" mt="8">
         ¿Tienes otros síntomas? <br/> Regístralos considerando que 0 es ausencia del síntoma y 10 es la mayor intensidad de este.

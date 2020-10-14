@@ -25,3 +25,6 @@ cypress_headless:
 docker-local:
 	@docker build --rm -t lcm-sayu .
 	@cd src/main/docker && docker-compose up
+
+validate-pipeline:
+	circleci config validate

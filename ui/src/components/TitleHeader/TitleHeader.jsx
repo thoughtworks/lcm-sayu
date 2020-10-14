@@ -1,18 +1,42 @@
-import React from 'react';
-import { Image, Box, Flex, Text } from "@chakra-ui/core";
-import BackArrow from '../../assets/images/BackArrow.svg';
+import React from "react";
+import { Image, Box, Flex, Text, Stack } from "@chakra-ui/core";
+import BackArrow from "../../assets/images/BackArrow.svg";
+import CloseIcon from "../../assets/images/CloseIcon.svg";
 import { useHistory } from "react-router-dom";
 
-function TitleHeader(){
-    const history = useHistory();
-    return(
-    <>
-      <button onClick={() => {history.push("/");}}>
-            <Image src={BackArrow} />
-       </button>
-       <Text>Cuéntale a Sayu cómo te sientes hoy</Text>
-       <Text>Registro de dolor</Text>
-    </>
-    );
+function TitleHeader(props) {
+  const history = useHistory();
+  return (
+    <Box marginTop={5} marginLeft={8} marginRight={8}>
+      <Flex justify="space-between">
+        <button
+          onClick={() => {
+            history.push(props.backArrowRoute);
+          }}
+        >
+          <Image src={BackArrow} />
+        </button>
+        <button
+          onClick={() => {
+            history.push(props.closeRoute);
+          }}
+        >
+          <Image src={CloseIcon} />
+        </button>
+      </Flex>
+      <Flex direction="column">
+        <Text marginTop={5} fontSize={["md", "lg", "lg", "xl"]}>
+          Cuéntale a sayu cómo te sientes hoy
+        </Text>
+        <Text
+          fontWeight="bold"
+          marginTop={5}
+          fontSize={["sm", "md", "md", "lg"]}
+        >
+          Registro de dolor
+        </Text>
+      </Flex>
+    </Box>
+  );
 }
-export {TitleHeader};
+export { TitleHeader };
