@@ -26,31 +26,19 @@ jobs:
       - restore_cache:
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
       - run:
-          name: Install yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash
+          name: Install UI dependencies
+          command: npx yarn --cwd ui install
       - run:
-          name: Install npm
+          name: UI component tests
           command: |
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install v14.10.1
-            nvm alias default v14.10.1
+            npx yarn --cwd ui test
       - run:
-          name: UI Tests
-          command: |
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            npx yarn --cwd ui install
-            npx yarn --cwd ui jest
-      - run:
-          name: Build (jar)
+          name: Build quarkus with unit test
           command: ./gradlew quarkusBuild
       - save_cache:
           paths:
             - ~/.gradle/wrapper
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - store_artifacts:
-          path: build/libs/lcm-sayu-1.0.0-SNAPSHOT.jar
 
   native:
     executor: linux-executor
