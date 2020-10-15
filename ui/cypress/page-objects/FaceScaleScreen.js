@@ -1,6 +1,6 @@
 class FaceScaleScreen {
     clickPainLevel(level) {
-        cy.contains(level).click();
+        cy.get(`img[alt="${level}"]`).click();
     }
   }
   
