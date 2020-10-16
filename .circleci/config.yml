@@ -31,7 +31,8 @@ jobs:
       - run:
           name: UI component tests
           command: |
-            npx yarn --cwd ui test
+            cd ui
+            npx yarn test
       - run:
           name: Build quarkus with unit test
           command: ./gradlew quarkusBuild
