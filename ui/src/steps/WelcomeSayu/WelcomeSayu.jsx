@@ -7,29 +7,29 @@ import wavingHand from "./../../assets/images/waving_hand_emoji.svg";
 function WelcomeSayu() {
   const history = useHistory();
   return (
-    <Flex direction="column" align="center">
-      <Image src={logo}></Image>
-      <Text fontSize={["lg", "lg", "lg", "xl"]} fontWeight="bold">
-        SAYU
-      </Text>
-      <Stack isInline align="center" marginTop={5}>
-        <Text fontWeight="bold" fontSize={["lg", "lg", "lg", "xl"]}>
-          Hola
-        </Text>
-        <Image src={wavingHand} />
-      </Stack>
-      <Text
-        marginTop={5}
-        fontSize={["sm", "md", "lg", "xl"]}
-      >
-        Registra diariamente tus síntomas y podremos analizar mejor tu
-        tratamiento
-      </Text>
+    <Flex direction="column">
+      <Image src={logo} width="4em"></Image>
+
       <Stack
-        align="center"
         width="90%"
-        marginTop={10}
+        marginTop={60}
+        align="center"
       >
+        <Stack isInline >
+          <Text fontWeight="bold" fontSize={["xl"]} align="right">
+            Hola
+        </Text>
+          <Image src={wavingHand} width="2em" />
+        </Stack>
+
+        <Text
+          marginTop={5}
+          fontSize={["sm"]}
+        >
+          Registra diariamente tus síntomas y podremos analizar mejor tu
+          tratamiento
+      </Text>
+        <Stack marginTop={70} />
         <CustomButton
           backgroundColor="lightGreen"
           color="white"
@@ -37,9 +37,10 @@ function WelcomeSayu() {
           onClick={() => {
             history.push("/face-scale-screen");
           }}
-          label="Registra síntomas aquí"
+          label="Comencemos"
         />
       </Stack>
+
     </Flex>
   );
 }
