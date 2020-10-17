@@ -26,8 +26,7 @@ function WelcomeSayu() {
           marginTop={5}
           fontSize={["sm"]}
         >
-          Registra diariamente tus síntomas y podremos analizar mejor tu
-          tratamiento
+          Utiliza esta herramienta para llevar un registro de los síntomas de tu hijo/hija.
       </Text>
         <Stack marginTop={70} />
         <CustomButton
