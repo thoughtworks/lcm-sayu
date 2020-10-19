@@ -18,8 +18,7 @@ function FaceScaleScreen({ setPainValue }) {
           <Text fontWeight="bold"
            fontSize={["sm"]}
            align="center"
-           marginBottom={5}
-           marginLeft="2em">
+           marginBottom={5}>
             Won-Baker FACES® Pain Rating Scale
           </Text>
         </Box>
