@@ -15,7 +15,7 @@ function WelcomeSayu() {
 
      </Stack>
       <Stack
-        width="90%"
+        width="100%"
         marginTop={60}
         align="center"
       >
@@ -40,7 +40,7 @@ function WelcomeSayu() {
           onClick={() => {
             history.push("/face-scale-screen");
           }}
-          label="Comencemos"
+          label="Registrar Síntomas"
         />
       </Stack>
 
