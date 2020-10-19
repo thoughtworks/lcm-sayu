@@ -15,6 +15,7 @@ executors:
   graalvm-java11:
     docker:
       - image: oracle/graalvm-ce:20.2.0-java11
+    resource_class: xlarge
 
 jobs:
   build:
@@ -25,9 +26,11 @@ jobs:
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
       - restore_cache:
           key: v1-gradle-cache-{{ checksum "build.gradle" }}
+      - restore_cache:
+          key: yarn-packages-{{ checksum "ui/yarn.lock" }}
       - run:
           name: Install UI dependencies
-          command: npx yarn --cwd ui install
+          command: npx yarn --cwd ui install --immutable
       - run:
           name: UI component tests
           command: |
@@ -40,6 +43,10 @@ jobs:
           paths:
             - ~/.gradle/wrapper
           key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          key: yarn-packages-{{ checksum "ui/yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
   native:
     executor: linux-executor
