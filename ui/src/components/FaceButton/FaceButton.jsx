@@ -61,11 +61,14 @@ function FaceButton({ painValue, setPainValue }) {
           alt={faceInfo[painValue].description}
         />
       </button>
-      <Text textAlign="center">{faceInfo[painValue].number}</Text>
+      <Text textAlign="center"
+        fontWeight="bold">
+        {faceInfo[painValue].number}
+      </Text>
       <Text
         paddingLeft={[1, 2, 3, 10]}
         textAlign="center"
-        fontSize={["sm", "md", "lg", "xl"]}
+        fontSize={["sm"]}
       >
         {faceInfo[painValue].description}
       </Text>
