@@ -40,7 +40,7 @@ function WelcomeSayu() {
           onClick={() => {
             history.push("/face-scale-screen");
           }}
-          label="Registrar Síntomas"
+          label="Registrar síntomas"
         />
       </Stack>
 

@@ -4,6 +4,7 @@ import { TitleHeader } from "../../components/TitleHeader/TitleHeader";
 import { FaceButton } from "../../components/FaceButton/FaceButton";
 import { useHistory } from "react-router-dom";
 
+
 function FaceScaleScreen({ setPainValue }) {
   const history = useHistory();
   return (
@@ -39,6 +40,7 @@ function FaceScaleScreen({ setPainValue }) {
             © 1983 Wong-Baker FACES Foundation. www.WongBakerFACES.org  Used with permission.
           </Text>
         </Stack>
+       
     </>
   );
 }

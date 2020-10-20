@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { WelcomeSayu } from "./../steps/WelcomeSayu/WelcomeSayu";
 import { FaceScaleScreen } from "./../steps/FaceScaleScreen/FaceScaleScreen";
 import { SymptomsRegistry } from "./../steps/SymptomsRegistry/SymptomsRegistry";
+import { SuccessfulSymptomsRegistry } from "./../steps/SuccessfulSymptomsRegistry/SuccessfulSymptomsRegistry";
 import { Route, Switch } from "react-router-dom";
 import { Page } from "./../layouts/Page";
 function SymptomManagement() {
@@ -21,6 +22,11 @@ function SymptomManagement() {
       <Route exact path={"/symptoms-registry"}>
         <Page>
           <SymptomsRegistry painValue={painValue} />
+        </Page>
+      </Route>
+      <Route exact path={"/successful-symptoms-registry"}>
+        <Page>
+          <SuccessfulSymptomsRegistry />
         </Page>
       </Route>
     </Switch>

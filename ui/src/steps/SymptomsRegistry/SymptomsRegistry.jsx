@@ -4,6 +4,7 @@ import { Slider } from '../../components/SymptomSlider/SymptomSlider';
 import { PainBox } from "../../components/PainBox/PainBox";
 import { TitleHeader } from "../../components/TitleHeader/TitleHeader";
 import { useHistory } from "react-router-dom";
+import { CustomButton } from "../../components/CustomButton/CustomButton";
 function SymptomsRegistry({ painValue }) {
   const history = useHistory();
   return (
@@ -44,6 +45,20 @@ function SymptomsRegistry({ painValue }) {
           <Slider symptomValue='Dificultad para dormir'/>
         </Box>
       </Stack>
+
+      <Stack marginTop={5}>
+          <CustomButton
+                    backgroundColor="lightGreen"
+                    color="white"
+                    hover={{ backgroundColor: "lightGrey" }}
+                    onClick={() => {
+                        history.push("/successful-symptoms-registry");
+                    }}
+                    label="Guardar"
+                />
+      </Stack>
+      
+
     </>
   );
 }
