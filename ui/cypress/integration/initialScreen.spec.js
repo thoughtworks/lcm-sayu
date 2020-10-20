@@ -1,12 +1,14 @@
 import WelcomeSayu from '../page-objects/WelcomeSayu'
 import FaceScaleScreen from '../page-objects/FaceScaleScreen'
 import SymptomsRegistry from '../page-objects/SymptomsRegistry'
+import SuccessfulSymptomsRegistry from '../page-objects/SuccessfulSymptomsRegistry'
 
 describe("Enter and record pain and symptoms", function () {
   it("Enter and record pain and symptoms", () => {
     const welcomeSayu = new WelcomeSayu();
     const faceScaleScreen = new FaceScaleScreen();
     const symptomsRegistry = new SymptomsRegistry();
+    const successfulSymptomsRegistry = new SuccessfulSymptomsRegistry();
 
     welcomeSayu.visit();
     welcomeSayu.clickRegisterSymptomsButton();
@@ -43,5 +45,9 @@ describe("Enter and record pain and symptoms", function () {
 
     symptomsRegistry.slideSymptom("Dificultad\\ para\\ dormir", 3);
     symptomsRegistry.getLevelNumber("Dificultad para dormir").should('contain', 3);
+
+    symptomsRegistry.clickSuccessfulSymptomsRegistryButton();
+    cy.contains("Tu registro");
   });
+
 });
