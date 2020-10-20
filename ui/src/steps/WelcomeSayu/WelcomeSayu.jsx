@@ -3,14 +3,14 @@ import { useHistory } from "react-router-dom";
 import { Flex, Image, Text, Stack } from "@chakra-ui/core";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
 import logo from "./../../assets/images/sayu_logo.svg";
-import heart from "./../../assets/images/heart.svg";
+import heart from "./../../assets/images/heart_logo.svg";
 import wavingHand from "./../../assets/images/waving_hand_emoji.svg";
 function WelcomeSayu() {
   const history = useHistory();
   return (
     <Flex direction="column">
        <Stack isInline >
-       <Image src={heart} width="4em"></Image>
+       <Image src={heart} width="2em"></Image>
       <Image src={logo} width="4em"></Image>
 
      </Stack>
