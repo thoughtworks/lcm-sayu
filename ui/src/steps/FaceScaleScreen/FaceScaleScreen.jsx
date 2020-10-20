@@ -4,7 +4,6 @@ import { TitleHeader } from "../../components/TitleHeader/TitleHeader";
 import { FaceButton } from "../../components/FaceButton/FaceButton";
 import { useHistory } from "react-router-dom";
 
-
 function FaceScaleScreen({ setPainValue }) {
   const history = useHistory();
   return (
