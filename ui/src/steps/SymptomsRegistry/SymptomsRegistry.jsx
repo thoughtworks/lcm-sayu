@@ -46,7 +46,9 @@ function SymptomsRegistry({ painValue }) {
         </Box>
       </Stack>
 
-      <Stack marginTop={5}>
+      <Stack marginTop={20}
+          width="100%"
+          align="center">
           <CustomButton
                     backgroundColor="lightGreen"
                     color="white"

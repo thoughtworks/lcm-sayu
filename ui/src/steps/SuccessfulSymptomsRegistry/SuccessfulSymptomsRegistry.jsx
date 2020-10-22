@@ -10,7 +10,7 @@ function SuccessfulSymptomsRegistry(){
     return (
         <>
        
-        <Flex direction="column">
+        <Flex direction="column" width="100%" align="center" >
             <Image src={checkmark} marginTop={20} marginBottom={10}></Image>
            
             <Text fontSize={["sm"]} marginBottom={15}>
