@@ -20,7 +20,7 @@ function FaceScaleScreen({ setPainValue }) {
           <Text fontWeight="bold"
            fontSize={["sm"]}
            marginBottom={5}>
-            Won-Baker FACES® Pain Rating Scale
+            Wong-Baker FACES® Pain Rating Scale
           </Text>
         </Stack>
         <Stack isInline width="100%" justifyContent="center">
@@ -39,7 +39,7 @@ function FaceScaleScreen({ setPainValue }) {
             © 1983 Wong-Baker FACES Foundation. www.WongBakerFACES.org  Used with permission.
           </Text>
         </Stack>
-       
+
     </>
   );
 }
