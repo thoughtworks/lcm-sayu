@@ -9,12 +9,12 @@ function SuccessfulSymptomsRegistry(){
     const history = useHistory();
     return (
         <>
-       
+
         <Flex direction="column" width="100%" align="center" >
             <Image src={checkmark} marginTop={20} marginBottom={10}></Image>
-           
+
             <Text fontSize={["sm"]} marginBottom={15}>
-            ¡Tu registro se ha guardado exitosamente!
+            ¡Se han guardado los síntomas exitosamente!
             </Text>
 
             <CustomButton
@@ -24,7 +24,7 @@ function SuccessfulSymptomsRegistry(){
                 onClick={() => {
                     history.push("/");
                 }}
-                label="Ok, volver al inicio"
+                label="Volver al inicio"
             />
         </Flex>
         </>

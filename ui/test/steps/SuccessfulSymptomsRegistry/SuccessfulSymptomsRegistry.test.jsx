@@ -23,12 +23,12 @@ describe("<SuccessfulSymptomRegistry />", () =>{
         afterEach(cleanup);
 
     test("should show success message", () => {
-        const successMessage = screen.getByText(/¡Tu registro se ha guardado exitosamente!/i)
+        const successMessage = screen.getByText(/¡Se han guardado los síntomas exitosamente!/i)
         expect(successMessage).toBeInTheDocument()
     });
 
     test("should show welcome screen when button is clicked", () => {
-        const okButton = screen.getByText(/Ok, volver/i);
+        const okButton = screen.getByText(/volver al inicio/i);
         userEvent.click(okButton);
         expect(mockPush).toHaveBeenCalledWith("/");
     });
