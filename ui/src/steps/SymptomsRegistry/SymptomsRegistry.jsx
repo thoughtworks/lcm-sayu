@@ -24,25 +24,13 @@ function SymptomsRegistry({ painValue }) {
           <Slider symptomValue='Náusea'/>
         </Box>
         <Box>
-          <Slider symptomValue='Depresión'/>
-        </Box>
-        <Box>
-          <Slider symptomValue='Ansiedad'/>
-        </Box>
-        <Box>
-          <Slider symptomValue='Somnolencia'/>
-        </Box>
-        <Box>
           <Slider symptomValue='Apetito'/>
-        </Box>
-        <Box>
-          <Slider symptomValue='Bienestar/Malestar'/>
         </Box>
         <Box>
           <Slider symptomValue='Falta de aire'/>
         </Box>
         <Box>
-          <Slider symptomValue='Dificultad para dormir'/>
+          <Slider symptomValue='Dificultad para tragar'/>
         </Box>
       </Stack>
 
@@ -59,7 +47,7 @@ function SymptomsRegistry({ painValue }) {
                     label="Guardar"
                 />
       </Stack>
-      
+
 
     </>
   );
