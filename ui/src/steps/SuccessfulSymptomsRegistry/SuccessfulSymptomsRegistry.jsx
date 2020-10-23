@@ -20,7 +20,7 @@ function SuccessfulSymptomsRegistry(){
             <CustomButton
                 backgroundColor="lightGreen"
                 color="white"
-                hover={{ backgroundColor: "lightGrey" }}
+                hover={{ backgroundColor: "darkGreen" }}
                 onClick={() => {
                     history.push("/");
                 }}

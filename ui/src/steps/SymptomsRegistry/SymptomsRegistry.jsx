@@ -40,14 +40,14 @@ function SymptomsRegistry({ painValue }) {
           <CustomButton
                     backgroundColor="lightGreen"
                     color="white"
-                    hover={{ backgroundColor: "lightGrey" }}
+                    hover={{ backgroundColor: "darkGreen" }}
                     onClick={() => {
                         history.push("/successful-symptoms-registry");
                     }}
                     label="Registrar"
                 />
       </Stack>
-      <Stack marginTop={20}
+      <Stack marginTop={5}
           width="100%"
           align="center">
           <CustomButton
@@ -55,7 +55,7 @@ function SymptomsRegistry({ painValue }) {
                     color="lightGreen"
                     borderColor="lightGreen"
                     border="2px"
-                    hover={{ backgroundColor: "lightGrey", color:"white" }}
+                    hover={{ backgroundColor: "darkGreen", color:"white" }}
                     onClick={() => {
                         history.push("/successful-symptoms-registry");
                     }}
