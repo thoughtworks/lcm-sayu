@@ -1,10 +1,11 @@
 import React from "react";
-import { Text, Stack, Box } from "@chakra-ui/core";
+import { Text, Stack, Box, RadioGroup } from "@chakra-ui/core";
 import { Slider } from '../../components/SymptomSlider/SymptomSlider';
 import { PainBox } from "../../components/PainBox/PainBox";
 import { TitleHeader } from "../../components/TitleHeader/TitleHeader";
 import { useHistory } from "react-router-dom";
 import { CustomButton } from "../../components/CustomButton/CustomButton";
+import { SymptomRadioButton } from "../../components/SymptomRadioButton/SymptomRadioButton";
 function SymptomsRegistry({ painValue }) {
   const history = useHistory();
   return (
@@ -32,7 +33,14 @@ function SymptomsRegistry({ painValue }) {
         <Box>
           <Slider symptomValue='Dificultad para tragar'/>
         </Box>
+        <Box>
+          <SymptomRadioButton symptomValue='Constipación'/>
+        </Box>
+        <Box>
+          <SymptomRadioButton symptomValue='Fiebre'/>
+        </Box>  
       </Stack>
+
 
       <Stack marginTop={20}
           width="100%"
