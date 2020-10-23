@@ -5,7 +5,7 @@ const customTheme = {
   colors: {
     ...theme.colors,
     lightGreen: "#00AFA2",
-    lightGrey: "#728095",
+    lightGrey: "#03877D",
     white: "#FFFFFF",
     black: "#000000",
     lightPurple: "#616EE4",

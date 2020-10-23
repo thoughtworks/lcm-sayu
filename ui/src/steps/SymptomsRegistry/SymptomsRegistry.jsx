@@ -44,7 +44,22 @@ function SymptomsRegistry({ painValue }) {
                     onClick={() => {
                         history.push("/successful-symptoms-registry");
                     }}
-                    label="Guardar"
+                    label="Registrar"
+                />
+      </Stack>
+      <Stack marginTop={20}
+          width="100%"
+          align="center">
+          <CustomButton
+                    backgroundColor="white"
+                    color="lightGreen"
+                    borderColor="lightGreen"
+                    border="2px"
+                    hover={{ backgroundColor: "lightGrey", color:"white" }}
+                    onClick={() => {
+                        history.push("/successful-symptoms-registry");
+                    }}
+                    label="Cancelar"
                 />
       </Stack>
 

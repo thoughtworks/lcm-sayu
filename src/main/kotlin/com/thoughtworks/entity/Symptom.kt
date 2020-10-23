@@ -6,11 +6,11 @@ import javax.persistence.*
 @Entity
 @Table(name = "symptom")
 class Symptom: PanacheEntity() {
-    companion object: PanacheCompanion<Symptom, Long> {
+     companion object: PanacheCompanion<Symptom, Long> {
         @get:Id
         @get:GeneratedValue(strategy = GenerationType.IDENTITY)
         @get:Column(name = "id")
-        var id=0
+        var id: Long? = null;
     }
 
 
