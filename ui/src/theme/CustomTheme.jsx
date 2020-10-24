@@ -10,7 +10,6 @@ const customTheme = {
     white: "#FFFFFF",
     black: "#000000",
     lightPurple: "#616EE4",
-    blue: "#616EE4",
   },
   fonts: {
     ...theme.fonts,
