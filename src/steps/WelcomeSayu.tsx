@@ -4,34 +4,35 @@ import { Flex, Image, Text, Stack } from '@chakra-ui/core'
 
 import { CustomButton } from 'src/components/CustomButton'
 
-const WelcomeSayu = () => {
+function WelcomeSayu() {
   const router = useRouter()
-
   return (
-    <Flex direction="column" align="center">
-      <Image src="img/sayu-logo.svg"></Image>
-      <Text fontSize={['lg', 'lg', 'lg', 'xl']} fontWeight="bold">
-        SAYU
-      </Text>
-      <Stack isInline align="center" marginTop={5}>
-        <Text fontWeight="bold" fontSize={['lg', 'lg', 'lg', 'xl']}>
-          Hola
-        </Text>
-        <Image src="img/waving-hand-emoji.svg" />
+    <Flex direction="column">
+      <Stack isInline>
+        <Image src="img/heart_logo.svg" width="4em"></Image>
+        <Image src="img/sayu_logo.svg" width="2em"></Image>
       </Stack>
-      <Text marginTop={5} fontSize={['sm', 'md', 'lg', 'xl']}>
-        Registra diariamente tus síntomas y podremos analizar mejor tu
-        tratamiento
-      </Text>
-      <Stack align="center" width="90%" marginTop={10}>
+      <Stack width="100%" marginTop={60} align="center">
+        <Stack isInline>
+          <Text fontWeight="bold" fontSize={['xl']}>
+            Hola
+          </Text>
+          <Image src="img/waving_hand_emoji.svg" width="2em" />
+        </Stack>
+
+        <Text marginTop={5} fontSize={['sm']}>
+          Utiliza esta herramienta para llevar un registro de los síntomas de tu
+          hijo/hija.
+        </Text>
+        <Stack marginTop={70} />
         <CustomButton
           backgroundColor="lightGreen"
           color="white"
-          hover={{ backgroundColor: 'lightGrey' }}
+          hover={{ backgroundColor: 'darkGreen' }}
           onClick={() => {
             router.push('/face-scale-screen')
           }}
-          label="Registra síntomas aquí"
+          label="Registrar síntomas"
         />
       </Stack>
     </Flex>

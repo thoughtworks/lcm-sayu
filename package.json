@@ -21,6 +21,7 @@
     "test:all": "jest --watchAll --coverage",
     "test:coverage": "yarn test --coverage",
     "test:audit": "yarn audit --groups dependencies --level moderate",
+    "test:e2e": "yarn cypress run",
     "test:ci": "yarn test:format && yarn test:type-check && yarn test:coverage"
   },
   "husky": {
@@ -58,6 +59,7 @@
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
     "babel-jest": "^25.2.3",
+    "cypress": "^5.5.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-react": "^7.19.0",

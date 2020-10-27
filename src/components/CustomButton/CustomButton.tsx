@@ -1,30 +1,28 @@
 import React from 'react'
-import { BoxProps, Button } from '@chakra-ui/core'
+import { Button } from '@chakra-ui/core'
 
-type CustomButtomProps = {
+type CustomButtonProps = {
+  border?: string
+  borderColor?: string
   backgroundColor: string
   color: string
+  hover: { [key: string]: any }
+  onClick: React.MouseEventHandler<Element>
   label: string
-  hover: BoxProps
-  onClick: ((event: React.MouseEvent<any, MouseEvent>) => void) | undefined
 }
 
-const CustomButton = ({
-  backgroundColor,
-  color,
-  label,
-  hover,
-  onClick,
-}: CustomButtomProps) => {
+function CustomButton(props: CustomButtonProps) {
   return (
     <Button
-      backgroundColor={backgroundColor}
-      color={color}
+      border={props.border}
+      borderColor={props.borderColor}
+      backgroundColor={props.backgroundColor}
+      color={props.color}
       width={['100%', '50%', '30%', '25%']}
-      _hover={hover}
-      onClick={onClick}
+      _hover={props.hover}
+      onClick={props.onClick}
     >
-      {label}
+      {props.label}
     </Button>
   )
 }

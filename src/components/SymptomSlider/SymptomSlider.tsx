@@ -15,15 +15,11 @@ import {
 const symptonInfo: { [key: string]: any } = {
   Cansancio: { min: 'Sin cansancio', max: 'Máximo cansancio' },
   Náusea: { min: 'Sin náusea', max: 'Máxima náusea' },
-  Depresión: { min: 'Sin depresión', max: 'Máxima depresión' },
-  Ansiedad: { min: 'Sin ansiedad', max: 'Máxima ansiedad' },
-  Somnolencia: { min: 'Sin somnolencia', max: 'Máxima somnolencia' },
   Apetito: { min: 'Buen apetito', max: 'Sin apetito' },
-  'Bienestar/Malestar': { min: 'Máximo bienestar', max: 'Máximo malestar' },
   'Falta de aire': { min: 'Sin falta de aire', max: 'Máxima falta de aire' },
-  'Dificultad para dormir': {
-    min: 'Sin dificultad para dormir',
-    max: 'Máxima dificultad para dormir',
+  'Dificultad para tragar': {
+    min: 'Sin dificultad para tragar',
+    max: 'Máxima dificultad para tragar',
   },
 }
 
@@ -48,8 +44,11 @@ const Slider = ({ symptomValue }: SliderProps) => {
           <Text>0</Text>
           <ChakraSlider
             id={symptomValue}
+            name={symptomValue}
             value={sliderValue}
-            onChange={setSliderValue}
+            onChange={(sliderValueEvent) => {
+              setSliderValue(sliderValueEvent)
+            }}
             min={0}
             max={10}
             step={1}

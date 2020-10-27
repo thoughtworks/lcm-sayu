@@ -10,7 +10,7 @@ jest.mock('next/router', () => ({
 describe('Home page', () => {
   test('when click on the button should redirect to index', () => {
     render(<WelcomeSayu />)
-    const button = screen.getByText(/registra síntomas aquí/i)
+    const button = screen.getByText(/registrar síntomas/i)
     userEvent.click(button)
     expect(mockPush).toHaveBeenCalledWith('/face-scale-screen')
   })

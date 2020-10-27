@@ -39,7 +39,7 @@ const PainBox = ({ painLevel }: PainBoxProps) =>
       borderRadius="4px"
       padding="1em"
       marginTop={3}
-      color="blue"
+      color="lightPurple"
     >
       <Flex direction="column" align="center">
         <Text>{painInformation[painLevel].icon}</Text>

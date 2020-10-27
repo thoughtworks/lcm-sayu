@@ -95,16 +95,16 @@ workflows:
       - build:
           filters:
             branches:
-              only: nextjs
+              only: master
       - create-docker-image:
           filters:
             branches:
-              only: nextjs
+              only: master
           requires:
             - build
       - push-docker-image-and-update:
           filters:
             branches:
-              only: nextjs
+              only: master
           requires:
             - create-docker-image
