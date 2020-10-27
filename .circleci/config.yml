@@ -1,91 +1,38 @@
 version: 2.1
 orbs:
-  openjdk-install: cloudesire/openjdk-install@1.2.3
   aws-cli: circleci/aws-cli@0.1.4
 
 executors:
-  linux-executor:
-    machine: true
-    resource_class: medium
-    working_directory: ~/repo
-    environment:
-      GRADLE_OPTS: -Dorg.gradle.daemon=false
-      TERM: dumb
-      GRAALVM_HOME: /home/circleci/repo/.graalvm
-  graalvm-java11:
+  node:
     docker:
-      - image: oracle/graalvm-ce:20.2.0-java11
-    resource_class: xlarge
+      - image: node:12
 
 jobs:
   build:
-    executor: graalvm-java11
+    executor: node
     steps:
       - checkout
       - restore_cache:
-          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - restore_cache:
-          key: v1-gradle-cache-{{ checksum "build.gradle" }}
-      - restore_cache:
-          key: yarn-packages-{{ checksum "ui/yarn.lock" }}
+          key: yarn-packages-{{ checksum "./yarn.lock" }}
       - run:
           name: Install UI dependencies
-          command: npx yarn --cwd ui install --immutable
+          command: yarn
       - run:
-          name: UI component tests
-          command: |
-            cd ui
-            npx yarn test
+          name: UI component tests & coverage
+          command: yarn test:coverage
       - run:
-          name: Build quarkus with unit test
-          command: ./gradlew quarkusBuild
+          name: UI Linter test
+          command: yarn lint
+      - run:
+          name: UI Format test
+          command: yarn test:format
+      - run:
+          name: UI Typescript test
+          command: yarn test:type-check
       - save_cache:
-          paths:
-            - ~/.gradle/wrapper
-          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
-      - save_cache:
-          key: yarn-packages-{{ checksum "ui/yarn.lock" }}
+          key: yarn-packages-{{ checksum "./yarn.lock" }}
           paths:
             - ~/.cache/yarn
-
-  native:
-    executor: linux-executor
-    steps:
-      - checkout
-      - openjdk-install/openjdk:
-          version: 11
-      - run:
-          name: Install GraalVM
-          command: curl https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-linux-amd64-20.2.0.tar.gz -O -J -L && tar xfz graalvm-ce-java11-linux-amd64-20.2.0.tar.gz && mv graalvm-ce-java11-20.2.0 .graalvm && rm graalvm-ce-java11-linux-amd64-20.2.0.tar.gz
-      - run:
-          name: Install native-image
-          command: $GRAALVM_HOME/bin/gu install native-image
-      - run:
-          name: Install yarn
-          command: curl -o- -L https://yarnpkg.com/install.sh | bash
-      - run:
-          name: Install npm
-          command: |
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install v14.10.1
-            nvm alias default v14.10.1
-      - run:
-          name: Build (Native)
-          command: |
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            npx yarn --cwd ui install
-            npx yarn --cwd ui deploy
-            cp -rf ui/static src/main/resources/META-INF/resources/static
-            ./gradlew build -Dquarkus.package.type=native
-          no_output_timeout: 15m
-      - persist_to_workspace:
-          root: .
-          paths:
-            - build/lcm-sayu-1.0.0-SNAPSHOT-runner
-      - store_artifacts:
-          path: build/lcm-sayu-1.0.0-SNAPSHOT-runner
 
   create-docker-image:
     docker:
@@ -94,14 +41,12 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - setup_remote_docker
-      - run:
-          name: Copy Dockerfile to build dir
-          command: cp src/main/docker/Dockerfile.native-image ~/project/build/
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: Build docker image
           command: |
-            docker build --build-arg username=${DB_USERNAME} --build-arg password=${DB_PASSWORD} --build-arg url=${DB_URL} --build-arg port=${DB_PORT} --build-arg name=${DB_NAME} -f build/Dockerfile.native-image -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:latest build
+            docker build -t ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${AWS_RESOURCE_NAME_PREFIX}:latest .
       - run:
           name: Save image to an archive
           command: |
@@ -123,8 +68,8 @@ jobs:
           at: .
       - aws-cli/install
       - aws-cli/configure:
-          aws-access-key-id: "$AWS_ACCESS_KEY_ID"
-          aws-region: "$AWS_DEFAULT_REGION"
+          aws-access-key-id: '$AWS_ACCESS_KEY_ID'
+          aws-region: '$AWS_DEFAULT_REGION'
       - run:
           name: Load image
           command: |
@@ -145,27 +90,21 @@ jobs:
 
 workflows:
   version: 2
-  buildjar-and-buildnative:
+  build-lcm-sayu:
     jobs:
-        - build:
-            filters:
-              branches:
-                only: master
-        - native:
-            filters:
-              branches:
-                only: master
-            requires:
-              - build
-        - create-docker-image:
-            filters:
-              branches:
-                only: master
-            requires:
-              - native
-        - push-docker-image-and-update:
-            filters:
-              branches:
-                only: master
-            requires:
-              - create-docker-image
+      - build:
+          filters:
+            branches:
+              only: master
+      - create-docker-image:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+      - push-docker-image-and-update:
+          filters:
+            branches:
+              only: master
+          requires:
+            - create-docker-image
