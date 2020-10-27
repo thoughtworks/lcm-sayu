@@ -4,7 +4,7 @@ class WelcomeSayu {
   }
 
   clickRegisterSymptomsButton() {
-    cy.contains("Comencemos").click();
+    cy.contains("Registrar síntomas").click();
   }
 }
 

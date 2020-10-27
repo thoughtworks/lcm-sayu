@@ -4,12 +4,12 @@ const customTheme = {
   ...theme,
   colors: {
     ...theme.colors,
-    lightGreen: "#529593",
-    lightGrey: "#728095",
+    lightGreen: "#00AFA2",
+    darkGreen:"#03877D",
+    lightGrey:"#728095",
     white: "#FFFFFF",
     black: "#000000",
     lightPurple: "#616EE4",
-    blue: "#616EE4",
   },
   fonts: {
     ...theme.fonts,

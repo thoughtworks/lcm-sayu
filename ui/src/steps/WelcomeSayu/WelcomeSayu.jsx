@@ -36,11 +36,11 @@ function WelcomeSayu() {
         <CustomButton
           backgroundColor="lightGreen"
           color="white"
-          hover={{ backgroundColor: "lightGrey" }}
+          hover={{ backgroundColor: "darkGreen" }}
           onClick={() => {
             history.push("/face-scale-screen");
           }}
-          label="Registrar Síntomas"
+          label="Registrar síntomas"
         />
       </Stack>
 

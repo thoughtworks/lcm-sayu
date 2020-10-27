@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { WelcomeSayu } from "./../steps/WelcomeSayu/WelcomeSayu";
 import { FaceScaleScreen } from "./../steps/FaceScaleScreen/FaceScaleScreen";
 import { SymptomsRegistry } from "./../steps/SymptomsRegistry/SymptomsRegistry";
+import { SuccessfulSymptomsRegistry } from "./../steps/SuccessfulSymptomsRegistry/SuccessfulSymptomsRegistry";
 import { Route, Switch } from "react-router-dom";
 import { Page } from "./../layouts/Page";
+import {FailedSymptomsRegistry} from "./../steps/FailedSymptomsRegistry/FailedSymptomsRegistry"
 function SymptomManagement() {
   const [painValue, setPainValue] = useState("faceZero");
   return (
@@ -23,6 +25,17 @@ function SymptomManagement() {
           <SymptomsRegistry painValue={painValue} />
         </Page>
       </Route>
+      <Route exact path={"/successful-symptoms-registry"}>
+        <Page>
+          <SuccessfulSymptomsRegistry />
+        </Page>
+      </Route>
+      <Route exact path={"/failed-symptoms-registry"}>
+        <Page>
+          <FailedSymptomsRegistry />
+        </Page>
+      </Route>
+      
     </Switch>
   );
 }
