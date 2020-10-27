@@ -17,7 +17,8 @@ import {
     'Dificultad para tragar':{min:'Sin dificultad para tragar', max:'Máxima dificultad para tragar'},
   }
 
-  function Slider({symptomValue}){
+  function Slider({symptomValue, handleInputChange}){
+
     const [sliderValue, setSliderValue] = useState(0);
       return(
       <Box>
@@ -34,7 +35,16 @@ import {
           </FormLabel>
           <Stack isInline spacing={2}>
             <Text>0</Text>
-            <ChakraSlider id={symptomValue} value={sliderValue} onChange={setSliderValue} min={0} max={10} step={1}>
+            <ChakraSlider id={symptomValue} name={symptomValue} value={sliderValue}
+              onChange={(sliderValueEvent)=>{
+                setSliderValue(sliderValueEvent);
+                handleInputChange({
+                   target:{
+                     name: symptomValue,
+                     value: sliderValueEvent
+                    }
+                  })
+              }}   min={0} max={10} step={1}>
               <SliderTrack h={1} />
               <SliderFilledTrack />
               <SliderThumb size={4} bg="lightPurple" />

@@ -8,7 +8,7 @@ import {
     'Fiebre':{name:'Fiebre', description: '¿Ha tenido en las últimas 24 horas fiebre?'}
   }
 
-function SymptomRadioButton({symptomValue, symptomName}) {
+function SymptomRadioButton({symptomValue}) {
     const [value, setValue] = React.useState("0");
     return (
     <>
