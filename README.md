@@ -1,68 +1,27 @@
-# lcm-sayu project
+# NextJS Typescript Boilerplate
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework. Also uses GraalVM and in combination with Quarkus
-we can get a native executable = Fast and low memory footprint!
+Bootstrap a developer-friendly NextJS app configured with:
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+- [Typescript](https://www.typescriptlang.org/)
+- Linting with [ESLint](https://eslint.org/)
+- Formatting with [Prettier](https://prettier.io/)
+- Linting, typechecking and formatting on by default using [`husky`](https://github.com/typicode/husky) for commit hooks
+- Testing with [Jest](https://jestjs.io/) and [`react-testing-library`](https://testing-library.com/docs/react-testing-library/intro)
 
-##Developing
+## Deploy your own
 
-### Running the application in dev mode
+Deploy the example using [Vercel](https://vercel.com):
 
-You can run your application in dev mode that enables live coding using:
-```
-make dev
-```
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/next.js/tree/canary/examples/with-typescript-eslint-jest)
 
-### Creating a native executable
+## How to use
 
-With Quarkus and GraalVM we can create a native binary executable of our application.
-Take note that this executable is generated inside a docker image then uses the
-architecture of that image, if you use that same binary in another image odds are that
-won't run there.
+Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
 
-Use this make task to generate a binary executable:
-
-```
-make build
+```bash
+npx create-next-app --example with-typescript-eslint-jest with-typescript-eslint-jest-app
+# or
+yarn create next-app --example with-typescript-eslint-jest with-typescript-eslint-jest-app
 ```
 
-### Running the application in docker mode
-
-You can run your application in local mode and resembling as best as possible the production environment in AWS using docker-compose as following:
-
-```
-make docker-local
-```
-
-This fireup two containers: one with a native executable (as in ```make build```) inside and another with postgresql 13 ready for connections.
-
-Take a look to src/main/docker/docker-compose.yml file for configurations details.
-
-##Testing
-
-### Running Cypress headless
-
-```
-make cypress_headless
-```
-### Running Cypress with UI
-
-```
-make cypress_ui
-```
-
-##Deploying
-
-### CI/CD
-
-We use CircleCi as our CI/CD tool of choice. In ```.circleci/config.yml``` you can find the defined pipeline (pipeline as code ftw!).
-Take note that as the process to generate a native executable is resource consuming is necessary to use a linux vm in CircleCi
-and that can be very different from the docker image we use in docker mode. Feel free to migrate this pipeline to your 
-CI/CD tool of choice.
-
-### AWS
-
-We use AWS as our PaaS of choice. At the end of the pipeline it pushes a docker image with the application to ECR service
-and update the ECS service. All infra configuration namely ECR, ECS, RDS, VPC, ELB, Clodwatch and S3 are in 
-https://github.com/dsantibanezvera/lcm-sayu-infra with it owns pipeline, CircleCi as well.
+Deploy it to the cloud with [Vercel](https://vercel.com/import?filter=next.js&utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).

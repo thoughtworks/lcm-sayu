@@ -1,0 +1,72 @@
+{
+  "name": "with-typescript-eslint-jest",
+  "author": "@erikdstock",
+  "license": "MIT",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p 80",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "typeormcli": "TYPEORM_MIGRATIONS=migrations/*.ts TYPEORM_MIGRATIONS_DIR=migrations ts-node -P ./tsconfig.migration.json ./node_modules/typeorm/cli.js",
+    "migration:create": "yarn typeormcli migration:create -n",
+    "migration:generate": "yarn typeormcli migration:generate -n",
+    "migration:run": "yarn typeormcli migration:run",
+    "migration:rollback": "yarn typeormcli migration:revert",
+    "test": "jest",
+    "test:format": "prettier -c \"**/*.{js,ts,tsx}\"",
+    "test:type-check": "tsc --pretty --noEmit",
+    "test:watch": "jest --watch",
+    "test:all": "jest --watchAll --coverage",
+    "test:coverage": "yarn test --coverage",
+    "test:audit": "yarn audit --groups dependencies --level moderate",
+    "test:ci": "yarn test:format && yarn test:type-check && yarn test:coverage"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test:type-check && yarn test:coverage"
+    }
+  },
+  "lint-staged": {
+    "*.@(ts|tsx)": [
+      "yarn lint",
+      "yarn test:format"
+    ]
+  },
+  "dependencies": {
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.35",
+    "@emotion/styled": "^10.0.27",
+    "emotion-theming": "^10.0.27",
+    "next": "latest",
+    "pg": "^8.4.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typeorm": "^0.2.28"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@testing-library/dom": "^7.26.3",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^10.0.1",
+    "@testing-library/user-event": "^12.1.8",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.9.5",
+    "@types/react": "^16.9.27",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "babel-jest": "^25.2.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-react": "^7.19.0",
+    "husky": "^4.2.3",
+    "jest": "^25.2.3",
+    "jest-watch-typeahead": "^0.5.0",
+    "lint-staged": "^10.0.10",
+    "prettier": "^2.0.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.0"
+  }
+}

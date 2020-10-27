@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES2019",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noEmit": false,
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules", ".next", "out", "migrations"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+}

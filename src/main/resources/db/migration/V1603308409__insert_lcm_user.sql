@@ -1,1 +1,0 @@
-insert into lcm_user (alias) values ('sayu');
