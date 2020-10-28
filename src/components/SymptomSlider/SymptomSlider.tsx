@@ -25,9 +25,10 @@ const symptonInfo: { [key: string]: any } = {
 
 type SliderProps = {
   symptomValue: string
+  reference: any
 }
 
-const Slider = ({ symptomValue }: SliderProps) => {
+const Slider = ({ symptomValue, reference }: SliderProps) => {
   const [sliderValue, setSliderValue] = useState(0)
   return (
     <Box>
@@ -43,6 +44,7 @@ const Slider = ({ symptomValue }: SliderProps) => {
         <Stack isInline spacing={2}>
           <Text>0</Text>
           <ChakraSlider
+            ref={reference}
             id={symptomValue}
             name={symptomValue}
             value={sliderValue}

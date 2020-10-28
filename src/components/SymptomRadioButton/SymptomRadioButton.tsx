@@ -14,9 +14,13 @@ const symptonInfo: { [key: string]: any } = {
 
 type SymptomRadioButtonProps = {
   symptomValue: string
+  reference: any
 }
 
-function SymptomRadioButton({ symptomValue }: SymptomRadioButtonProps) {
+function SymptomRadioButton({
+  symptomValue,
+  reference,
+}: SymptomRadioButtonProps) {
   const [value, setValue] = useState('0')
   return (
     <>
@@ -29,10 +33,10 @@ function SymptomRadioButton({ symptomValue }: SymptomRadioButtonProps) {
         onChange={(e) => setValue(e.target.value)}
         value={value}
       >
-        <Radio variantColor="blue" value="1">
+        <Radio variantColor="blue" value="1" ref={reference}>
           Sí
         </Radio>
-        <Radio variantColor="blue" value="0">
+        <Radio variantColor="blue" value="0" ref={reference}>
           No
         </Radio>
       </RadioGroup>

@@ -17,14 +17,14 @@ const TitleHeader = ({ backArrowRoute, closeRoute }: TitleHeaderProps) => {
             router.push(backArrowRoute)
           }}
         >
-          <Image src="public/img/BackArrow.svg" />
+          <Image src="img/BackArrow.svg" />
         </button>
         <button
           onClick={() => {
             router.push(closeRoute)
           }}
         >
-          <Image src="public/img/CloseIcon.svg" />
+          <Image src="img/CloseIcon.svg" />
         </button>
       </Flex>
       <Flex direction="column">

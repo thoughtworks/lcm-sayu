@@ -22,6 +22,7 @@
     "test:coverage": "yarn test --coverage",
     "test:audit": "yarn audit --groups dependencies --level moderate",
     "test:e2e": "yarn cypress run",
+    "test:e2e:open": "yarn cypress open",
     "test:ci": "yarn test:format && yarn test:type-check && yarn test:coverage"
   },
   "husky": {
@@ -45,6 +46,7 @@
     "pg": "^8.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.9.6",
     "typeorm": "^0.2.28"
   },
   "devDependencies": {
