@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FocusEventHandler, useState } from 'react'
 import {
   Slider as ChakraSlider,
   SliderTrack,
@@ -25,10 +25,12 @@ const symptonInfo: { [key: string]: any } = {
 
 type SliderProps = {
   symptomValue: string
+  value: number
+  onChange: (value: number) => void
+  onBlur: FocusEventHandler<HTMLElement>
 }
 
-const Slider = ({ symptomValue }: SliderProps) => {
-  const [sliderValue, setSliderValue] = useState(0)
+const Slider = ({ symptomValue, value, onChange, onBlur }: SliderProps) => {
   return (
     <Box>
       <FormControl>
@@ -36,7 +38,7 @@ const Slider = ({ symptomValue }: SliderProps) => {
           <Stack isInline>
             <Text fontFamily="heading">{symptomValue}</Text>
             <Text color="lightPurple" fontFamily="heading">
-              {sliderValue}
+              {value}
             </Text>
           </Stack>
         </FormLabel>
@@ -45,10 +47,9 @@ const Slider = ({ symptomValue }: SliderProps) => {
           <ChakraSlider
             id={symptomValue}
             name={symptomValue}
-            value={sliderValue}
-            onChange={(sliderValueEvent) => {
-              setSliderValue(sliderValueEvent)
-            }}
+            value={value}
+            onBlur={onBlur}
+            onChange={onChange}
             min={0}
             max={10}
             step={1}

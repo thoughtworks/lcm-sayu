@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FocusEventHandler, useState } from 'react'
 import { Radio, RadioGroup, Text } from '@chakra-ui/core'
 
 const symptonInfo: { [key: string]: any } = {
@@ -14,10 +14,17 @@ const symptonInfo: { [key: string]: any } = {
 
 type SymptomRadioButtonProps = {
   symptomValue: string
+  value: number
+  onChange: (value: number) => void
+  onBlur: FocusEventHandler<HTMLElement>
 }
 
-function SymptomRadioButton({ symptomValue }: SymptomRadioButtonProps) {
-  const [value, setValue] = useState('0')
+function SymptomRadioButton({
+  symptomValue,
+  value,
+  onChange,
+  onBlur,
+}: SymptomRadioButtonProps) {
   return (
     <>
       <Text fontFamily="heading">{symptonInfo[symptomValue].name}</Text>
@@ -26,8 +33,9 @@ function SymptomRadioButton({ symptomValue }: SymptomRadioButtonProps) {
       </Text>
       <RadioGroup
         isInline
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(_, value) => onChange(value as number)}
         value={value}
+        onBlur={onBlur}
       >
         <Radio variantColor="blue" value="1">
           Sí
