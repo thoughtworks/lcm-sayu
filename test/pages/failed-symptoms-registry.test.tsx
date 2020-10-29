@@ -28,9 +28,15 @@ describe('<FailedSymptomRegistry />', () => {
     expect(failureMessage).toBeInTheDocument()
   })
 
-  test('should show welcome screen when button is clicked', () => {
+  test('should show face scale screen when button is clicked', () => {
     const retryButton = screen.getByText(/volver a intentarlo/i)
     userEvent.click(retryButton)
+    expect(mockPush).toHaveBeenCalledWith('/face-scale-screen')
+  })
+
+  test('should show welcome screen when button is clicked', () => {
+    const cancelButton = screen.getByText(/salir/i)
+    userEvent.click(cancelButton)
     expect(mockPush).toHaveBeenCalledWith('/')
   })
 })

@@ -17,7 +17,7 @@ function SymptomsRegistry() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <TitleHeader backArrowRoute="/face-scale-screen" closeRoute="/" />
+        <TitleHeader />
         <PainBox painLevel={painLevel} />
         <Text fontSize="md" mb="8" mt="8">
           ¿Tienes otros síntomas? <br /> Regístralos considerando que 0 es
@@ -57,7 +57,7 @@ function SymptomsRegistry() {
             color="white"
             hover={{ backgroundColor: 'darkGreen' }}
             onClick={() => {
-              //router.push('/successful-symptoms-registry')
+              router.push('/successful-symptoms-registry')
             }}
             label="Registrar"
             type="submit"
@@ -71,7 +71,7 @@ function SymptomsRegistry() {
             border="2px"
             hover={{ backgroundColor: 'darkGreen', color: 'white' }}
             onClick={() => {
-              router.push('/failed-symptoms-registry')
+              router.push('/')
             }}
             label="Cancelar"
           />

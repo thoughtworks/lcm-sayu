@@ -2,29 +2,20 @@ import React from 'react'
 import { Image, Box, Flex, Text } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
 
-type TitleHeaderProps = {
-  backArrowRoute: string
-  closeRoute: string
-}
-
-const TitleHeader = ({ backArrowRoute, closeRoute }: TitleHeaderProps) => {
+const TitleHeader = () => {
   const router = useRouter()
   return (
     <Box marginTop={5}>
       <Flex justify="space-between">
-        <button
-          onClick={() => {
-            router.push(backArrowRoute)
-          }}
-        >
-          <Image src="img/BackArrow.svg" />
+        <button onClick={() => router.back()}>
+          <Image src="img/BackArrow.svg" alt="Ir atrás" />
         </button>
         <button
           onClick={() => {
-            router.push(closeRoute)
+            router.push('/')
           }}
         >
-          <Image src="img/CloseIcon.svg" />
+          <Image src="img/CloseIcon.svg" alt="Volver al home" />
         </button>
       </Flex>
       <Flex direction="column">

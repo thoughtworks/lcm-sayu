@@ -6,8 +6,9 @@ import userEvent from '@testing-library/user-event'
 import { FaceScaleScreen } from 'src/steps/FaceScaleScreen'
 
 const mockPush = jest.fn().mockResolvedValue(null)
+const mockBack = jest.fn()
 jest.mock('next/router', () => ({
-  useRouter: () => ({ push: mockPush }),
+  useRouter: () => ({ push: mockPush, back: mockBack }),
 }))
 
 describe('<FaceScaleScreen />', () => {
@@ -38,5 +39,17 @@ describe('<FaceScaleScreen />', () => {
       pathname: '/symptoms-registry',
       query: { 'pain-level': 'zero' },
     })
+  })
+
+  test('should go back when pressing back arrow', () => {
+    const goBackButton = screen.getByAltText(/ir atrás/i)
+    userEvent.click(goBackButton)
+    expect(mockBack).toHaveBeenCalled()
+  })
+
+  test('should go to home page when close button is clicked', () => {
+    const closeButton = screen.getByAltText(/volver al home/i)
+    userEvent.click(closeButton)
+    expect(mockPush).toHaveBeenCalledWith('/')
   })
 })

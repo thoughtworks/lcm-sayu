@@ -1,12 +1,14 @@
-import { render, screen, fireEvent, cleanup } from 'test/testUtils'
+import { render, screen, fireEvent, cleanup, userEvent } from 'test/testUtils'
 
 import SymptomsRegistry from 'pages/symptoms-registry'
 
+const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
-  useRouter: jest.fn().mockReturnValue({
+  useRouter: () => ({
     query: {
       'pain-level': 'zero',
     },
+    push: mockPush,
   }),
 }))
 
@@ -56,12 +58,30 @@ describe('Home page', () => {
     expect(await screen.findByText('3')).toBeVisible()
   })
 
-  test('Should show the right symptom text', async () => {
+  test('Should show the right symptom text', () => {
     const nauseaText = screen.getByText(/^Náusea$/i)
     expect(nauseaText).toBeInTheDocument()
     const minNauseaText = screen.getByText(/Sin náusea/i)
     expect(minNauseaText).toBeInTheDocument()
     const maxNauseaText = screen.getByText(/Máxima náusea/i)
     expect(maxNauseaText).toBeInTheDocument()
+  })
+
+  test('should redirect to home when pressing cancel', () => {
+    const cancelButton = screen.getByText(/Cancelar/i)
+    userEvent.click(cancelButton)
+    expect(mockPush).toHaveBeenCalledWith('/')
+  })
+
+  test('should redirect to succesful symptoms registry when pressing register', () => {
+    const registerButton = screen.getByText(/Registrar/i)
+    userEvent.click(registerButton)
+    expect(mockPush).toHaveBeenCalledWith('/successful-symptoms-registry')
+  })
+
+  test('should press fever radio button', () => {
+    const radioOption = screen.getAllByText(/Sí/i)
+    userEvent.click(radioOption[0])
+    expect(radioOption[0]).toBeInTheDocument()
   })
 })

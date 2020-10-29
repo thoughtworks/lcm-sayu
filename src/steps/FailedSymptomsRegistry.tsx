@@ -19,7 +19,7 @@ function FailedSymptomsRegistry() {
             color="white"
             hover={{ backgroundColor: 'darkGreen' }}
             onClick={() => {
-              router.push('/')
+              router.push('/face-scale-screen')
             }}
             label="Volver a intentarlo"
           />
@@ -32,7 +32,7 @@ function FailedSymptomsRegistry() {
             border="2px"
             hover={{ backgroundColor: 'darkGreen', color: 'white' }}
             onClick={() => {
-              router.push('/successful-symptoms-registry')
+              router.push('/')
             }}
             label="Salir"
           />
