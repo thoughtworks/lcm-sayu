@@ -1,0 +1,12 @@
+POST http://localhost:3000/api/symptom HTTP/1.1
+content-type: application/json
+
+{
+    "fiebre": 1,
+    "constipacion":0,
+    "cansancio":1,
+    "nausea":5,
+    "apetito":5,
+    "aire":5,
+    "tragar":5
+}
