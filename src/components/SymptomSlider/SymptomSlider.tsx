@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { Control, Controller } from 'react-hook-form'
 import {
-  Slider as ChakraSlider,
+  Slider,
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
@@ -24,53 +25,64 @@ const symptonInfo: { [key: string]: any } = {
 }
 
 type SliderProps = {
-  symptomValue: string
-  reference: any
+  symptomValue:
+    | 'Cansancio'
+    | 'Náusea'
+    | 'Apetito'
+    | 'Falta de aire'
+    | 'Dificultad para tragar'
+  control: Control
 }
 
-const Slider = ({ symptomValue, reference }: SliderProps) => {
-  const [sliderValue, setSliderValue] = useState(0)
+const SymptomSlider = ({ symptomValue, control }: SliderProps) => {
   return (
     <Box>
-      <FormControl>
-        <FormLabel htmlFor={symptomValue}>
-          <Stack isInline>
-            <Text fontFamily="heading">{symptomValue}</Text>
-            <Text color="lightPurple" fontFamily="heading">
-              {sliderValue}
-            </Text>
-          </Stack>
-        </FormLabel>
-        <Stack isInline spacing={2}>
-          <Text>0</Text>
-          <ChakraSlider
-            ref={reference}
-            id={symptomValue}
-            name={symptomValue}
-            value={sliderValue}
-            onChange={(sliderValueEvent) => {
-              setSliderValue(sliderValueEvent)
-            }}
-            min={0}
-            max={10}
-            step={1}
-          >
-            <SliderTrack h={1} />
-            <SliderFilledTrack />
-            <SliderThumb size={4} bg="lightPurple" />
-          </ChakraSlider>
-          <Text>10</Text>
-        </Stack>
-        <Flex justifyContent={'space-between'} mt={5}>
-          <Text fontSize="xs" color="lightGrey">
-            {symptonInfo[symptomValue].min}
-          </Text>
-          <Text fontSize="xs" color="lightGrey">
-            {symptonInfo[symptomValue].max}
-          </Text>
-        </Flex>
-      </FormControl>
+      <Controller
+        control={control}
+        name={symptomValue}
+        defaultValue={0}
+        render={({ onChange, onBlur, value, name }) => (
+          <FormControl>
+            <FormLabel htmlFor={name}>
+              <Stack isInline>
+                <Text fontFamily="heading">{name}</Text>
+                <Text color="lightPurple" fontFamily="heading">
+                  {value}
+                </Text>
+              </Stack>
+            </FormLabel>
+            <Stack isInline spacing={2}>
+              <Text>0</Text>
+
+              <Slider
+                id={name}
+                name={name}
+                value={value}
+                onBlur={onBlur}
+                onChange={onChange}
+                min={0}
+                max={10}
+                step={1}
+              >
+                <SliderTrack h={1} />
+                <SliderFilledTrack />
+                <SliderThumb size={4} bg="lightPurple" />
+              </Slider>
+
+              <Text>10</Text>
+            </Stack>
+            <Flex justifyContent={'space-between'} mt={5}>
+              <Text fontSize="xs" color="lightGrey">
+                {symptonInfo[name].min}
+              </Text>
+              <Text fontSize="xs" color="lightGrey">
+                {symptonInfo[name].max}
+              </Text>
+            </Flex>
+          </FormControl>
+        )}
+      />
     </Box>
   )
 }
-export { Slider }
+export { SymptomSlider }

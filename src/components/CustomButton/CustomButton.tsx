@@ -7,7 +7,7 @@ type CustomButtonProps = {
   backgroundColor: string
   color: string
   hover: { [key: string]: any }
-  onClick: React.MouseEventHandler<Element>
+  onClick?: React.MouseEventHandler<Element>
   label: string
   type?: 'button' | 'submit'
 }

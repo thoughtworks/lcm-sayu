@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 import { Text, Stack, Box } from '@chakra-ui/core'
 import { useForm } from 'react-hook-form'
-import { Slider } from 'src/components/SymptomSlider/SymptomSlider'
+import { SymptomSlider } from 'src/components/SymptomSlider/SymptomSlider'
 import { PainBox } from 'src/components/PainBox/PainBox'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { CustomButton } from 'src/components/CustomButton/CustomButton'
 import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRadioButton'
 
 function SymptomsRegistry() {
-  const { register, handleSubmit, watch, errors } = useForm()
-  const onSubmit = (data) => console.log(data)
+  const { handleSubmit, control } = useForm()
+  const onSubmit = (data: any) => console.warn(data)
   const router = useRouter()
   const painLevel = router.query['pain-level'] as string
 
@@ -26,31 +26,28 @@ function SymptomsRegistry() {
 
         <Stack spacing={10}>
           <Box>
-            <Slider symptomValue="Cansancio" reference={register} />
+            <SymptomSlider symptomValue="Cansancio" control={control} />
           </Box>
           <Box>
-            <Slider symptomValue="Náusea" reference={register} />
+            <SymptomSlider symptomValue="Náusea" control={control} />
           </Box>
           <Box>
-            <Slider symptomValue="Apetito" reference={register} />
+            <SymptomSlider symptomValue="Apetito" control={control} />
           </Box>
           <Box>
-            <Slider symptomValue="Falta de aire" reference={register} />
+            <SymptomSlider symptomValue="Falta de aire" control={control} />
           </Box>
           <Box>
-            <Slider
+            <SymptomSlider
               symptomValue="Dificultad para tragar"
-              reference={register}
+              control={control}
             />
           </Box>
           <Box>
-            <SymptomRadioButton
-              symptomValue="Constipación"
-              reference={register}
-            />
+            <SymptomRadioButton symptomValue="Constipación" control={control} />
           </Box>
           <Box>
-            <SymptomRadioButton symptomValue="Fiebre" reference={register} />
+            <SymptomRadioButton symptomValue="Fiebre" control={control} />
           </Box>
         </Stack>
 
@@ -60,7 +57,7 @@ function SymptomsRegistry() {
             color="white"
             hover={{ backgroundColor: 'darkGreen' }}
             onClick={() => {
-              router.push('/successful-symptoms-registry')
+              //router.push('/successful-symptoms-registry')
             }}
             label="Registrar"
             type="submit"
