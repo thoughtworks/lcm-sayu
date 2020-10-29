@@ -15,13 +15,13 @@ module.exports = new EntitySchema({
     value: {
       type: 'integer',
     },
-    relations: {
-      symptom: {
-        target: 'Symptom',
-        type: 'one-to-many',
-        joinTable: true,
-        cascade: true,
-      },
+  },
+  relations: {
+    symptom: {
+      target: 'Symptom',
+      type: 'many-to-one',
+      joinTable: true,
+      cascade: true,
     },
   },
 })

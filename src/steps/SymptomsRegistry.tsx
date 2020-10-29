@@ -10,7 +10,6 @@ import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRad
 
 function SymptomsRegistry() {
   const { handleSubmit, control } = useForm()
-  const onSubmit = (data: any) => console.warn(data)
   const router = useRouter()
   const painLevel = router.query['pain-level'] as string
 
@@ -79,5 +78,17 @@ function SymptomsRegistry() {
       </form>
     </>
   )
+}
+const onSubmit = (data: any) => {
+  const request = {
+    fiebre: data['Fiebre'] as number,
+    constipacion: data['Constipación'] as number,
+    cansancio: data['Cansancio'],
+    nausea: data['Náusea'],
+    apetito: data['Apetito'],
+    aire: data['Falta de aire'],
+    tragar: data['Dificultad para tragar'],
+  }
+  fetch('/api/symptom', { method: 'POST', body: JSON.stringify(request) })
 }
 export { SymptomsRegistry }
