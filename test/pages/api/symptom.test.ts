@@ -20,9 +20,12 @@ jest.mock('typeorm', () => ({
     close: jest.fn(),
   }),
 }))
+const dateNow = 1604083287383
+global.Date.now = jest.fn().mockReturnValue(dateNow)
 
 describe('Symptom api', () => {
   test('should save the symptoms', async () => {
+    const creationDate = new Date(dateNow)
     const symptom = {
       Cansancio: 0,
       Náusea: 0,
@@ -40,42 +43,42 @@ describe('Symptom api', () => {
 
     expect(mockSave).toHaveBeenCalledWith([
       {
-        creationDate: '2020-10-30T15:50:03.697Z',
+        creationDate,
         symptom: { id: 4, name: 'Fiebre' },
         value: undefined,
       },
       {
-        creationDate: '2020-10-30T15:50:03.697Z',
+        creationDate,
         symptom: { id: 7, name: 'Constipación' },
         value: undefined,
       },
       {
-        creationDate: '2020-10-30T15:50:03.697Z',
+        creationDate,
         symptom: { id: 1, name: 'Cansancio' },
         value: undefined,
       },
       {
-        creationDate: '2020-10-30T15:50:03.697Z',
+        creationDate,
         symptom: { id: 6, name: 'Náusea' },
         value: undefined,
       },
       {
-        creationDate: '2020-10-30T15:50:03.697Z',
+        creationDate,
         symptom: { id: 2, name: 'Apetito' },
         value: undefined,
       },
       {
-        creationDate: '2020-10-30T15:50:03.697Z',
+        creationDate,
         symptom: { id: 8, name: 'Falta de aire' },
         value: undefined,
       },
       {
-        creationDate: '2020-10-30T15:50:03.697Z',
+        creationDate,
         symptom: { id: 3, name: 'Dificultad para tragar' },
         value: undefined,
       },
       {
-        creationDate: '2020-10-30T15:50:03.697Z',
+        creationDate,
         symptom: { id: 5, name: 'Dolor' },
         value: undefined,
       },

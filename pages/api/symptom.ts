@@ -9,61 +9,62 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const connection = await createConnection()
     try {
+      const creationDate = new Date(Date.now())
       const symptomList = await connection
         .getRepository<Symptom>('Symptom')
         .find()
       const registry: Registry[] = [
         {
-          creationDate: new Date(),
+          creationDate,
           value: symptoms.fiebre as number,
           symptom: symptomList.find(
             (symptom: Symptom) => symptom.name === 'Fiebre'
           ),
         },
         {
-          creationDate: new Date(),
+          creationDate,
           value: symptoms.constipacion as number,
           symptom: symptomList.find(
             (symptom: Symptom) => symptom.name === 'Constipación'
           ),
         },
         {
-          creationDate: new Date(),
+          creationDate,
           value: symptoms.cansancio as number,
           symptom: symptomList.find(
             (symptom: Symptom) => symptom.name === 'Cansancio'
           ),
         },
         {
-          creationDate: new Date(),
+          creationDate,
           value: symptoms.nausea as number,
           symptom: symptomList.find(
             (symptom: Symptom) => symptom.name === 'Náusea'
           ),
         },
         {
-          creationDate: new Date(),
+          creationDate,
           value: symptoms.apetito as number,
           symptom: symptomList.find(
             (symptom: Symptom) => symptom.name === 'Apetito'
           ),
         },
         {
-          creationDate: new Date(),
+          creationDate,
           value: symptoms.aire as number,
           symptom: symptomList.find(
             (symptom: Symptom) => symptom.name === 'Falta de aire'
           ),
         },
         {
-          creationDate: new Date(),
+          creationDate,
           value: symptoms.tragar as number,
           symptom: symptomList.find(
             (symptom: Symptom) => symptom.name === 'Dificultad para tragar'
           ),
         },
         {
-          creationDate: new Date(),
+          creationDate,
           value: symptoms.painlevel as number,
           symptom: symptomList.find(
             (symptom: Symptom) => symptom.name === 'Dolor'
