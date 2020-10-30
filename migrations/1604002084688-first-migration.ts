@@ -14,6 +14,7 @@ export class firstMigration1604002084688 implements MigrationInterface {
         await queryRunner.query(`INSERT INTO "symptom"(name) VALUES('Dificultad para tragar')`);
         await queryRunner.query(`INSERT INTO "symptom"(name) VALUES('Apetito')`);
         await queryRunner.query(`INSERT INTO "symptom"(name) VALUES('Náusea')`);
+        await queryRunner.query(`INSERT INTO "symptom"(name) VALUES('Dolor')`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

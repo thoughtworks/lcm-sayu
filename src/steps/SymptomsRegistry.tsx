@@ -9,13 +9,13 @@ import { CustomButton } from 'src/components/CustomButton/CustomButton'
 import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRadioButton'
 
 function SymptomsRegistry() {
-  const { handleSubmit, control } = useForm()
   const router = useRouter()
-  const painLevel = router.query['pain-level'] as string
+  const painLevel = parseInt(router.query['pain-level'] as string, 10)
+  const { handleSubmit, control } = useForm()
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit(painLevel))}>
         <TitleHeader />
         <PainBox painLevel={painLevel} />
         <Text fontSize="md" mb="8" mt="8">
@@ -56,7 +56,7 @@ function SymptomsRegistry() {
             color="white"
             hover={{ backgroundColor: 'darkGreen' }}
             onClick={() => {
-              router.push('/successful-symptoms-registry')
+              //router.push('/successful-symptoms-registry')
             }}
             label="Registrar"
             type="submit"
@@ -79,10 +79,11 @@ function SymptomsRegistry() {
     </>
   )
 }
-const onSubmit = (data: any) => {
+const onSubmit = (painLevel: number) => (data: any) => {
   const request = {
-    fiebre: data['Fiebre'] as number,
-    constipacion: data['Constipación'] as number,
+    painlevel: painLevel,
+    fiebre: parseInt(data['Fiebre'], 10) as number,
+    constipacion: parseInt(data['Constipación'], 10) as number,
     cansancio: data['Cansancio'],
     nausea: data['Náusea'],
     apetito: data['Apetito'],

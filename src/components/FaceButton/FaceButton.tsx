@@ -7,37 +7,37 @@ const faceInfo: { [key: string]: any } = {
     img: 'img/faces/FaceZero.svg',
     number: '0',
     description: 'No duele',
-    click: 'zero',
+    click: 0,
   },
   faceTwo: {
     img: 'img/faces/FaceTwo.svg',
     number: '2',
     description: 'Duele un poco',
-    click: 'two',
+    click: 2,
   },
   faceFour: {
     img: 'img/faces/FaceFour.svg',
     number: '4',
     description: 'Duele un poco más',
-    click: 'four',
+    click: 4,
   },
   faceSix: {
     img: 'img/faces/FaceSix.svg',
     number: '6',
     description: 'Duele mucho',
-    click: 'six',
+    click: 6,
   },
   faceEight: {
     img: 'img/faces/FaceEight.svg',
     number: '8',
     description: 'Duele mucho más',
-    click: 'eight',
+    click: 8,
   },
   faceTen: {
     img: 'img/faces/FaceTen.svg',
     number: '10',
     description: 'Duele al máximo',
-    click: 'ten',
+    click: 10,
   },
 }
 

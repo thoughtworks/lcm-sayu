@@ -31,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           creationDate: new Date(),
           value: symptoms.cansancio as number,
           symptom: symptomList.find(
-            (symptom: Symptom) => symptom.name === 'Falta de aire'
+            (symptom: Symptom) => symptom.name === 'Cansancio'
           ),
         },
         {
@@ -45,14 +45,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           creationDate: new Date(),
           value: symptoms.apetito as number,
           symptom: symptomList.find(
-            (symptom: Symptom) => symptom.name === 'Cansancio'
+            (symptom: Symptom) => symptom.name === 'Apetito'
           ),
         },
         {
           creationDate: new Date(),
           value: symptoms.aire as number,
           symptom: symptomList.find(
-            (symptom: Symptom) => symptom.name === 'Apetito'
+            (symptom: Symptom) => symptom.name === 'Falta de aire'
           ),
         },
         {
@@ -62,9 +62,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             (symptom: Symptom) => symptom.name === 'Dificultad para tragar'
           ),
         },
+        {
+          creationDate: new Date(),
+          value: symptoms.painlevel as number,
+          symptom: symptomList.find(
+            (symptom: Symptom) => symptom.name === 'Dolor'
+          ),
+        },
       ]
       const registryRepository = connection.getRepository('Registry')
       await registryRepository.save(registry)
+      res.statusCode = 200
     } finally {
       connection.close()
     }
