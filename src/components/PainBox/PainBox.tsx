@@ -32,8 +32,8 @@ type PainBoxProps = {
   painLevel: number
 }
 
-const PainBox = ({ painLevel }: PainBoxProps) =>
-  painLevel ? (
+const PainBox = ({ painLevel }: PainBoxProps) => {
+  return painLevel !== undefined ? (
     <Box
       border="1px solid"
       borderRadius="4px"
@@ -47,5 +47,5 @@ const PainBox = ({ painLevel }: PainBoxProps) =>
       </Flex>
     </Box>
   ) : null
-
+}
 export { PainBox }

@@ -37,7 +37,7 @@ describe('<FaceScaleScreen />', () => {
     userEvent.click(faceNumberZeroButton)
     expect(mockPush).toHaveBeenCalledWith({
       pathname: '/symptoms-registry',
-      query: { 'pain-level': 'zero' },
+      query: { 'pain-level': 0 },
     })
   })
 

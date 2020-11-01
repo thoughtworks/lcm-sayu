@@ -12,7 +12,6 @@ function SymptomsRegistry() {
   const router = useRouter()
   const painLevel = parseInt(router.query['pain-level'] as string, 10)
   const { handleSubmit, control } = useForm()
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit(painLevel))}>
@@ -56,7 +55,7 @@ function SymptomsRegistry() {
             color="white"
             hover={{ backgroundColor: 'darkGreen' }}
             onClick={() => {
-              //router.push('/successful-symptoms-registry')
+              router.push('/successful-symptoms-registry')
             }}
             label="Registrar"
             type="submit"
