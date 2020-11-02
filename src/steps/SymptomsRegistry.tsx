@@ -89,7 +89,11 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
     aire: data['Falta de aire'],
     tragar: data['Dificultad para tragar'],
   }
-  await axios.post('/api/registry-save', request)
-  router.push('/successful-symptoms-registry')
+  try {
+    await axios.post('/api/registry-save', request)
+    router.push('/successful-symptoms-registry')
+  } catch (err) {
+    router.push('/failed-symptoms-registry')
+  }
 }
 export { SymptomsRegistry }

@@ -87,6 +87,15 @@ describe('Home page', () => {
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
     expect(mockPush).toHaveBeenCalledWith('/successful-symptoms-registry')
   })
+
+  test('should redirect to failed symptoms register when there is an error', async () => {
+    jest.spyOn(axios, 'post').mockRejectedValue(null)
+    const registerButton = screen.getByText(/Registrar/i)
+    userEvent.click(registerButton)
+    await waitFor(() => expect(axios.post).toHaveBeenCalled())
+    expect(mockPush).toHaveBeenCalledWith('/failed-symptoms-registry')
+  })
+
   test('should press fever radio button', () => {
     const radioOption = screen.getAllByText(/Sí/i)
     userEvent.click(radioOption[0])
