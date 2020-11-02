@@ -7,22 +7,33 @@ type CustomButtonProps = {
   backgroundColor: string
   color: string
   hover: { [key: string]: any }
-  onClick: React.MouseEventHandler<Element>
+  onClick?: React.MouseEventHandler<Element>
   label: string
+  type?: 'button' | 'submit'
 }
 
-function CustomButton(props: CustomButtonProps) {
+function CustomButton({
+  border,
+  borderColor,
+  backgroundColor,
+  color,
+  hover,
+  onClick,
+  label,
+  type = 'button',
+}: CustomButtonProps) {
   return (
     <Button
-      border={props.border}
-      borderColor={props.borderColor}
-      backgroundColor={props.backgroundColor}
-      color={props.color}
+      border={border}
+      borderColor={borderColor}
+      backgroundColor={backgroundColor}
+      color={color}
       width={['100%', '50%', '30%', '25%']}
-      _hover={props.hover}
-      onClick={props.onClick}
+      _hover={hover}
+      onClick={onClick}
+      type={type}
     >
-      {props.label}
+      {label}
     </Button>
   )
 }

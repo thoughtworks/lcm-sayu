@@ -6,7 +6,7 @@ import { FaceButton } from 'src/components/FaceButton/FaceButton'
 const FaceScaleScreen = () => {
   return (
     <>
-      <TitleHeader backArrowRoute="/" closeRoute="/" />
+      <TitleHeader />
 
       <Text fontSize={['sm']}>
         Muéstrale a tu hijo/hija este dibujo y explícale lo siguiente: "Elige la

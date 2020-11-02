@@ -1,39 +1,39 @@
 import React from 'react'
 import { Image, Box, Flex, Text } from '@chakra-ui/core'
 
-const painInformation: { [key: string]: any } = {
-  zero: {
+const painInformation: any = {
+  '0': {
     name: 'Sin dolor',
     icon: <Image src="img/faces/FaceZero.svg" />,
   },
-  two: {
+  '2': {
     name: 'Duele un poco',
     icon: <Image src="img/faces/FaceTwo.svg" />,
   },
-  four: {
+  '4': {
     name: 'Duele un poco más',
     icon: <Image src="img/faces/FaceFour.svg" />,
   },
-  six: {
+  '6': {
     name: 'Duele aún más',
     icon: <Image src="img/faces/FaceSix.svg" />,
   },
-  eight: {
+  '8': {
     name: 'Duele mucho',
     icon: <Image src="img/faces/FaceEight.svg" />,
   },
-  ten: {
+  '10': {
     name: 'El peor dolor',
     icon: <Image src="img/faces/FaceTen.svg" />,
   },
 }
 
 type PainBoxProps = {
-  painLevel: string
+  painLevel: number
 }
 
-const PainBox = ({ painLevel }: PainBoxProps) =>
-  painLevel ? (
+const PainBox = ({ painLevel }: PainBoxProps) => {
+  return painLevel !== undefined ? (
     <Box
       border="1px solid"
       borderRadius="4px"
@@ -47,5 +47,5 @@ const PainBox = ({ painLevel }: PainBoxProps) =>
       </Flex>
     </Box>
   ) : null
-
+}
 export { PainBox }

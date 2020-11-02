@@ -1,12 +1,22 @@
-import { render, screen, fireEvent, cleanup } from 'test/testUtils'
-
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  userEvent,
+  waitFor,
+} from 'test/testUtils'
+import axios from 'axios'
 import SymptomsRegistry from 'pages/symptoms-registry'
 
+jest.mock('axios')
+const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
-  useRouter: jest.fn().mockReturnValue({
+  useRouter: () => ({
     query: {
-      'pain-level': 'zero',
+      'pain-level': '0',
     },
+    push: mockPush,
   }),
 }))
 
@@ -56,12 +66,39 @@ describe('Home page', () => {
     expect(await screen.findByText('3')).toBeVisible()
   })
 
-  test('Should show the right symptom text', async () => {
+  test('Should show the right symptom text', () => {
     const nauseaText = screen.getByText(/^Náusea$/i)
     expect(nauseaText).toBeInTheDocument()
     const minNauseaText = screen.getByText(/Sin náusea/i)
     expect(minNauseaText).toBeInTheDocument()
     const maxNauseaText = screen.getByText(/Máxima náusea/i)
     expect(maxNauseaText).toBeInTheDocument()
+  })
+
+  test('should redirect to home when pressing cancel', () => {
+    const cancelButton = screen.getByText(/Cancelar/i)
+    userEvent.click(cancelButton)
+    expect(mockPush).toHaveBeenCalledWith('/')
+  })
+
+  test('should redirect to succesful symptoms registry when pressing register', async () => {
+    const registerButton = screen.getByText(/Registrar/i)
+    userEvent.click(registerButton)
+    await waitFor(() => expect(axios.post).toHaveBeenCalled())
+    expect(mockPush).toHaveBeenCalledWith('/successful-symptoms-registry')
+  })
+
+  test('should redirect to failed symptoms register when there is an error', async () => {
+    jest.spyOn(axios, 'post').mockRejectedValue(null)
+    const registerButton = screen.getByText(/Registrar/i)
+    userEvent.click(registerButton)
+    await waitFor(() => expect(axios.post).toHaveBeenCalled())
+    expect(mockPush).toHaveBeenCalledWith('/failed-symptoms-registry')
+  })
+
+  test('should press fever radio button', () => {
+    const radioOption = screen.getAllByText(/Sí/i)
+    userEvent.click(radioOption[0])
+    expect(radioOption[0]).toBeInTheDocument()
   })
 })

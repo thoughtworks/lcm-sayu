@@ -22,6 +22,7 @@
     "test:coverage": "yarn test --coverage",
     "test:audit": "yarn audit --groups dependencies --level moderate",
     "test:e2e": "yarn cypress run",
+    "test:e2e:open": "yarn cypress open",
     "test:ci": "yarn test:format && yarn test:type-check && yarn test:coverage"
   },
   "husky": {
@@ -40,11 +41,13 @@
     "@chakra-ui/core": "^0.8.0",
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
+    "axios": "^0.21.0",
     "emotion-theming": "^10.0.27",
     "next": "latest",
     "pg": "^8.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^6.9.6",
     "typeorm": "^0.2.28"
   },
   "devDependencies": {

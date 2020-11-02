@@ -1,8 +1,8 @@
 const { EntitySchema } = require('typeorm')
 
 module.exports = new EntitySchema({
-  name: 'Person',
-  tableName: 'person',
+  name: 'Symptom',
+  tableName: 'symptom',
   columns: {
     id: {
       primary: true,
@@ -11,6 +11,14 @@ module.exports = new EntitySchema({
     },
     name: {
       type: 'text',
+    },
+  },
+  relations: {
+    registries: {
+      target: 'Registry',
+      type: 'one-to-many',
+      joinTable: true,
+      cascade: true,
     },
   },
 })
