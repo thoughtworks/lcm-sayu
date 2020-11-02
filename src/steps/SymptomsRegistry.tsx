@@ -1,7 +1,8 @@
 import React from 'react'
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 import { Text, Stack, Box } from '@chakra-ui/core'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
 import { SymptomSlider } from 'src/components/SymptomSlider/SymptomSlider'
 import { PainBox } from 'src/components/PainBox/PainBox'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
@@ -14,7 +15,7 @@ function SymptomsRegistry() {
   const { handleSubmit, control } = useForm()
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit(painLevel))}>
+      <form onSubmit={handleSubmit(onSubmit(painLevel, router))}>
         <TitleHeader />
         <PainBox painLevel={painLevel} />
         <Text fontSize="md" mb="8" mt="8">
@@ -54,9 +55,6 @@ function SymptomsRegistry() {
             backgroundColor="lightGreen"
             color="white"
             hover={{ backgroundColor: 'darkGreen' }}
-            onClick={() => {
-              router.push('/successful-symptoms-registry')
-            }}
             label="Registrar"
             type="submit"
           />
@@ -78,7 +76,9 @@ function SymptomsRegistry() {
     </>
   )
 }
-const onSubmit = (painLevel: number) => (data: any) => {
+const onSubmit = (painLevel: number, router: NextRouter) => async (
+  data: any
+) => {
   const request = {
     painlevel: painLevel,
     fiebre: parseInt(data['Fiebre'], 10) as number,
@@ -89,9 +89,7 @@ const onSubmit = (painLevel: number) => (data: any) => {
     aire: data['Falta de aire'],
     tragar: data['Dificultad para tragar'],
   }
-  fetch('/api/symptom', {
-    method: 'POST',
-    body: JSON.stringify(request),
-  })
+  await axios.post('/api/registry-save', request)
+  router.push('/successful-symptoms-registry')
 }
 export { SymptomsRegistry }

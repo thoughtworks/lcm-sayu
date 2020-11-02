@@ -20,7 +20,6 @@ export class RegistryService {
           ) as number
           return new Registry(value, symptom)
         })
-
       const registryRepository = connection.getRepository('Registry')
       await registryRepository.save(registryList)
     } finally {

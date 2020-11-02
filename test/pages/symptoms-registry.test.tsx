@@ -6,10 +6,10 @@ import {
   userEvent,
   waitFor,
 } from 'test/testUtils'
-
+import axios from 'axios'
 import SymptomsRegistry from 'pages/symptoms-registry'
 
-global.fetch = jest.fn().mockResolvedValue(null)
+jest.mock('axios')
 const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
   useRouter: () => ({
@@ -84,7 +84,7 @@ describe('Home page', () => {
   test('should redirect to succesful symptoms registry when pressing register', async () => {
     const registerButton = screen.getByText(/Registrar/i)
     userEvent.click(registerButton)
-    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
+    await waitFor(() => expect(axios.post).toHaveBeenCalled())
     expect(mockPush).toHaveBeenCalledWith('/successful-symptoms-registry')
   })
   test('should press fever radio button', () => {
