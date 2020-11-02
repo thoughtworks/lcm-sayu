@@ -89,6 +89,9 @@ const onSubmit = (painLevel: number) => (data: any) => {
     aire: data['Falta de aire'],
     tragar: data['Dificultad para tragar'],
   }
-  fetch('/api/symptom', { method: 'POST', body: JSON.stringify(request) })
+  fetch('/api/symptom', {
+    method: 'POST',
+    body: JSON.stringify(request),
+  })
 }
 export { SymptomsRegistry }

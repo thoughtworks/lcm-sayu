@@ -1,12 +1,20 @@
-import { render, screen, fireEvent, cleanup, userEvent } from 'test/testUtils'
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  userEvent,
+  waitFor,
+} from 'test/testUtils'
 
 import SymptomsRegistry from 'pages/symptoms-registry'
 
+global.fetch = jest.fn().mockResolvedValue(null)
 const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
   useRouter: () => ({
     query: {
-      'pain-level': 'zero',
+      'pain-level': '0',
     },
     push: mockPush,
   }),
@@ -73,12 +81,12 @@ describe('Home page', () => {
     expect(mockPush).toHaveBeenCalledWith('/')
   })
 
-  test('should redirect to succesful symptoms registry when pressing register', () => {
+  test('should redirect to succesful symptoms registry when pressing register', async () => {
     const registerButton = screen.getByText(/Registrar/i)
     userEvent.click(registerButton)
+    await waitFor(() => expect(global.fetch).toHaveBeenCalled())
     expect(mockPush).toHaveBeenCalledWith('/successful-symptoms-registry')
   })
-
   test('should press fever radio button', () => {
     const radioOption = screen.getAllByText(/Sí/i)
     userEvent.click(radioOption[0])

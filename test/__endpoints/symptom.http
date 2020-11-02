@@ -8,5 +8,6 @@ content-type: application/json
     "nausea":5,
     "apetito":5,
     "aire":5,
-    "tragar":5
+    "tragar":5,
+    "painlevel": 3
 }
