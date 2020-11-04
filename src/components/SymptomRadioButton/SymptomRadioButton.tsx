@@ -39,10 +39,10 @@ function SymptomRadioButton({
             value={value}
             onBlur={onBlur}
           >
-            <Radio variantColor="blue" value="1">
+            <Radio id={`${name}-1`} variantColor="blue" value="1">
               Sí
             </Radio>
-            <Radio variantColor="blue" value="0">
+            <Radio id={`${name}-0`} variantColor="blue" value="0">
               No
             </Radio>
           </RadioGroup>

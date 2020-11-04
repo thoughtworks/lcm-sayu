@@ -37,7 +37,7 @@ describe('Enter and record pain and symptoms', function () {
     symptomsRegistry
       .getLevelNumber('Dificultad para tragar')
       .should('contain', 3)
-
+    symptomsRegistry.radioButtonSymptom('Fiebre', 1)
     symptomsRegistry.clickSuccessfulSymptomsRegistryButton()
     cy.contains('¡Se han guardado los síntomas exitosamente!')
   })

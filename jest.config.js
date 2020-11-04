@@ -19,4 +19,11 @@ module.exports = {
   },
   moduleDirectories: ['node_modules', '.'],
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 96,
+      lines: 95
+    },
+  },
 }
