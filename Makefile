@@ -6,3 +6,5 @@ run:
 	docker-compose up
 stop:
 	docker stop $(docker ps -a -q --filter ancestor=lcm-sayu --format="{{.ID}}")
+db-up:
+	docker-compose up postgres

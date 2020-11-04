@@ -1,0 +1,23 @@
+#login {
+  header {
+    display: grid;
+    grid-template:
+      'heart-logo sayu-description'
+      'heart-logo sayu-logo'/70px auto;
+    .heartLogo {
+      grid-area: heart-logo;
+    }
+    .sayuDescription {
+      grid-area: sayu-description;
+      text-transform: uppercase;
+      color: #ffca2a;
+      margin-top: 3px;
+      font-weight: bolder;
+      font-size: 8.7px;
+    }
+    .sayuLogo {
+      grid-area: sayu-logo;
+      width: 130px;
+    }
+  }
+}

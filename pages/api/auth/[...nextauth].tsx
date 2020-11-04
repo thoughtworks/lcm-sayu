@@ -24,29 +24,29 @@ const options = {
   // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
   // a seperate secret is defined explicitly for encrypting the JWT.
   secret: process.env.SECRET,
-  callbacks: {
-    jwt: async (token, user) => {
-      if (user) {
-        token = { roles: user.roles }
-      }
+  // callbacks: {
+  //   jwt: async (token, user) => {
+  //     if (user) {
+  //       token = { roles: user.roles }
+  //     }
 
-      return token
-    },
-    session: async (session, token) => {
-      session.roles = token.roles
-      return session
-    },
+  //     return token
+  //   },
+  //   session: async (session, token) => {
+  //     session.roles = token.roles
+  //     return session
+  //   },
 
-    signIn: async (user, account, profile) => {
-      console.log(user)
-      // if (user.email === 'bherreran24@gmail.com') {
-      //   //user.roles = ['tutor', 'enfermera']
-      //   return true
-      // }
-      return false
-    },
-    // preguntar si usuario esta en tabla de permitidos y se pueden verificar roles
-  },
+  //   signIn: async (user, account, profile) => {
+  //     console.log(user)
+  //     // if (user.email === 'bherreran24@gmail.com') {
+  //     //   //user.roles = ['tutor', 'enfermera']
+  //     //   return true
+  //     // }
+  //     return false
+  //   },
+  //   // preguntar si usuario esta en tabla de permitidos y se pueden verificar roles
+  // },
   session: {
     // Use JSON Web Tokens for session instead of database sessions.
     // This option can be used with or without a database for users/accounts.
