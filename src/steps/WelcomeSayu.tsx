@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import { Flex, Image, Text, Stack } from '@chakra-ui/core'
 
 import { CustomButton } from 'src/components/CustomButton'
+import withSession from 'src/hoc/WithSession'
 
-function WelcomeSayu() {
+const WelcomeSayu = () => {
   const router = useRouter()
   return (
     <Flex direction="column">
@@ -38,4 +39,4 @@ function WelcomeSayu() {
     </Flex>
   )
 }
-export { WelcomeSayu }
+export default withSession(WelcomeSayu)
