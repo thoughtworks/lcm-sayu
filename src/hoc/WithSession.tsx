@@ -21,7 +21,6 @@ export default function withSession<P>(
             <span>
               <small>Signed in as: </small>
               <strong>{session.user.email || session?.user.name}</strong>
-              <img src={session.user.image} />
             </span>
           </header>
         )}
