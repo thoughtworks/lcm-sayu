@@ -1,0 +1,23 @@
+#google-button {
+  display: flex;
+  color: #fff;
+  font-family: 'Roboto Medium';
+  background-color: #4285f4;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+
+  .text {
+    align-self: center;
+    text-align: center;
+    margin: 0 10px;
+  }
+
+  .g-logo {
+    padding: 10px;
+    background-color: #fff;
+
+    img {
+      height: 18px;
+    }
+  }
+}

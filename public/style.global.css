@@ -5,6 +5,10 @@ body {
   font: 14px 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased !important;
 }
+@font-face{
+  font-family: "Roboto Medium";
+  src: url("/fonts/Roboto/roboto-medium.woff2") format("woff2");
+}
 .content{
   padding: 35px;
 }

@@ -1,4 +1,5 @@
 import { signIn, signOut, useSession } from 'next-auth/client'
+import GoogleButton from 'src/components/GoogleButton'
 
 import styles from './login.module.scss'
 const Login = () => {
@@ -17,6 +18,7 @@ const Login = () => {
         <img src="img/sayu_logo.svg" alt="sayu" className={styles.sayuLogo} />
       </header>
       <section>
+        <GoogleButton />
         {!loading && !session ? (
           <a
             href="api/auth/signin"
