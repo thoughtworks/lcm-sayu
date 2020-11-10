@@ -36,6 +36,9 @@ const options = {
   session: {
     jwt: true,
   },
+  pages: {
+    error: '/_error',
+  },
 }
 
 const NextAuthHandler: NextApiHandler = (req, res) =>
