@@ -32,6 +32,10 @@ const options = {
       const ALLOWED_USERS = ['bsoto@thoughtworks.com']
       return ALLOWED_USERS.includes(user.email)
     },
+    redirect: async () => {
+      const redirectTo: string | undefined = '/'
+      return redirectTo
+    },
   },
   session: {
     jwt: true,
