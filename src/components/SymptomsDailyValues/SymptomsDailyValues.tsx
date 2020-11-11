@@ -8,7 +8,7 @@ const SymptomsDailyValues = () => (
       <div className={styles.dia}>Miércoles, 07</div>
     </Box>
     <Stack isInline spacing={1}>
-      <Text fontSize={'xs'} ml={2}>
+      <Text fontSize={'xs'} ml={2} lineHeight={'tall'}>
         03:12
       </Text>
       <Box ml={1}>
@@ -35,7 +35,7 @@ const SymptomsDailyValues = () => (
       <Box>
         <div className={styles.fiebre_value}>No</div>
       </Box>
-      <Icon name="edit" ml={3} />
+      <Icon name="edit" ml={3} mt={'2px'} />
     </Stack>
   </Box>
 )
