@@ -8,14 +8,14 @@ const TitleHeader = () => {
     <Box marginTop={5}>
       <Flex justify="space-between">
         <button onClick={() => router.back()}>
-          <Image src="img/BackArrow.svg" alt="Ir atrás" />
+          <Image src="img/back_arrow.svg" alt="Ir atrás" />
         </button>
         <button
           onClick={() => {
             router.push('/')
           }}
         >
-          <Image src="img/CloseIcon.svg" alt="Volver al home" />
+          <Image src="img/close_icon.svg" alt="Volver al home" />
         </button>
       </Flex>
       <Flex direction="column">

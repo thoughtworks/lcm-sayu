@@ -13,8 +13,8 @@ const customTheme = {
   },
   fonts: {
     ...theme.fonts,
-    heading: 'Roboto-Bold',
-    body: 'Roboto-Regular',
+    heading: 'Roboto Bold',
+    body: 'Roboto Regular',
   },
 }
 
