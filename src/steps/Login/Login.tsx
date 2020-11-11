@@ -1,9 +1,7 @@
-import { signIn, signOut, useSession } from 'next-auth/client'
 import GoogleButton from 'src/components/GoogleButton'
 
 import styles from './login.module.scss'
 const Login = () => {
-  const [session, loading] = useSession()
   return (
     <main id={styles.login}>
       <header>
@@ -19,27 +17,6 @@ const Login = () => {
       </header>
       <section>
         <GoogleButton />
-        {!loading && !session ? (
-          <a
-            href="api/auth/signin"
-            onClick={(e) => {
-              e.preventDefault()
-              signIn('google')
-            }}
-          >
-            Login
-          </a>
-        ) : (
-          <a
-            href="api/auth/signout"
-            onClick={(e) => {
-              e.preventDefault()
-              signOut()
-            }}
-          >
-            Logout
-          </a>
-        )}
       </section>
     </main>
   )
