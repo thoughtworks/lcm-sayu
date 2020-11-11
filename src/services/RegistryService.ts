@@ -1,6 +1,6 @@
 import { Registry } from 'src/model/Registry'
 import { Symptom } from 'src/model/Symptom'
-import { createConnection } from 'typeorm'
+import { createConnection, LessThan } from 'typeorm'
 
 export class RegistryService {
   async saveRegistry(symptomsToRegister: any): Promise<void> {
@@ -22,6 +22,23 @@ export class RegistryService {
         })
       const registryRepository = connection.getRepository('Registry')
       await registryRepository.save(registryList)
+    } finally {
+      connection.close()
+    }
+  }
+
+  async registriesRetrieval(registriesDate: Date): Promise<Registry[]> {
+    const connection = await createConnection()
+    try {
+      const registryRepository = connection.getRepository<Registry>('Registry')
+      const symptomsRegistries = await registryRepository.find({
+        relations: ['symptom'],
+        where: { creationDate: LessThan(registriesDate) },
+        order: {
+          creationDate: 'DESC',
+        },
+      })
+      return symptomsRegistries
     } finally {
       connection.close()
     }
