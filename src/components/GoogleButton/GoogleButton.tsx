@@ -4,18 +4,17 @@ const GoogleButton = () => {
   const [session, loading] = useSession()
   return !loading && !session ? (
     <a
+      id={styles['google-button']}
       href="api/auth/signin"
       onClick={(e) => {
         e.preventDefault()
         signIn('google')
       }}
     >
-      <button id={styles['google-button']}>
-        <div className={styles['g-logo']}>
-          <img src="img/g_logo.svg" />
-        </div>
-        <div className={styles.text}>Iniciar sesión con Google</div>
-      </button>
+      <div className={styles['g-logo']}>
+        <img src="img/g_logo.svg" />
+      </div>
+      <div className={styles.text}>Iniciar sesión con Google</div>
     </a>
   ) : (
     <a
