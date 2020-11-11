@@ -47,4 +47,5 @@ const PainBox = ({ painLevel }: PainBoxProps) =>
       </Flex>
     </Box>
   ) : null
+
 export { PainBox }

@@ -11,11 +11,13 @@ import SymptomsRegistry from 'pages/symptoms-registry'
 
 jest.mock('axios')
 const mockPush = jest.fn().mockResolvedValue(null)
+
+const mockQuery = {
+  'pain-level': '0',
+}
 jest.mock('next/router', () => ({
   useRouter: () => ({
-    query: {
-      'pain-level': '0',
-    },
+    query: mockQuery,
     push: mockPush,
   }),
 }))
@@ -100,5 +102,17 @@ describe('Home page', () => {
     const radioOption = screen.getAllByText(/Sí/i)
     userEvent.click(radioOption[0])
     expect(radioOption[0]).toBeInTheDocument()
+  })
+
+  test('should not render painbox when painLevel is invalid', () => {
+    mockQuery['pain-level'] = 'bla'
+    render(<SymptomsRegistry />)
+
+    expect(screen.queryByText(/sin dolor/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/duele un poco/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/duele un poco más/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/duele aún más/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/duele mucho/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/el peor dolor/i)).not.toBeInTheDocument
   })
 })
