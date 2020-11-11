@@ -14,23 +14,10 @@ export default function withSession<P>(
       if (!session && !loading) {
         router.push('/login')
       }
-
       if (session && !roles.includes(session.rol)) {
         router.push('/_error?error=Unauthorized')
       }
     })
-    return (
-      <main>
-        {!loading && session && (
-          <header>
-            <span>
-              <small>Signed in as: </small>
-              <strong>{session.user.email || session?.user.name}</strong>
-            </span>
-          </header>
-        )}
-        <WrappedComponent {...props} />
-      </main>
-    )
+    return <WrappedComponent {...props} />
   }
 }

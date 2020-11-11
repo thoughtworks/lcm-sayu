@@ -29,7 +29,7 @@ const options = {
       return { ...session, rol: 'tutor' }
     },
     signIn: async (user: User) => {
-      const ALLOWED_USERS = ['bsoto@thoughtworks.com']
+      const ALLOWED_USERS = ['bsoto@thoughtworks.com', 'bherreran24@gmail.com']
       return ALLOWED_USERS.includes(user.email)
     },
     redirect: async () => {

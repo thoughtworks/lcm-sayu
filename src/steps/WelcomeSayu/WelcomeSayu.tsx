@@ -1,22 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/client'
 import { Flex, Image, Text, Stack } from '@chakra-ui/core'
 
 import { CustomButton } from 'src/components/CustomButton'
 import withSession from 'src/hoc/WithSession'
 
+import styles from './WelcomeSayu.module.scss'
+
 const WelcomeSayu = () => {
   const router = useRouter()
+  const [session, loading] = useSession()
+  const [name, setName] = useState('')
+  useEffect(() => {
+    if (!loading && session) {
+      setName(session.user.name.split(' ')[0])
+    }
+  })
   return (
     <Flex direction="column">
-      <Stack isInline>
-        <Image src="img/heart_logo.svg" width="4em"></Image>
-        <Image src="img/sayu_logo.svg" width="2em"></Image>
-      </Stack>
+      <header className={styles.header}>
+        <div className={styles['logo-section']}>
+          <img className={styles['heart-logo']} src="img/heart_logo.svg" />
+          <img className={styles['sayu-logo']} src="img/sayu_logo.svg" />
+        </div>
+        <div className={styles['logout-button']}>logout</div>
+      </header>
       <Stack width="100%" marginTop={60} align="center">
         <Stack isInline>
           <Text fontWeight="bold" fontSize={['xl']}>
-            Hola
+            Hola {name}
           </Text>
           <Image src="img/waving_hand_emoji.svg" width="2em" />
         </Stack>

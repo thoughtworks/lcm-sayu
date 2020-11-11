@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  .logout-button {
+    align-self: center;
+  }
+  .logo-section {
+    display: flex;
+    height: 30px;
+
+    .heart-logo {
+      width: 27px;
+      margin-right: 5px;
+    }
+    .sayu-logo {
+      width: 65px;
+      margin-top: 5px;
+    }
+  }
+}
