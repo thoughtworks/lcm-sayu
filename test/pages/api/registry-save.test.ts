@@ -1,6 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import typeorm from 'typeorm'
+
 import { Symptom } from 'src/model/Symptom'
+
 import handler from 'pages/api/registry-save'
+import { cleanup } from '../../testUtils'
 
 const symptoms: Symptom[] = [
   { id: 1, name: 'Cansancio' },
@@ -24,18 +28,25 @@ const dateNow = 1604083287383
 global.Date.now = jest.fn().mockReturnValue(dateNow)
 
 describe('Symptom api', () => {
+  const symptom = {
+    painlevel: 0,
+    fiebre: 1,
+    constipacion: 0,
+    cansancio: 2,
+    nausea: 3,
+    apetito: 4,
+    aire: 0,
+    tragar: 1,
+  }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  afterEach(cleanup)
+
   test('should save symptoms', async () => {
     const creationDate = new Date(dateNow)
-    const symptom = {
-      painlevel: 0,
-      fiebre: 1,
-      constipacion: 0,
-      cansancio: 2,
-      nausea: 3,
-      apetito: 4,
-      aire: 0,
-      tragar: 1,
-    }
     await handler(
       { body: symptom } as NextApiRequest,
       ({
@@ -94,5 +105,23 @@ describe('Symptom api', () => {
         value: 0,
       },
     ])
+  })
+
+  test('should log error and return 500 HTTP code when there is an error', async () => {
+    jest
+      .spyOn(typeorm, 'createConnection')
+      .mockRejectedValue('Connection error')
+    global.console.error = jest.fn()
+    const mockStatus = (jest.fn() as unknown) as NextApiResponse
+    await handler(
+      { body: symptom } as NextApiRequest,
+      ({
+        send: (jest.fn() as unknown) as NextApiResponse,
+        status: mockStatus,
+      } as unknown) as NextApiResponse
+    )
+
+    expect(global.console.error).toHaveBeenCalledWith('Connection error')
+    expect(mockStatus).toHaveBeenCalledWith(500)
   })
 })
