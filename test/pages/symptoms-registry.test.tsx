@@ -99,9 +99,13 @@ describe('Home page', () => {
   })
 
   test('should press fever radio button', () => {
-    const radioOption = screen.getAllByText(/Sí/i)
-    userEvent.click(radioOption[0])
-    expect(radioOption[0]).toBeInTheDocument()
+    const radioOption = screen
+      .getAllByText(/^sí$/i)[0]
+      .closest('label')
+      ?.querySelector('input') as HTMLElement
+    expect(radioOption).not.toBeChecked()
+    userEvent.click(radioOption)
+    expect(radioOption).toBeChecked()
   })
 
   test('should not render painbox when painLevel is invalid', () => {
