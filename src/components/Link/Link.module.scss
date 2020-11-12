@@ -1,0 +1,29 @@
+$light-green: #00afa2;
+$white: #ffffff;
+$dark-green: #03877d;
+.link {
+  display: inline-flex;
+  width: 100%;
+  height: 2.5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  background-color: $light-green;
+  color: $white;
+
+  &:hover {
+    background-color: $dark-green;
+  }
+
+  &.secondary {
+    background-color: $white;
+    color: $light-green;
+    border: 2px solid $light-green;
+
+    &:hover {
+      background-color: $dark-green;
+      color: $white;
+    }
+  }
+}

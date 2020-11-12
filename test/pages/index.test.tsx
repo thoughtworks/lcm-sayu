@@ -31,8 +31,7 @@ describe('Home page', () => {
     render(<WelcomeSayu />)
 
     const button = screen.getByText(/registrar síntomas/i)
-    userEvent.click(button)
-    expect(mockPush).toHaveBeenCalledWith('/face-scale-screen')
+    expect(button).toHaveAttribute('href', '/face-scale-screen')
   })
 
   test('when click on logout button should call signout', () => {

@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import { screen, cleanup, render } from '@testing-library/react'
 import { ThemeProvider } from '@chakra-ui/core'
 import { SuccessfulSymptomsRegistry } from 'src/steps/SuccessfulSymptomsRegistry'
@@ -30,7 +29,6 @@ describe('<SuccessfulSymptomRegistry />', () => {
 
   test('should show welcome screen when button is clicked', () => {
     const okButton = screen.getByText(/volver al inicio/i)
-    userEvent.click(okButton)
-    expect(mockPush).toHaveBeenCalledWith('/')
+    expect(okButton).toHaveAttribute('href', '/')
   })
 })

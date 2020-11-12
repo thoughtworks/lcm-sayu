@@ -6,8 +6,9 @@ import axios from 'axios'
 import { SymptomSlider } from 'src/components/SymptomSlider/SymptomSlider'
 import { PainBox } from 'src/components/PainBox/PainBox'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
-import { CustomButton } from 'src/components/CustomButton/CustomButton'
+import { SubmitButton } from 'src/components/SubmitButton'
 import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRadioButton'
+import Link from 'src/components/Link'
 
 function SymptomsRegistry() {
   const router = useRouter()
@@ -51,26 +52,10 @@ function SymptomsRegistry() {
         </Stack>
 
         <Stack marginTop={8} width="100%" align="center">
-          <CustomButton
-            backgroundColor="lightGreen"
-            color="white"
-            hover={{ backgroundColor: 'darkGreen' }}
-            label="Registrar"
-            type="submit"
-          />
+          <SubmitButton label="Registrar" />
         </Stack>
         <Stack marginTop={2} width="100%" align="center">
-          <CustomButton
-            backgroundColor="white"
-            color="lightGreen"
-            borderColor="lightGreen"
-            border="2px"
-            hover={{ backgroundColor: 'darkGreen', color: 'white' }}
-            onClick={() => {
-              router.push('/')
-            }}
-            label="Cancelar"
-          />
+          <Link href="/" label="Cancelar" secondaryStyle />
         </Stack>
       </form>
     </>

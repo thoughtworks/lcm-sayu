@@ -1,15 +1,13 @@
 import React from 'react'
-import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/client'
-import { Flex, Image, Text, Stack } from '@chakra-ui/core'
 
-import { CustomButton } from 'src/components/CustomButton'
+import { Flex, Image, Text, Stack } from '@chakra-ui/core'
 import withSession from 'src/hoc/WithSession'
 
 import styles from './WelcomeSayu.module.scss'
+import Link from 'src/components/Link'
 
 const WelcomeSayu = () => {
-  const router = useRouter()
   const [session, loading] = useSession()
 
   return (
@@ -48,15 +46,7 @@ const WelcomeSayu = () => {
           hijo/hija.
         </Text>
         <Stack marginTop={70} />
-        <CustomButton
-          backgroundColor="lightGreen"
-          color="white"
-          hover={{ backgroundColor: 'darkGreen' }}
-          onClick={() => {
-            router.push('/face-scale-screen')
-          }}
-          label="Registrar síntomas"
-        />
+        <Link href="/face-scale-screen" label="Registrar síntomas" />
       </Stack>
     </Flex>
   )

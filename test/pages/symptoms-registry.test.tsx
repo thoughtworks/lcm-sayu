@@ -79,8 +79,7 @@ describe('Home page', () => {
 
   test('should redirect to home when pressing cancel', () => {
     const cancelButton = screen.getByText(/Cancelar/i)
-    userEvent.click(cancelButton)
-    expect(mockPush).toHaveBeenCalledWith('/')
+    expect(cancelButton).toHaveAttribute('href', '/')
   })
 
   test('should redirect to succesful symptoms registry when pressing register', async () => {
