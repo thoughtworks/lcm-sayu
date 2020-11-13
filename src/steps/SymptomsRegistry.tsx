@@ -9,6 +9,7 @@ import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { SubmitButton } from 'src/components/SubmitButton'
 import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRadioButton'
 import Link from 'src/components/Link'
+import withSession from 'src/hoc/WithSession'
 
 function SymptomsRegistry() {
   const router = useRouter()
@@ -81,4 +82,4 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
     router.push('/failed-symptoms-registry')
   }
 }
-export { SymptomsRegistry }
+export default withSession(SymptomsRegistry, 'tutor')

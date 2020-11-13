@@ -22,6 +22,9 @@ jest.mock('next/router', () => ({
   }),
 }))
 
+jest.mock('next-auth/client', () => ({
+  useSession: jest.fn().mockReturnValue([{ role: 'tutor' }, false]),
+}))
 describe('Home page', () => {
   beforeEach(() => {
     render(<SymptomsRegistry />)

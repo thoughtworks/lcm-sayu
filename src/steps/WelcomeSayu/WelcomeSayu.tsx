@@ -51,4 +51,4 @@ const WelcomeSayu = () => {
     </Flex>
   )
 }
-export default withSession(WelcomeSayu, ['tutor'])
+export default withSession(WelcomeSayu, 'tutor')

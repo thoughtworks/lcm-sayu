@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, Stack } from '@chakra-ui/core'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { FaceButton } from 'src/components/FaceButton/FaceButton'
+import withSession from 'src/hoc/WithSession'
 
 const FaceScaleScreen = () => {
   return (
@@ -35,4 +36,4 @@ const FaceScaleScreen = () => {
   )
 }
 
-export { FaceScaleScreen }
+export default withSession(FaceScaleScreen, 'tutor')

@@ -1,10 +1,11 @@
-import { useSession } from 'next-auth/client'
+import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import { useSession, getSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 export default function withSession<P>(
   WrappedComponent: React.ComponentType<P>,
-  roles: ('tutor' | 'enfermero')[]
+  roles: 'tutor' | 'enfermero'
 ): (props: P) => JSX.Element {
   return (props: P) => {
     const [session, loading] = useSession()
@@ -14,10 +15,22 @@ export default function withSession<P>(
       if (!session && !loading) {
         router.push('/login')
       }
-      if (session && !roles.includes(session.rol)) {
+      if (session && !roles.includes(session.role)) {
         router.push('/_error?error=Unauthorized')
       }
     })
     return <WrappedComponent {...props} />
   }
 }
+const withSessionServer = (
+  handler: NextApiHandler,
+  role: 'tutor' | 'enfermero'
+) => {
+  return async (req: NextApiRequest, res: NextApiResponse) => {
+    const session = await getSession({ req })
+    console.warn('session', session)
+    console.warn('role', role)
+    return handler(req, res)
+  }
+}
+export { withSessionServer }

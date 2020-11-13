@@ -1,1 +1,1 @@
-export { SymptomsRegistry as default } from 'src/steps/SymptomsRegistry'
+export { default } from 'src/steps/SymptomsRegistry'

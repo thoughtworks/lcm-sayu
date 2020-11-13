@@ -1,2 +1,1 @@
-import WelcomeSayu from 'src/steps/WelcomeSayu'
-export default WelcomeSayu
+export { default } from 'src/steps/WelcomeSayu'
