@@ -26,7 +26,7 @@ const options = {
   secret: process.env.SECRET,
   callbacks: {
     session: async (session: SessionBase) => {
-      return { ...session, rol: 'tutor' }
+      return { ...session, role: 'tutor' }
     },
     signIn: async (user: User) => {
       const ALLOWED_USERS = ['bsoto@thoughtworks.com', 'bherreran24@gmail.com']

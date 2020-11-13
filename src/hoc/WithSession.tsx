@@ -28,8 +28,13 @@ const withSessionServer = (
 ) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getSession({ req })
-    console.warn('session', session)
-    console.warn('role', role)
+    if (!session || session.role !== role) {
+      res.status(401)
+      res.send(null)
+      console.error('Access denied for user', session)
+      return
+    }
+
     return handler(req, res)
   }
 }
