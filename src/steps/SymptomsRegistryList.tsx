@@ -4,6 +4,8 @@ import axios from 'axios'
 
 import { default as SymptomsLegend } from '../components/SymptomsLegend/SymptomsLegend'
 import { default as SymptomsDailyValues } from '../components/SymptomsDailyValues/SymptomsDailyValues'
+import { DateBox } from '../components/DateBox/DateBox'
+
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 
 const SymptomsRegistryList = () => {
@@ -77,6 +79,7 @@ const SymptomsRegistryList = () => {
         <Box>
           <SymptomsLegend />
         </Box>
+        <DateBox symptomDate="Miercoles 7 de noviembre" />
         {registries?.map((registry) => (
           <Box key={registry.id}>
             <SymptomsDailyValues

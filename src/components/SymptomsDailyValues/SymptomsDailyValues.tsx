@@ -26,9 +26,6 @@ const SymptomsDailyValues = ({
   feverLevel,
 }: SymptomsLevel) => (
   <Box>
-    <Box mb={1}>
-      <div className={styles.dia}>Miércoles, 07</div>
-    </Box>
     <Stack isInline spacing={1}>
       <Text fontSize={'xs'} ml={2} lineHeight={'tall'}>
         {symptomDate}

@@ -106,7 +106,10 @@ export class RegistryService {
 
     let count = 0
 
+    let symptomsGroupSaved = false
+
     registries.forEach((registry) => {
+      symptomsGroupSaved = false
       count += 1
       currentDate = registry.creationDate
 
@@ -125,6 +128,7 @@ export class RegistryService {
         }
         registriesDTO.push(registryDTO)
         firstIteration = true
+        symptomsGroupSaved = true
       }
 
       if (firstIteration) {
@@ -158,7 +162,7 @@ export class RegistryService {
       }
     })
 
-    if (!firstIteration) {
+    if (!symptomsGroupSaved) {
       const lastRegistryDTO: RegistryDTO = {
         id: count,
         symptomDate: symptomsDate.toDateString(),
