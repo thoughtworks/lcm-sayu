@@ -1,6 +1,7 @@
+import { createConnection } from 'typeorm'
+import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { Registry } from 'src/model/Registry'
 import { Symptom } from 'src/model/Symptom'
-import { createConnection, LessThan } from 'typeorm'
 
 export class RegistryService {
   async saveRegistry(symptomsToRegister: any): Promise<void> {
@@ -27,18 +28,17 @@ export class RegistryService {
     }
   }
 
-  async registriesRetrieval(registriesDate: Date): Promise<Registry[]> {
+  async registriesRetrieval(): Promise<RegistryDTO[]> {
     const connection = await createConnection()
     try {
       const registryRepository = connection.getRepository<Registry>('Registry')
       const symptomsRegistries = await registryRepository.find({
         relations: ['symptom'],
-        where: { creationDate: LessThan(registriesDate) },
         order: {
           creationDate: 'DESC',
         },
       })
-      return symptomsRegistries
+      return this.toRegistriesDTO(symptomsRegistries)
     } finally {
       connection.close()
     }
@@ -88,5 +88,92 @@ export class RegistryService {
       default:
         false
     }
+  }
+  private toRegistriesDTO(registries: Registry[]): RegistryDTO[] {
+    const registriesDTO: RegistryDTO[] = []
+    let symptomsDate: Date = new Date()
+    let currentDate: Date = new Date()
+    let painLevel = 0
+    let tireLevel = 0
+    let appetiteLevel = 0
+    let nauseaLevel = 0
+    let swallowLevel = 0
+    let airLevel = 0
+    let depositionLevel = false
+    let feverLevel = false
+
+    let firstIteration = true
+
+    let count = 0
+
+    registries.forEach((registry) => {
+      count += 1
+      currentDate = registry.creationDate
+
+      if (!firstIteration && currentDate.getTime() != symptomsDate.getTime()) {
+        const registryDTO: RegistryDTO = {
+          id: count,
+          symptomDate: symptomsDate.toDateString(),
+          painLevel: painLevel,
+          tireLevel: tireLevel,
+          appetiteLevel: appetiteLevel,
+          nauseaLevel: nauseaLevel,
+          swallowLevel: swallowLevel,
+          airLevel: airLevel,
+          depositionLevel: depositionLevel,
+          feverLevel: feverLevel,
+        }
+        registriesDTO.push(registryDTO)
+        firstIteration = true
+      }
+
+      if (firstIteration) {
+        symptomsDate = registry.creationDate
+        firstIteration = false
+      }
+
+      if (registry.symptom.name === 'Dolor') {
+        painLevel = registry.value
+      }
+      if (registry.symptom.name === 'Cansancio') {
+        tireLevel = registry.value
+      }
+      if (registry.symptom.name === 'Apetito') {
+        appetiteLevel = registry.value
+      }
+      if (registry.symptom.name === 'Náuseas') {
+        nauseaLevel = registry.value
+      }
+      if (registry.symptom.name === 'Dificultad para tragar') {
+        swallowLevel = registry.value
+      }
+      if (registry.symptom.name === 'Falta de aire') {
+        airLevel = registry.value
+      }
+      if (registry.symptom.name === 'Constipación') {
+        depositionLevel = Boolean(registry.value)
+      }
+      if (registry.symptom.name === 'Fiebre') {
+        feverLevel = Boolean(registry.value)
+      }
+    })
+
+    if (!firstIteration) {
+      const lastRegistryDTO: RegistryDTO = {
+        id: count,
+        symptomDate: symptomsDate.toDateString(),
+        painLevel: painLevel,
+        tireLevel: tireLevel,
+        appetiteLevel: appetiteLevel,
+        nauseaLevel: nauseaLevel,
+        swallowLevel: swallowLevel,
+        airLevel: airLevel,
+        depositionLevel: depositionLevel,
+        feverLevel: feverLevel,
+      }
+      registriesDTO.push(lastRegistryDTO)
+    }
+
+    return registriesDTO
   }
 }
