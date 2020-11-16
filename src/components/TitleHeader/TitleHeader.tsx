@@ -19,14 +19,10 @@ const TitleHeader = () => {
         </button>
       </Flex>
       <Flex direction="column">
-        <Text marginTop={5} fontSize={['md', 'lg', 'lg', 'xl']}>
+        <Text marginTop={5} fontSize="sm">
           Cuéntale a sayu cómo te sientes hoy
         </Text>
-        <Text
-          fontWeight="bold"
-          marginTop={5}
-          fontSize={['sm', 'md', 'md', 'lg']}
-        >
+        <Text fontWeight="bold" marginTop={5} fontSize="sm">
           Registro de dolor
         </Text>
       </Flex>

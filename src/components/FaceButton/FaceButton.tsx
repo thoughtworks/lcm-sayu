@@ -63,11 +63,7 @@ const FaceButton = ({ painValue }: FaceButtonProps) => {
         />
       </button>
       <Text textAlign="center">{faceInfo[painValue].number}</Text>
-      <Text
-        paddingLeft={[1, 2, 3, 10]}
-        textAlign="center"
-        fontSize={['sm', 'md', 'lg', 'xl']}
-      >
+      <Text paddingLeft={[1, 2, 3, 10]} textAlign="center" fontSize="sm">
         {faceInfo[painValue].description}
       </Text>
     </Flex>
