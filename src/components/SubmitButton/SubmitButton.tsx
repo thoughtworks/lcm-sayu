@@ -15,12 +15,12 @@ const SubmitButton: FunctionComponent<SubmitButtonProps> = ({
 
   return (
     <Button
-      backgroundColor={backgroundColor}
-      color={color}
-      width={['100%', '50%', '30%', '25%']}
-      _hover={hover}
       onClick={onClick}
       type="submit"
+      isFullWidth
+      color={color}
+      backgroundColor={backgroundColor}
+      _hover={hover}
     >
       {label}
     </Button>
