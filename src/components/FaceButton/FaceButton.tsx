@@ -1,6 +1,7 @@
 import React from 'react'
-import { Image, Text, Flex } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
+
+import styles from './FaceButton.module.scss'
 
 const faceInfo: { [key: string]: any } = {
   faceZero: {
@@ -48,7 +49,7 @@ type FaceButtonProps = {
 const FaceButton = ({ painValue }: FaceButtonProps) => {
   const router = useRouter()
   return (
-    <Flex direction="column" align="center">
+    <section id={styles['face-button']}>
       <button
         onClick={() => {
           router.push({
@@ -57,16 +58,15 @@ const FaceButton = ({ painValue }: FaceButtonProps) => {
           })
         }}
       >
-        <Image
+        <img
+          className={styles['face-level']}
           src={faceInfo[painValue].img}
           alt={faceInfo[painValue].description}
         />
       </button>
-      <Text textAlign="center">{faceInfo[painValue].number}</Text>
-      <Text paddingLeft={[1, 2, 3, 10]} textAlign="center" fontSize="sm">
-        {faceInfo[painValue].description}
-      </Text>
-    </Flex>
+      <p className={styles['number']}>{faceInfo[painValue].number}</p>
+      <p className={styles['description']}>{faceInfo[painValue].description}</p>
+    </section>
   )
 }
 export { FaceButton }
