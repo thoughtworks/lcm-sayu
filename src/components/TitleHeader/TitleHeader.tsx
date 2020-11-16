@@ -7,7 +7,7 @@ const TitleHeader = () => {
   return (
     <Box marginTop={5}>
       <Flex justify="space-between">
-        <button onClick={() => router.back()}>
+        <button type="button" onClick={() => router.back()}>
           <Image src="img/back_arrow.svg" alt="Ir atrás" />
         </button>
         <button
