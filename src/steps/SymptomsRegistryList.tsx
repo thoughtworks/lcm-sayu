@@ -13,12 +13,12 @@ const SymptomsRegistryList = () => {
     getRegistries()
   }, [])
 
-  const [registries, setRegistries] = useState<RegistryDTO[]>()
+  const [viewRegistries, setViewRegistries] = useState<ViewRegistry[]>()
 
   async function getRegistries(): Promise<void> {
     try {
       const rs = await axios.get('/api/registry-read')
-      setRegistries(rs.data)
+      setViewRegistries(toViewRegistries(rs.data))
       console.log('exito: ', rs.data)
       console.log('toViewRegistries: ', toViewRegistries(rs.data))
     } catch (err) {
@@ -30,7 +30,6 @@ const SymptomsRegistryList = () => {
     day: string
     registries: RegistryDTO[]
   }
-  //const bla = [{ day: 'Miercoles 07', registries: [] }]
 
   function toViewRegistries(registries: RegistryDTO[]): ViewRegistry[] {
     const viewRegistries: ViewRegistry[] = []
@@ -79,22 +78,24 @@ const SymptomsRegistryList = () => {
         <Box>
           <SymptomsLegend />
         </Box>
-        <DateBox symptomDate="Miercoles 7 de noviembre" />
-        {registries?.map((registry) => (
-          <Box key={registry.id}>
-            <SymptomsDailyValues
-              key={registry.id}
-              symptomDate={registry.symptomDate}
-              painLevel={registry.painLevel}
-              tireLevel={registry.tireLevel}
-              appetiteLevel={registry.appetiteLevel}
-              nauseaLevel={registry.nauseaLevel}
-              swallowLevel={registry.swallowLevel}
-              airLevel={registry.airLevel}
-              depositionLevel={registry.depositionLevel}
-              feverLevel={registry.feverLevel}
-            />
-          </Box>
+        {viewRegistries?.map(({ day, registries }) => (
+          <div key={day}>
+            <DateBox symptomDate={day} />
+            {registries.map((registry) => (
+              <SymptomsDailyValues
+                key={registry.id}
+                symptomDate={registry.symptomDate}
+                painLevel={registry.painLevel}
+                tireLevel={registry.tireLevel}
+                appetiteLevel={registry.appetiteLevel}
+                nauseaLevel={registry.nauseaLevel}
+                swallowLevel={registry.swallowLevel}
+                airLevel={registry.airLevel}
+                depositionLevel={registry.depositionLevel}
+                feverLevel={registry.feverLevel}
+              />
+            ))}
+          </div>
         ))}
       </Stack>
     </>
