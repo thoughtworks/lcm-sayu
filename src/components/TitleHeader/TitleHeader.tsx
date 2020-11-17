@@ -11,6 +11,7 @@ const TitleHeader = () => {
           <Image src="img/back_arrow.svg" alt="Ir atrás" />
         </button>
         <button
+          type="button"
           onClick={() => {
             router.push('/')
           }}
