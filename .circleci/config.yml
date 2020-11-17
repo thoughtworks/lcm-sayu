@@ -86,7 +86,7 @@ jobs:
       - run:
           name: Update ECS service
           command: |
-            aws --region $AWS_DEFAULT_REGION ecs update-service --force-new-deployment --service lcm-sayu-service-dev --cluster lcm-sayu-cluster-dev
+            aws --region $AWS_DEFAULT_REGION ecs update-service --force-new-deployment --task-definition lcm-sayu-task-dev --service lcm-sayu-service-dev --cluster lcm-sayu-cluster-dev
 
 workflows:
   version: 2
