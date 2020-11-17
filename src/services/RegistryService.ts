@@ -106,14 +106,16 @@ export class RegistryService {
 
     let count = 0
 
-    let symptomsGroupSaved = false
-
     registries.forEach((registry) => {
-      symptomsGroupSaved = false
       count += 1
       currentDate = registry.creationDate
 
-      if (!firstIteration && currentDate.getTime() != symptomsDate.getTime()) {
+      if (firstIteration) {
+        symptomsDate = currentDate
+        firstIteration = false
+      }
+
+      if (currentDate.getTime() != symptomsDate.getTime()) {
         const registryDTO: RegistryDTO = {
           id: count,
           symptomDate: symptomsDate.toDateString(),
@@ -128,12 +130,6 @@ export class RegistryService {
         }
         registriesDTO.push(registryDTO)
         firstIteration = true
-        symptomsGroupSaved = true
-      }
-
-      if (firstIteration) {
-        symptomsDate = registry.creationDate
-        firstIteration = false
       }
 
       if (registry.symptom.name === 'Dolor') {
@@ -162,7 +158,7 @@ export class RegistryService {
       }
     })
 
-    if (!symptomsGroupSaved) {
+    if (!firstIteration) {
       const lastRegistryDTO: RegistryDTO = {
         id: count,
         symptomDate: symptomsDate.toDateString(),
