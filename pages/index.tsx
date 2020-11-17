@@ -1,1 +1,1 @@
-export { WelcomeSayu as default } from 'src/steps/WelcomeSayu'
+export { default } from 'src/steps/WelcomeSayu'

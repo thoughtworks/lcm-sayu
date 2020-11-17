@@ -3,12 +3,16 @@ import { cleanup, render, screen } from '@testing-library/react'
 import { ThemeProvider } from '@chakra-ui/core'
 import userEvent from '@testing-library/user-event'
 
-import { FaceScaleScreen } from 'src/steps/FaceScaleScreen'
+import FaceScaleScreen from 'src/steps/FaceScaleScreen'
 
 const mockPush = jest.fn().mockResolvedValue(null)
 const mockBack = jest.fn()
 jest.mock('next/router', () => ({
   useRouter: () => ({ push: mockPush, back: mockBack }),
+}))
+
+jest.mock('next-auth/client', () => ({
+  useSession: jest.fn().mockReturnValue([{ role: 'tutor' }, false]),
 }))
 
 describe('<FaceScaleScreen />', () => {

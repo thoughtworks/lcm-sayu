@@ -1,1 +1,1 @@
-export { FaceScaleScreen as default } from 'src/steps/FaceScaleScreen'
+export { default } from 'src/steps/FaceScaleScreen'

@@ -1,0 +1,20 @@
+#face-button {
+  display: flex;
+  flex-direction: column;
+
+  .face-level {
+    width: 40px;
+    max-width: none;
+  }
+
+  .number {
+    text-align: center;
+    font-weight: bolder;
+    margin: 5px 0;
+  }
+
+  .description {
+    font-size: 10px;
+    text-align: center;
+  }
+}

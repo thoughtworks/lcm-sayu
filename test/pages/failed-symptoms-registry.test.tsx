@@ -1,5 +1,4 @@
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import { screen, cleanup, render } from '@testing-library/react'
 import { ThemeProvider } from '@chakra-ui/core'
 import { FailedSymptomsRegistry } from 'src/steps/FailedSymptomsRegistry'
@@ -30,13 +29,11 @@ describe('<FailedSymptomRegistry />', () => {
 
   test('should show face scale screen when button is clicked', () => {
     const retryButton = screen.getByText(/volver a intentarlo/i)
-    userEvent.click(retryButton)
-    expect(mockPush).toHaveBeenCalledWith('/face-scale-screen')
+    expect(retryButton).toHaveAttribute('href', '/face-scale-screen')
   })
 
   test('should show welcome screen when button is clicked', () => {
     const cancelButton = screen.getByText(/salir/i)
-    userEvent.click(cancelButton)
-    expect(mockPush).toHaveBeenCalledWith('/')
+    expect(cancelButton).toHaveAttribute('href', '/')
   })
 })

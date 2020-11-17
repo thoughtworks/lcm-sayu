@@ -1,8 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiHandler } from 'next'
+import { withSessionServer } from 'src/hoc/WithSession'
 
 import { RegistryService } from 'src/services/RegistryService'
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: NextApiHandler = async (req, res) => {
   const symptoms = req.body
   try {
     const registryService = new RegistryService()
@@ -15,4 +16,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   res.send(null)
 }
 
-export default handler
+export default withSessionServer(handler, 'tutor')

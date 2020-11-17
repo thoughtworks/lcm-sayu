@@ -11,15 +11,20 @@ import SymptomsRegistry from 'pages/symptoms-registry'
 
 jest.mock('axios')
 const mockPush = jest.fn().mockResolvedValue(null)
+
+const mockQuery = {
+  'pain-level': '0',
+}
 jest.mock('next/router', () => ({
   useRouter: () => ({
-    query: {
-      'pain-level': '0',
-    },
+    query: mockQuery,
     push: mockPush,
   }),
 }))
 
+jest.mock('next-auth/client', () => ({
+  useSession: jest.fn().mockReturnValue([{ role: 'tutor' }, false]),
+}))
 describe('Home page', () => {
   beforeEach(() => {
     render(<SymptomsRegistry />)
@@ -77,8 +82,7 @@ describe('Home page', () => {
 
   test('should redirect to home when pressing cancel', () => {
     const cancelButton = screen.getByText(/Cancelar/i)
-    userEvent.click(cancelButton)
-    expect(mockPush).toHaveBeenCalledWith('/')
+    expect(cancelButton).toHaveAttribute('href', '/')
   })
 
   test('should redirect to succesful symptoms registry when pressing register', async () => {
@@ -97,8 +101,24 @@ describe('Home page', () => {
   })
 
   test('should press fever radio button', () => {
-    const radioOption = screen.getAllByText(/Sí/i)
-    userEvent.click(radioOption[0])
-    expect(radioOption[0]).toBeInTheDocument()
+    const radioOption = screen
+      .getAllByText(/^sí$/i)[0]
+      .closest('label')
+      ?.querySelector('input') as HTMLElement
+    expect(radioOption).not.toBeChecked()
+    userEvent.click(radioOption)
+    expect(radioOption).toBeChecked()
+  })
+
+  test('should not render painbox when painLevel is invalid', () => {
+    mockQuery['pain-level'] = 'bla'
+    render(<SymptomsRegistry />)
+
+    expect(screen.queryByText(/sin dolor/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/duele un poco/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/duele un poco más/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/duele aún más/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/duele mucho/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/el peor dolor/i)).not.toBeInTheDocument
   })
 })

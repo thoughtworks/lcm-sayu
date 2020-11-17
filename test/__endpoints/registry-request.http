@@ -1,5 +1,6 @@
-POST http://localhost:3000/api/registry-save HTTP/1.1
+POST {{host}}/api/registry-save HTTP/1.1
 content-type: application/json
+Cookie: {{cookie}}
 
 {
     "fiebre": 1,
