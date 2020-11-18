@@ -7,7 +7,7 @@ type DateBoxProps = {
 }
 
 const DateBox = ({ symptomDate }: DateBoxProps) => (
-  <Box mb={1}>
+  <Box>
     <div className={styles.dia}>{symptomDate}</div>
   </Box>
 )

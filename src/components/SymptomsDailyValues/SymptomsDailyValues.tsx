@@ -25,7 +25,7 @@ const SymptomsDailyValues = ({
   depositionLevel,
   feverLevel,
 }: SymptomsLevel) => (
-  <Box>
+  <Box mb={2}>
     <Stack isInline spacing={1}>
       <Text fontSize={'xs'} ml={2} lineHeight={'tall'}>
         {symptomDate}
