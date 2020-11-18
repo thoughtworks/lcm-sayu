@@ -46,17 +46,27 @@ const WelcomeSayu = () => {
           hijo/hija.
         </Text>
         <Stack marginTop={70} />
-        <div className={styles.actions}>
-          <div>
-            <Link href="/seleccion-nivel-dolor" label="Registrar síntomas" />
+
+        {Role.CUIDADOR === session?.role && (
+          <div className={styles.actions}>
+            <div>
+              <Link href="/seleccion-nivel-dolor" label="Registrar síntomas" />
+            </div>
+            <div className={styles['symptom-registry-list-link']}>
+              <Link
+                href="/ver-registros-sintomas"
+                label="Ver historial de síntomas"
+              />
+            </div>
           </div>
-          <div className={styles['symptom-registry-list-link']}>
-            <Link
-              href="/ver-registros-sintomas"
-              label="Ver historial de síntomas"
-            />
-          </div>
-        </div>
+        )}
+        {Role.TRATANTE === session?.role && (
+          <Link
+            href="/tratante/gestion-usuario"
+            label="Gestionar usuarios"
+            secondaryStyle
+          />
+        )}
       </Stack>
     </Flex>
   )

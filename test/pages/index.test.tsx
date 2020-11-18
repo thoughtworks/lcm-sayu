@@ -42,6 +42,10 @@ describe('Home page', () => {
     const signoutButton = screen.getByText(/^salir$/i)
     userEvent.click(signoutButton)
 
-    expect(mockSignOut).toHaveBeenCalled()
+    const userManagementButton = screen.getByText(/^gestionar usuarios$/i)
+    expect(userManagementButton).toHaveAttribute(
+      'href',
+      '/tratante/gestion-usuario'
+    )
   })
 })

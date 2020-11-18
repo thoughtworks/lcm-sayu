@@ -21,7 +21,12 @@ function SymptomsRegistry() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit(painLevel, router))}>
-        <TitleHeader />
+        <TitleHeader
+          closeButton
+          title="Cuéntale a sayu cómo te sientes hoy"
+          subtitle="Registro de dolor"
+        />
+
         <PainBox painLevel={painLevel} />
         <Text fontSize="md" mb="8" mt="8">
           ¿Tienes otros síntomas? <br /> Regístralos considerando que 0 es

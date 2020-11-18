@@ -10,7 +10,11 @@ import styles from './PainLevelSelection.module.scss'
 const PainLevelSelection = () => {
   return (
     <main id={styles['pain-level-selection']}>
-      <TitleHeader />
+      <TitleHeader
+        closeButton
+        title="Cuéntale a sayu cómo te sientes hoy"
+        subtitle="Registro de dolor"
+      />
 
       <Text fontSize="sm" color="grey">
         Muéstrale a tu hijo/hija este dibujo y explícale lo siguiente: "Elige la
