@@ -19,8 +19,6 @@ const SymptomsRegistryList = () => {
     try {
       const rs = await axios.get('/api/registry-read')
       setViewRegistries(toViewRegistries(rs.data))
-      console.log('exito: ', rs.data)
-      console.log('toViewRegistries: ', toViewRegistries(rs.data))
     } catch (err) {
       console.warn('error registros: ', err)
     }
@@ -31,26 +29,44 @@ const SymptomsRegistryList = () => {
     registries: RegistryDTO[]
   }
 
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timezone: 'UTC',
+  }
+
+  const monthName = viewRegistries?.slice(0, 1)[0].day.split(' ')[3] || ''
+  const month = capitalize(monthName)
+  const year = viewRegistries?.slice(0, 1)[0].day.split(' ')[5] || ''
+
+  function capitalize(word: string): string {
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  }
+
   function toViewRegistries(registries: RegistryDTO[]): ViewRegistry[] {
     const viewRegistries: ViewRegistry[] = []
     let daysRegistry: RegistryDTO[] = []
     let firstIteration = true
-    let symptomsDay = ''
+    let symptomsDay = new Date()
+
     let symptomsGroupSaved = false
 
     registries.forEach((registry) => {
       symptomsGroupSaved = false
-      const currentDay = registry.symptomDate
+      const currentDay = new Date(registry.symptomDate)
+
       if (firstIteration) {
         symptomsDay = currentDay
         firstIteration = false
       }
 
-      if (currentDay === symptomsDay) {
+      if (currentDay.getDate() === symptomsDay.getDate()) {
         daysRegistry.push(registry)
       } else {
         viewRegistries.push({
-          day: symptomsDay,
+          day: symptomsDay.toLocaleDateString('es-CL', options),
           registries: daysRegistry,
         })
         daysRegistry = []
@@ -62,7 +78,7 @@ const SymptomsRegistryList = () => {
 
     if (!symptomsGroupSaved || daysRegistry.length === 1) {
       viewRegistries.push({
-        day: symptomsDay,
+        day: symptomsDay.toLocaleDateString('es-CL', options),
         registries: daysRegistry,
       })
     }
@@ -78,13 +94,20 @@ const SymptomsRegistryList = () => {
         <Box>
           <SymptomsLegend />
         </Box>
+        <Text width={277} textAlign="left">
+          {month + ', ' + year}
+        </Text>
         {viewRegistries?.map(({ day, registries }) => (
           <div key={day}>
-            <DateBox symptomDate={day} />
+            <DateBox
+              symptomDate={capitalize(day.split(' ')[0] + day.split(' ')[1])}
+            />
             {registries.map((registry) => (
               <SymptomsDailyValues
                 key={registry.id}
-                symptomDate={registry.symptomDate}
+                symptomDate={new Date(registry.symptomDate)
+                  .toLocaleTimeString('es-CL')
+                  .slice(0, 5)}
                 painLevel={registry.painLevel}
                 tireLevel={registry.tireLevel}
                 appetiteLevel={registry.appetiteLevel}

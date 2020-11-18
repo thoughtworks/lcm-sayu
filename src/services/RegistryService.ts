@@ -118,7 +118,7 @@ export class RegistryService {
       if (currentDate.getTime() != symptomsDate.getTime()) {
         const registryDTO: RegistryDTO = {
           id: count,
-          symptomDate: symptomsDate.toDateString(),
+          symptomDate: symptomsDate,
           painLevel: painLevel,
           tireLevel: tireLevel,
           appetiteLevel: appetiteLevel,
@@ -161,7 +161,7 @@ export class RegistryService {
     if (!firstIteration) {
       const lastRegistryDTO: RegistryDTO = {
         id: count,
-        symptomDate: symptomsDate.toDateString(),
+        symptomDate: symptomsDate,
         painLevel: painLevel,
         tireLevel: tireLevel,
         appetiteLevel: appetiteLevel,
