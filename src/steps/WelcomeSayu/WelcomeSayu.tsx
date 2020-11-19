@@ -46,7 +46,7 @@ const WelcomeSayu = () => {
           hijo/hija.
         </Text>
         <Stack marginTop={70} />
-        <Link href="/face-scale-screen" label="Registrar síntomas" />
+        <Link href="/seleccion-nivel-dolor" label="Registrar síntomas" />
       </Stack>
     </Flex>
   )
