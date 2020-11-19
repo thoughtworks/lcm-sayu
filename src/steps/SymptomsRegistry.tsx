@@ -80,7 +80,7 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
   }
   try {
     await axios.post('/api/registry-save', request)
-    router.push('/successful-symptoms-registry')
+    router.push('/registro-exitoso-sintomas')
   } catch (err) {
     router.push(`/_error?error=${ErrorCodes.FailedSymptomsRegistry}`)
   }
