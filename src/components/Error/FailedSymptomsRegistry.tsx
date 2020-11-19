@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import { Flex, Image, Text, Stack } from '@chakra-ui/core'
 import Link from 'src/components/Link'
 
-function FailedSymptomsRegistry() {
+const FailedSymptomsRegistry: FunctionComponent = () => {
   return (
     <>
       <Flex direction="column" width="100%" align="center">
@@ -12,7 +12,7 @@ function FailedSymptomsRegistry() {
           Ha ocurrido un error, espera unos minutos e inténtalo nuevamente.
         </Text>
         <Stack marginTop={8} width="100%" align="center">
-          <Link href="/face-scale-screen" label="Volver a intentarlo" />
+          <Link href="/seleccion-nivel-dolor" label="Volver a intentarlo" />
         </Stack>
         <Stack marginTop={2} width="100%" align="center">
           <Link secondaryStyle href="/" label="Salir" />

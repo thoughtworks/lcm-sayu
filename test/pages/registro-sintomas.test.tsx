@@ -98,7 +98,9 @@ describe('Home page', () => {
     const registerButton = screen.getByText(/Registrar/i)
     userEvent.click(registerButton)
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
-    expect(mockPush).toHaveBeenCalledWith('/failed-symptoms-registry')
+    expect(mockPush).toHaveBeenCalledWith(
+      '/_error?error=FailedSymptomsRegistry'
+    )
   })
 
   test('should press fever radio button', () => {
