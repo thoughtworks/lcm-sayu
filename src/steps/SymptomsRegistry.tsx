@@ -3,17 +3,20 @@ import { NextRouter, useRouter } from 'next/router'
 import { Text, Stack, Box } from '@chakra-ui/core'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+
 import { SymptomSlider } from 'src/components/SymptomSlider/SymptomSlider'
 import { PainBox } from 'src/components/PainBox/PainBox'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { SubmitButton } from 'src/components/SubmitButton'
 import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRadioButton'
 import Link from 'src/components/Link'
+import { ErrorCodes } from 'src/components/Error'
+
 import withSession from 'src/hoc/WithSession'
 
 function SymptomsRegistry() {
   const router = useRouter()
-  const painLevel = parseInt(router.query['pain-level'] as string, 10)
+  const painLevel = parseInt(router.query['nivel-dolor'] as string, 10)
   const { handleSubmit, control } = useForm()
   return (
     <>
@@ -77,9 +80,9 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
   }
   try {
     await axios.post('/api/registry-save', request)
-    router.push('/successful-symptoms-registry')
+    router.push('/registro-exitoso-sintomas')
   } catch (err) {
-    router.push('/failed-symptoms-registry')
+    router.push(`/_error?error=${ErrorCodes.FailedSymptomsRegistry}`)
   }
 }
 export default withSession(SymptomsRegistry, 'tutor')

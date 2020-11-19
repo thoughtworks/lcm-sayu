@@ -5,11 +5,11 @@ import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { FaceButton } from 'src/components/FaceButton/FaceButton'
 import withSession from 'src/hoc/WithSession'
 
-import styles from './FaceScaleScreen.module.scss'
+import styles from './PainLevelSelection.module.scss'
 
-const FaceScaleScreen = () => {
+const PainLevelSelection = () => {
   return (
-    <main id={styles['face-scale-screen']}>
+    <main id={styles['pain-level-selection']}>
       <TitleHeader />
 
       <Text fontSize="sm" color="grey">
@@ -34,4 +34,4 @@ const FaceScaleScreen = () => {
   )
 }
 
-export default withSession(FaceScaleScreen, 'tutor')
+export default withSession(PainLevelSelection, 'tutor')

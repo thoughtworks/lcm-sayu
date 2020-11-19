@@ -7,13 +7,13 @@ import {
   waitFor,
 } from 'test/testUtils'
 import axios from 'axios'
-import SymptomsRegistry from 'pages/symptoms-registry'
+import SymptomsRegistry from 'pages/registro-sintomas'
 
 jest.mock('axios')
-const mockPush = jest.fn().mockResolvedValue(null)
 
+const mockPush = jest.fn().mockResolvedValue(null)
 const mockQuery = {
-  'pain-level': '0',
+  'nivel-dolor': '0',
 }
 jest.mock('next/router', () => ({
   useRouter: () => ({
@@ -25,10 +25,11 @@ jest.mock('next/router', () => ({
 jest.mock('next-auth/client', () => ({
   useSession: jest.fn().mockReturnValue([{ role: 'tutor' }, false]),
 }))
+
 describe('Home page', () => {
   beforeEach(() => {
-    render(<SymptomsRegistry />)
     jest.clearAllMocks()
+    render(<SymptomsRegistry />)
   })
 
   afterEach(cleanup)
@@ -89,7 +90,7 @@ describe('Home page', () => {
     const registerButton = screen.getByText(/Registrar/i)
     userEvent.click(registerButton)
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
-    expect(mockPush).toHaveBeenCalledWith('/successful-symptoms-registry')
+    expect(mockPush).toHaveBeenCalledWith('/registro-exitoso-sintomas')
   })
 
   test('should redirect to failed symptoms register when there is an error', async () => {
@@ -97,7 +98,9 @@ describe('Home page', () => {
     const registerButton = screen.getByText(/Registrar/i)
     userEvent.click(registerButton)
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
-    expect(mockPush).toHaveBeenCalledWith('/failed-symptoms-registry')
+    expect(mockPush).toHaveBeenCalledWith(
+      '/_error?error=FailedSymptomsRegistry'
+    )
   })
 
   test('should press fever radio button', () => {
@@ -111,7 +114,7 @@ describe('Home page', () => {
   })
 
   test('should not render painbox when painLevel is invalid', () => {
-    mockQuery['pain-level'] = 'bla'
+    mockQuery['nivel-dolor'] = 'bla'
     render(<SymptomsRegistry />)
 
     expect(screen.queryByText(/sin dolor/i)).not.toBeInTheDocument

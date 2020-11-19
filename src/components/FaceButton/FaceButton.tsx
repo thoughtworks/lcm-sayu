@@ -53,8 +53,8 @@ const FaceButton = ({ painValue }: FaceButtonProps) => {
       <button
         onClick={() => {
           router.push({
-            pathname: '/symptoms-registry',
-            query: { 'pain-level': faceInfo[painValue].click },
+            pathname: '/registro-sintomas',
+            query: { 'nivel-dolor': faceInfo[painValue].click },
           })
         }}
       >

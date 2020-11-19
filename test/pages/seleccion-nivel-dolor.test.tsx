@@ -1,9 +1,8 @@
 import React from 'react'
-import { cleanup, render, screen } from '@testing-library/react'
-import { ThemeProvider } from '@chakra-ui/core'
+import { cleanup, render, screen } from 'test/testUtils'
 import userEvent from '@testing-library/user-event'
 
-import FaceScaleScreen from 'src/steps/FaceScaleScreen'
+import PainLevelSelection from 'src/steps/PainLevelSelection'
 
 const mockPush = jest.fn().mockResolvedValue(null)
 const mockBack = jest.fn()
@@ -15,16 +14,14 @@ jest.mock('next-auth/client', () => ({
   useSession: jest.fn().mockReturnValue([{ role: 'tutor' }, false]),
 }))
 
-describe('<FaceScaleScreen />', () => {
+describe('<PainLevelSelection />', () => {
   beforeEach(() => {
-    render(
-      <ThemeProvider>
-        <FaceScaleScreen />
-      </ThemeProvider>
-    )
+    render(<PainLevelSelection />)
     jest.clearAllMocks()
   })
+
   afterEach(cleanup)
+
   test('should show all instructions to choose a face of face scale screen', () => {
     const sayuTitle = screen.getByText(/Cuéntale a sayu cómo te sientes hoy/i)
     const sayuSubtitle = screen.getByText(/Registro de dolor/i)
@@ -40,8 +37,8 @@ describe('<FaceScaleScreen />', () => {
     const faceNumberZeroButton = screen.getByAltText(/^no duele$/i)
     userEvent.click(faceNumberZeroButton)
     expect(mockPush).toHaveBeenCalledWith({
-      pathname: '/symptoms-registry',
-      query: { 'pain-level': 0 },
+      pathname: '/registro-sintomas',
+      query: { 'nivel-dolor': 0 },
     })
   })
 

@@ -31,7 +31,7 @@ describe('Home page', () => {
     render(<WelcomeSayu />)
 
     const button = screen.getByText(/registrar síntomas/i)
-    expect(button).toHaveAttribute('href', '/face-scale-screen')
+    expect(button).toHaveAttribute('href', '/seleccion-nivel-dolor')
   })
 
   test('when click on logout button should call signout', () => {
