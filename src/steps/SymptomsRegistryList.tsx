@@ -37,13 +37,15 @@ const SymptomsRegistryList = () => {
     timezone: 'UTC',
   }
 
-  const monthName = viewRegistries?.slice(0, 1)[0].day.split(' ')[3] || ''
+  const monthName =
+    viewRegistries?.length != 0
+      ? viewRegistries?.slice(0, 1)[0].day.split(' ')[3]
+      : ''
   const month = capitalize(monthName)
-  const year = viewRegistries?.slice(0, 1)[0].day.split(' ')[5] || ''
-
-  function capitalize(word: string): string {
-    return word.charAt(0).toUpperCase() + word.slice(1)
-  }
+  const year =
+    viewRegistries?.length != 0
+      ? viewRegistries?.slice(0, 1)[0].day.split(' ')[5]
+      : ''
 
   function toViewRegistries(registries: RegistryDTO[]): ViewRegistry[] {
     const viewRegistries: ViewRegistry[] = []
@@ -76,7 +78,10 @@ const SymptomsRegistryList = () => {
       }
     })
 
-    if (!symptomsGroupSaved || daysRegistry.length === 1) {
+    if (
+      viewRegistries.length != 0 &&
+      (!symptomsGroupSaved || daysRegistry.length === 1)
+    ) {
       viewRegistries.push({
         day: symptomsDay.toLocaleDateString('es-CL', options),
         registries: daysRegistry,
@@ -94,35 +99,47 @@ const SymptomsRegistryList = () => {
         <Box>
           <SymptomsLegend />
         </Box>
-        <Text width={277} textAlign="left">
-          {month + ', ' + year}
-        </Text>
-        {viewRegistries?.map(({ day, registries }) => (
-          <div key={day}>
-            <DateBox
-              symptomDate={capitalize(day.split(' ')[0] + day.split(' ')[1])}
-            />
-            {registries.map((registry) => (
-              <SymptomsDailyValues
-                key={registry.id}
-                symptomDate={new Date(registry.symptomDate)
-                  .toLocaleTimeString('es-CL')
-                  .slice(0, 5)}
-                painLevel={registry.painLevel}
-                tireLevel={registry.tireLevel}
-                appetiteLevel={registry.appetiteLevel}
-                nauseaLevel={registry.nauseaLevel}
-                swallowLevel={registry.swallowLevel}
-                airLevel={registry.airLevel}
-                depositionLevel={registry.depositionLevel}
-                feverLevel={registry.feverLevel}
+        {viewRegistries?.length != 0 ? (
+          <Text width={277} textAlign="left">
+            {month + ', ' + year}
+          </Text>
+        ) : (
+          ''
+        )}
+        {viewRegistries?.length != 0 ? (
+          viewRegistries?.map(({ day, registries }) => (
+            <div key={day}>
+              <DateBox
+                symptomDate={capitalize(day.split(' ')[0] + day.split(' ')[1])}
               />
-            ))}
-          </div>
-        ))}
+              {registries.map((registry) => (
+                <SymptomsDailyValues
+                  key={registry.id}
+                  symptomDate={new Date(registry.symptomDate)
+                    .toLocaleTimeString('es-CL')
+                    .slice(0, 5)}
+                  painLevel={registry.painLevel}
+                  tireLevel={registry.tireLevel}
+                  appetiteLevel={registry.appetiteLevel}
+                  nauseaLevel={registry.nauseaLevel}
+                  swallowLevel={registry.swallowLevel}
+                  airLevel={registry.airLevel}
+                  depositionLevel={registry.depositionLevel}
+                  feverLevel={registry.feverLevel}
+                />
+              ))}
+            </div>
+          ))
+        ) : (
+          <Text>Aún no tienes registros</Text>
+        )}
       </Stack>
     </>
   )
+}
+
+function capitalize(word?: string): string {
+  return word ? word.charAt(0).toUpperCase() + word.slice(1) : ''
 }
 
 export { SymptomsRegistryList }
