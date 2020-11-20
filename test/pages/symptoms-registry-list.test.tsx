@@ -5,7 +5,6 @@ import axios from 'axios'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
-const emptyMockedAxios = axios as jest.Mocked<typeof axios>
 
 const symptomsRegistries = [
   {
@@ -131,7 +130,7 @@ describe('<SymptomsRegistryList />', () => {
     mockedAxios.get.mockResolvedValueOnce({ data: [] })
 
     render(<SymptomsRegistryList />)
-    expect(emptyMockedAxios.get).toHaveBeenCalled()
+    expect(mockedAxios.get).toHaveBeenCalled()
 
     const noRegistriesMessage = await screen.findByText(
       /Aún no tienes registros/i
@@ -139,11 +138,65 @@ describe('<SymptomsRegistryList />', () => {
     expect(noRegistriesMessage).toBeInTheDocument()
   })
 
+  test('should display date when only one day is registered', async () => {
+    const oneDayRegistries = [
+      {
+        airLevel: 1,
+        appetiteLevel: 2,
+        depositionLevel: true,
+        feverLevel: true,
+        id: 17,
+        nauseaLevel: 3,
+        painLevel: 4,
+        swallowLevel: 5,
+        symptomDate: '2020-11-13T00:47:56.014Z',
+        tireLevel: 6,
+      },
+      {
+        airLevel: 7,
+        appetiteLevel: 7,
+        depositionLevel: false,
+        feverLevel: false,
+        id: 25,
+        nauseaLevel: 7,
+        painLevel: 7,
+        swallowLevel: 7,
+        symptomDate: '2020-11-13T00:43:17.630Z',
+        tireLevel: 7,
+      },
+    ]
+    mockedAxios.get.mockResolvedValueOnce({ data: oneDayRegistries })
+
+    render(<SymptomsRegistryList />)
+    expect(mockedAxios.get).toHaveBeenCalled()
+
+    const dayThursday = await screen.findByText(/jueves,12/i)
+    expect(dayThursday).toBeInTheDocument()
+
+    const air = await screen.findByText(/^1$/)
+    const appetite = await screen.findByText(/^2$/)
+    const feverDeposition = (await screen.findAllByText(/^SI$/)).length
+    const nausea = await screen.findByText(/^3$/)
+    const pain = await screen.findByText(/^4$/)
+    const swallow = await screen.findByText(/^5$/)
+    const hour = await screen.findByText(/^21:47$/)
+    const tire = await screen.findByText(/^6$/)
+
+    expect(air).toBeInTheDocument()
+    expect(appetite).toBeInTheDocument()
+    expect(feverDeposition).toBe(2)
+    expect(nausea).toBeInTheDocument()
+    expect(pain).toBeInTheDocument()
+    expect(swallow).toBeInTheDocument()
+    expect(hour).toBeInTheDocument()
+    expect(tire).toBeInTheDocument()
+  })
+
   test.skip('should display message when an error happens', async () => {
     mockedAxios.get.mockResolvedValueOnce(null)
 
     render(<SymptomsRegistryList />)
-    expect(emptyMockedAxios.get).toHaveBeenCalled()
+    expect(mockedAxios.get).toHaveBeenCalled()
 
     const errorMessage = await screen.findByText(/Ocurrió un error/i)
     expect(errorMessage).toBeInTheDocument()
