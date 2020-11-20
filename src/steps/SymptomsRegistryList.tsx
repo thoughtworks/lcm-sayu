@@ -7,6 +7,9 @@ import { default as SymptomsDailyValues } from '../components/SymptomsDailyValue
 import { DateBox } from '../components/DateBox/DateBox'
 
 import { RegistryDTO } from 'src/dto/RegistryDTO'
+import 'intl'
+import 'intl/locale-data/jsonp/es'
+global.Intl = require('intl')
 
 const SymptomsRegistryList = () => {
   useEffect(() => {
@@ -55,6 +58,10 @@ const SymptomsRegistryList = () => {
 
     let symptomsGroupSaved = false
 
+    if (registries.length === 0) {
+      return viewRegistries
+    }
+
     registries.forEach((registry) => {
       symptomsGroupSaved = false
       const currentDay = new Date(registry.symptomDate)
@@ -68,7 +75,7 @@ const SymptomsRegistryList = () => {
         daysRegistry.push(registry)
       } else {
         viewRegistries.push({
-          day: symptomsDay.toLocaleDateString('es-CL', options),
+          day: new Intl.DateTimeFormat('es-CL', options).format(symptomsDay),
           registries: daysRegistry,
         })
         daysRegistry = []
@@ -83,7 +90,14 @@ const SymptomsRegistryList = () => {
       (!symptomsGroupSaved || daysRegistry.length === 1)
     ) {
       viewRegistries.push({
-        day: symptomsDay.toLocaleDateString('es-CL', options),
+        day: new Intl.DateTimeFormat('es-CL', options).format(symptomsDay),
+        registries: daysRegistry,
+      })
+    }
+
+    if (viewRegistries.length === 0) {
+      viewRegistries.push({
+        day: new Intl.DateTimeFormat('es-CL', options).format(symptomsDay),
         registries: daysRegistry,
       })
     }
