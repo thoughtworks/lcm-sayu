@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { Text, Stack, Box } from '@chakra-ui/core'
 import axios from 'axios'
 
 import { default as SymptomsLegend } from '../components/SymptomsLegend/SymptomsLegend'
 import { default as SymptomsDailyValues } from '../components/SymptomsDailyValues/SymptomsDailyValues'
 import { DateBox } from '../components/DateBox/DateBox'
+import { ErrorCodes } from 'src/components/Error'
 
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 import 'intl'
@@ -12,6 +14,7 @@ import 'intl/locale-data/jsonp/es'
 global.Intl = require('intl')
 
 const SymptomsRegistryList = () => {
+  const router = useRouter()
   useEffect(() => {
     getRegistries()
   }, [])
@@ -23,7 +26,7 @@ const SymptomsRegistryList = () => {
       const rs = await axios.get('/api/registry-read')
       setViewRegistries(toViewRegistries(rs.data))
     } catch (err) {
-      console.warn('error registros: ', err)
+      router.push(`/_error?error=${ErrorCodes.FailedSymptomsRetrieval}`)
     }
   }
 
