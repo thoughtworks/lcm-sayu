@@ -1,10 +1,16 @@
 import React from 'react'
-import { render, screen, cleanup } from 'test/testUtils'
+import { render, screen, cleanup, waitFor } from 'test/testUtils'
 import { SymptomsRegistryList } from 'src/steps/SymptomsRegistryList'
 import axios from 'axios'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
+const mockPush = jest.fn().mockResolvedValue(null)
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}))
 
 const symptomsRegistries = [
   {
@@ -192,13 +198,13 @@ describe('<SymptomsRegistryList />', () => {
     expect(tire).toBeInTheDocument()
   })
 
-  test.skip('should display message when an error happens', async () => {
-    mockedAxios.get.mockResolvedValueOnce(null)
+  test('should display message when an error happens', async () => {
+    mockedAxios.get.mockRejectedValue(null)
 
     render(<SymptomsRegistryList />)
-    expect(mockedAxios.get).toHaveBeenCalled()
-
-    const errorMessage = await screen.findByText(/Ocurrió un error/i)
-    expect(errorMessage).toBeInTheDocument()
+    await waitFor(() => expect(axios.get).toHaveBeenCalled())
+    expect(mockPush).toHaveBeenCalledWith(
+      '/_error?error=FailedSymptomsRetrieval'
+    )
   })
 })
