@@ -35,6 +35,7 @@ const options = {
         'aldemaro.diaz@thoughtworks.com',
         'daniela.cortes@thoughtworks.com',
         'dsantiba@thoughtworks.com',
+        'ncaceres@calvomackenna.cl',
       ]
       return ALLOWED_USERS.includes(user.email)
     },
