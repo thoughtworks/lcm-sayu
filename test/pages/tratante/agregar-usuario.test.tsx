@@ -42,11 +42,34 @@ describe('<AddUser />', () => {
 
     await waitFor(() =>
       expect(axios.post).toHaveBeenCalledWith('/api/registry-save', {
-        userMail: 'test@test.com',
+        userEmail: 'test@test.com',
         role: 'tratante',
       })
     )
 
     expect(mockPush).toHaveBeenCalledWith('/registro-exitoso-usuario')
+  })
+
+  test('should show required email error when when email is empty', async () => {
+    expect(
+      screen.queryByText(/^Debes ingresar correo electrónico$/)
+    ).not.toBeInTheDocument()
+    const submitButton = screen.getByText(/^Guardar$/)
+    userEvent.click(submitButton)
+    expect(
+      await screen.findByText(/^Debes ingresar correo electrónico$/)
+    ).toBeInTheDocument()
+  })
+
+  test('should show error message when email is not valid', async () => {
+    expect(
+      screen.queryByText(/^Debes ingresar correo electrónico válido$/)
+    ).not.toBeInTheDocument()
+    const emailInput = screen.getByText(/^Correo electrónico$/)
+    userEvent.type(emailInput, 'correo no valido')
+    userEvent.tab()
+    expect(
+      await screen.findByText(/^Debes ingresar correo electrónico válido$/)
+    ).toBeInTheDocument()
   })
 })

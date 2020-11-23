@@ -1,0 +1,17 @@
+@import 'src/styles/colors';
+
+.role {
+  .role-values {
+    display: inline-flex;
+    color: $light-grey;
+    font-size: 12px;
+
+    .role-value {
+      font-size: 12px;
+    }
+  }
+
+  h2 {
+    margin-bottom: 5px;
+  }
+}
