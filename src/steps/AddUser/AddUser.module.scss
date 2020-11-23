@@ -1,0 +1,39 @@
+@import 'src/styles/colors';
+#add-user {
+  font-size: 12px;
+
+  h1 {
+    margin-top: 24px;
+    font-size: 18px;
+  }
+
+  .user-email {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+
+    input {
+      border-radius: 4px;
+      border: 1px solid #e3e8ef;
+      height: 36px;
+    }
+  }
+  .role {
+    margin-top: 20px;
+
+    .role-values {
+      display: inline-flex;
+      color: $light-grey;
+      font-size: 12px;
+      margin-bottom: 30px;
+
+      .role-value {
+        font-size: 12px;
+      }
+    }
+
+    h2 {
+      margin-bottom: 5px;
+    }
+  }
+}
