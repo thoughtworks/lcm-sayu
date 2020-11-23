@@ -1,9 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Registry } from 'src/model/Registry'
 import handler from 'pages/api/registry-read'
-import { RegistryDTO } from 'src/dto/RegistryDTO'
+import { cleanup } from '../../testUtils'
 
-const date = new Date('Fri Nov 20 2020 22:18:33 GMT-0300 (Chile Summer Time)')
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+afterEach(cleanup)
+
+const date = new Date('Fri Nov 20 2020 22:18:33')
 const symptoms: Registry[] = [
   {
     id: 41,
@@ -65,7 +71,7 @@ const symptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náusea',
+      name: 'Náuseas',
     },
   },
   {
@@ -90,26 +96,33 @@ const dateNow = 1604083287383
 global.Date.now = jest.fn().mockReturnValue(dateNow)
 
 describe('Symptom api', () => {
-  test('should return symptoms dto', async () => {
-    const symptomRegistry = {
-      id: 1,
-      symptomDate: date,
-      painLevel: 4,
-      tireLevel: 1,
-      appetiteLevel: 4,
-      nauseaLevel: 3,
-      swallowLevel: 6,
-      airLevel: 5,
-      depositionLevel: true,
-      feverLevel: true,
-    }
-
-    const response = await handler(
+  test('should return symptoms', async () => {
+    const symptomRegistries = [
+      {
+        id: 8,
+        symptomDate: date,
+        painLevel: 4,
+        tireLevel: 1,
+        appetiteLevel: 4,
+        nauseaLevel: 3,
+        swallowLevel: 6,
+        airLevel: 5,
+        depositionLevel: true,
+        feverLevel: true,
+      },
+    ]
+    const mockStatus = (jest.fn() as unknown) as NextApiResponse
+    const mockJson = (jest.fn() as unknown) as NextApiResponse
+    await handler(
       {} as NextApiRequest,
       ({
-        send: (JSON.stringify(symptomRegistry) as unknown) as NextApiResponse,
-        status: (jest.fn() as unknown) as NextApiResponse,
+        send: (jest.fn() as unknown) as NextApiResponse,
+        status: mockStatus,
+        json: mockJson,
       } as unknown) as NextApiResponse
     )
+
+    expect(mockJson).toHaveBeenCalledWith(symptomRegistries)
+    expect(mockStatus).toHaveBeenCalledWith(200)
   })
 })
