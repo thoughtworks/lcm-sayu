@@ -4,8 +4,10 @@ import { useForm, FormProvider } from 'react-hook-form'
 import { SubmitButton } from 'src/components/SubmitButton'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import UserEmail from 'src/components/UserEmail'
-import styles from './AddUser.module.scss'
 import RoleRadioButton from 'src/components/RoleRadioButton'
+import Link from 'src/components/Link'
+
+import styles from './AddUser.module.scss'
 
 const AddUser = () => {
   const methods = useForm({
@@ -35,6 +37,9 @@ const AddUser = () => {
             <RoleRadioButton />
           </div>
           <SubmitButton label="Guardar" />
+          <div className={styles['cancel-link']}>
+            <Link label="Cancelar" href="/" secondaryStyle />
+          </div>
         </form>
       </FormProvider>
     </main>

@@ -72,4 +72,10 @@ describe('<AddUser />', () => {
       await screen.findByText(/^Debes ingresar correo electrónico válido$/)
     ).toBeInTheDocument()
   })
+
+  test('should have a cancel button', async () => {
+    const cancelButton = screen.getByText(/^Cancelar$/)
+
+    expect(cancelButton).toHaveAttribute('href', '/')
+  })
 })
