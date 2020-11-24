@@ -522,4 +522,21 @@ describe('Symptom api', () => {
     expect(global.console.error).toHaveBeenCalledWith('Connection error')
     expect(mockStatus).toHaveBeenCalledWith(500)
   })
+  test('should return nothing when no symptoms are registered', async () => {
+    console.log('Estoy en la prueba')
+    mockFind = jest.fn().mockResolvedValue([])
+    const mockStatus = (jest.fn() as unknown) as NextApiResponse
+    const mockJson = (jest.fn() as unknown) as NextApiResponse
+    await handler(
+      {} as NextApiRequest,
+      ({
+        send: (jest.fn() as unknown) as NextApiResponse,
+        status: mockStatus,
+        json: mockJson,
+      } as unknown) as NextApiResponse
+    )
+
+    expect(mockJson).toHaveBeenCalledWith([])
+    expect(mockStatus).toHaveBeenCalledWith(200)
+  })
 })
