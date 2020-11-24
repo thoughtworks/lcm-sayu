@@ -93,87 +93,83 @@ export class RegistryService {
     const registriesDTO: RegistryDTO[] = []
     let symptomsDate: Date = new Date()
     let currentDate: Date = new Date()
-    let painLevel = 0
-    let tireLevel = 0
-    let appetiteLevel = 0
-    let nauseaLevel = 0
-    let swallowLevel = 0
-    let airLevel = 0
-    let depositionLevel = false
-    let feverLevel = false
 
-    let firstIteration = true
+    let firstIterationOfTheDay = true
 
-    let count = 0
+    let symptomsUniqueID = 0
+
+    let registryDTO: RegistryDTO = {
+      id: 0,
+      symptomDate: new Date(),
+      painLevel: 0,
+      tireLevel: 0,
+      appetiteLevel: 0,
+      nauseaLevel: 0,
+      swallowLevel: 0,
+      airLevel: 0,
+      depositionLevel: false,
+      feverLevel: false,
+    }
 
     registries.forEach((registry) => {
-      count += 1
+      symptomsUniqueID += 1
       currentDate = registry.creationDate
 
-      if (firstIteration) {
+      if (firstIterationOfTheDay) {
         symptomsDate = currentDate
-        firstIteration = false
+        firstIterationOfTheDay = false
       }
 
       if (currentDate.getTime() != symptomsDate.getTime()) {
-        const registryDTO: RegistryDTO = {
-          id: count,
-          symptomDate: symptomsDate,
-          painLevel: painLevel,
-          tireLevel: tireLevel,
-          appetiteLevel: appetiteLevel,
-          nauseaLevel: nauseaLevel,
-          swallowLevel: swallowLevel,
-          airLevel: airLevel,
-          depositionLevel: depositionLevel,
-          feverLevel: feverLevel,
-        }
         registriesDTO.push(registryDTO)
-        firstIteration = true
+        firstIterationOfTheDay = true
       }
-
-      if (registry.symptom.name === 'Dolor') {
-        painLevel = registry.value
-      }
-      if (registry.symptom.name === 'Cansancio') {
-        tireLevel = registry.value
-      }
-      if (registry.symptom.name === 'Apetito') {
-        appetiteLevel = registry.value
-      }
-      if (registry.symptom.name === 'Náuseas') {
-        nauseaLevel = registry.value
-      }
-      if (registry.symptom.name === 'Dificultad para tragar') {
-        swallowLevel = registry.value
-      }
-      if (registry.symptom.name === 'Falta de aire') {
-        airLevel = registry.value
-      }
-      if (registry.symptom.name === 'Constipación') {
-        depositionLevel = Boolean(registry.value)
-      }
-      if (registry.symptom.name === 'Fiebre') {
-        feverLevel = Boolean(registry.value)
-      }
+      registryDTO = this.setSymptomLevels(
+        registry,
+        registryDTO,
+        symptomsUniqueID
+      )
     })
 
-    if (!firstIteration) {
-      const lastRegistryDTO: RegistryDTO = {
-        id: count,
-        symptomDate: symptomsDate,
-        painLevel: painLevel,
-        tireLevel: tireLevel,
-        appetiteLevel: appetiteLevel,
-        nauseaLevel: nauseaLevel,
-        swallowLevel: swallowLevel,
-        airLevel: airLevel,
-        depositionLevel: depositionLevel,
-        feverLevel: feverLevel,
-      }
-      registriesDTO.push(lastRegistryDTO)
+    if (!firstIterationOfTheDay) {
+      registriesDTO.push(registryDTO)
     }
 
     return registriesDTO
+  }
+
+  private setSymptomLevels(
+    registry: Registry,
+    registryDTO: RegistryDTO,
+    symptomsUniqueID: number
+  ) {
+    registryDTO.symptomDate = registry.creationDate
+    registryDTO.id = symptomsUniqueID
+    switch (registry.symptom.name) {
+      case 'Dolor':
+        registryDTO.painLevel = registry.value
+        break
+      case 'Cansancio':
+        registryDTO.tireLevel = registry.value
+        break
+      case 'Apetito':
+        registryDTO.appetiteLevel = registry.value
+        break
+      case 'Náuseas':
+        registryDTO.nauseaLevel = registry.value
+        break
+      case 'Dificultad para tragar':
+        registryDTO.swallowLevel = registry.value
+        break
+      case 'Falta de aire':
+        registryDTO.airLevel = registry.value
+        break
+      case 'Constipación':
+        registryDTO.depositionLevel = Boolean(registry.value)
+        break
+      case 'Fiebre':
+        registryDTO.feverLevel = Boolean(registry.value)
+    }
+    return registryDTO
   }
 }
