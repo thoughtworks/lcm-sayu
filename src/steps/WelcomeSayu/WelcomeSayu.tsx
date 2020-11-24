@@ -52,7 +52,7 @@ const WelcomeSayu = () => {
           </div>
           <div className={styles['symptom-registry-list-link']}>
             <Link
-              href="/symptoms-registry-list"
+              href="/ver-registros-sintomas"
               label="Ver historial de síntomas"
             />
           </div>
