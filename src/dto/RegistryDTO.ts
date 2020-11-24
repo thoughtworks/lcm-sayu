@@ -1,6 +1,6 @@
 export type RegistryDTO = {
   id: number
-  symptomDate: Date
+  symptomDate: number
   painLevel: number
   tireLevel: number
   appetiteLevel: number

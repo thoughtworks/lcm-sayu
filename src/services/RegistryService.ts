@@ -100,7 +100,7 @@ export class RegistryService {
 
     let registryDTO: RegistryDTO = {
       id: 0,
-      symptomDate: new Date(),
+      symptomDate: 0,
       painLevel: 0,
       tireLevel: 0,
       appetiteLevel: 0,
@@ -143,7 +143,14 @@ export class RegistryService {
     registryDTO: RegistryDTO,
     symptomsUniqueID: number
   ) {
-    registryDTO.symptomDate = registry.creationDate
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timezone: 'UTC',
+    }
+    registryDTO.symptomDate = registry.creationDate.getTime()
     registryDTO.id = symptomsUniqueID
     switch (registry.symptom.name) {
       case 'Dolor':
