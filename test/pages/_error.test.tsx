@@ -123,4 +123,26 @@ describe('_error', () => {
       expect(failureMessage).toBeInTheDocument()
     })
   })
+
+  describe('<FailedSymptomRetrieval />', () => {
+    beforeEach(() => {
+      mockQuery.error = 'FailedSymptomsRetrieval'
+      render(<ErrorPage statusCode={0} />)
+      jest.clearAllMocks()
+    })
+
+    afterEach(cleanup)
+
+    test('should show failure message', () => {
+      const failureMessage = screen.getByText(
+        /Ha ocurrido un error, espera unos minutos e inténtalo nuevamente/i
+      )
+      expect(failureMessage).toBeInTheDocument()
+    })
+
+    test('should show welcome screen when button is clicked', () => {
+      const cancelButton = screen.getByText(/salir/i)
+      expect(cancelButton).toHaveAttribute('href', '/')
+    })
+  })
 })
