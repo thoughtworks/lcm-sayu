@@ -15,19 +15,24 @@ global.Intl = require('intl')
 
 const SymptomsRegistryList = () => {
   const router = useRouter()
+
   useEffect(() => {
     getRegistries()
   }, [])
 
   const [viewRegistries, setViewRegistries] = useState<ViewRegistry[]>()
 
-  async function getRegistries(): Promise<void> {
+  const getRegistries = async (): Promise<void> => {
     try {
       const rs = await axios.get('/api/registry-read')
       setViewRegistries(toViewRegistries(rs.data))
     } catch (err) {
       router.push(`/_error?error=${ErrorCodes.FailedSymptomsRetrieval}`)
     }
+  }
+
+  const capitalize = (word?: string): string => {
+    return word ? word.charAt(0).toUpperCase() + word.slice(1) : ''
   }
 
   type ViewRegistry = {
@@ -43,17 +48,15 @@ const SymptomsRegistryList = () => {
     timezone: 'UTC',
   }
 
-  const monthName =
-    viewRegistries?.length != 0
-      ? viewRegistries?.slice(0, 1)[0].day.split(' ')[3]
-      : ''
-  const month = capitalize(monthName)
-  const year =
-    viewRegistries?.length != 0
-      ? viewRegistries?.slice(0, 1)[0].day.split(' ')[5]
-      : ''
+  let monthInfo = ''
+  if (viewRegistries?.length != 0) {
+    monthInfo =
+      capitalize(viewRegistries?.slice(0, 1)[0].day.split(' ')[3]) +
+      ', ' +
+      viewRegistries?.slice(0, 1)[0].day.split(' ')[5]
+  }
 
-  function toViewRegistries(registries: RegistryDTO[]): ViewRegistry[] {
+  const toViewRegistries = (registries: RegistryDTO[]): ViewRegistry[] => {
     const viewRegistries: ViewRegistry[] = []
     let daysRegistry: RegistryDTO[] = []
     let firstIteration = true
@@ -116,13 +119,9 @@ const SymptomsRegistryList = () => {
         <Box>
           <SymptomsLegend />
         </Box>
-        {viewRegistries?.length != 0 ? (
-          <Text width={277} textAlign="left">
-            {month + ', ' + year}
-          </Text>
-        ) : (
-          ''
-        )}
+        <Text fontSize={['lg']} width={277} textAlign="left">
+          {monthInfo}
+        </Text>
         {viewRegistries?.length != 0 ? (
           viewRegistries?.map(({ day, registries }) => (
             <div key={day}>
@@ -153,10 +152,6 @@ const SymptomsRegistryList = () => {
       </Stack>
     </>
   )
-}
-
-function capitalize(word?: string): string {
-  return word ? word.charAt(0).toUpperCase() + word.slice(1) : ''
 }
 
 export { SymptomsRegistryList }
