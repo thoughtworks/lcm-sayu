@@ -5,7 +5,7 @@ import { cleanup } from '../../testUtils'
 import typeorm from 'typeorm'
 
 beforeEach(() => {
-  jest.clearAllMocks()
+  jest.restoreAllMocks()
 })
 
 afterEach(cleanup)
@@ -305,7 +305,6 @@ const oneDaySymptoms: Registry[] = [
     },
   },
 ]
-
 const onlyOneHourSymptoms: Registry[] = [
   {
     id: 41,
@@ -389,7 +388,7 @@ jest.mock('typeorm', () => ({
   }),
 }))
 
-describe('Symptom api', () => {
+describe('Symptom read api', () => {
   test('should return symptoms from different dates', async () => {
     const symptomRegistries = [
       {
@@ -431,6 +430,7 @@ describe('Symptom api', () => {
     expect(mockJson).toHaveBeenCalledWith(symptomRegistries)
     expect(mockStatus).toHaveBeenCalledWith(200)
   })
+
   test('should return symptoms from same date', async () => {
     mockFind = jest.fn().mockResolvedValue(oneDaySymptoms)
 
@@ -474,6 +474,7 @@ describe('Symptom api', () => {
     expect(mockJson).toHaveBeenCalledWith(symptomRegistries)
     expect(mockStatus).toHaveBeenCalledWith(200)
   })
+
   test('should return symptoms for only one day and hour', async () => {
     mockFind = jest.fn().mockResolvedValue(onlyOneHourSymptoms)
 
@@ -505,6 +506,7 @@ describe('Symptom api', () => {
     expect(mockJson).toHaveBeenCalledWith(symptomRegistries)
     expect(mockStatus).toHaveBeenCalledWith(200)
   })
+
   test('should log error and return 500 HTTP code when there is an error', async () => {
     jest
       .spyOn(typeorm, 'createConnection')
@@ -522,11 +524,12 @@ describe('Symptom api', () => {
     expect(global.console.error).toHaveBeenCalledWith('Connection error')
     expect(mockStatus).toHaveBeenCalledWith(500)
   })
+
   test('should return nothing when no symptoms are registered', async () => {
-    console.log('Estoy en la prueba')
     mockFind = jest.fn().mockResolvedValue([])
     const mockStatus = (jest.fn() as unknown) as NextApiResponse
     const mockJson = (jest.fn() as unknown) as NextApiResponse
+
     await handler(
       {} as NextApiRequest,
       ({
