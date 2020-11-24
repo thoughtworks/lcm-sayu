@@ -4,7 +4,6 @@ import typeorm from 'typeorm'
 import { Symptom } from 'src/model/Symptom'
 
 import handler from 'pages/api/registry-save'
-import { cleanup } from '../../testUtils'
 
 const symptoms: Symptom[] = [
   { id: 1, name: 'Cansancio' },
@@ -46,8 +45,6 @@ describe('Symptom api', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
-
-  afterEach(cleanup)
 
   test('should save symptoms', async () => {
     const creationDate = new Date(dateNow)
