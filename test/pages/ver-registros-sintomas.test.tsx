@@ -8,7 +8,6 @@ import {
   getServerSideProps,
 } from 'src/steps/SymptomsRegistryList'
 import { Registry } from 'src/model/Registry'
-import { NextApiResponse } from 'next-auth/_utils'
 
 const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
@@ -17,6 +16,10 @@ jest.mock('next/router', () => ({
   }),
 }))
 
+const date = new Date('Fri Nov 20 2020 22:18:33')
+const secondDate = new Date('Sat Nov 21 2020 22:18:33')
+const thirdDate = new Date('Sun Nov 22 2020 22:18:33')
+const secondHourDate = new Date('Fri Nov 20 2020 23:18:33')
 const symptomsViewRegistries: ViewRegistry[] = [
   {
     day: 'miércoles, 18 de noviembre de 2020',
@@ -30,7 +33,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
         nauseaLevel: 3,
         painLevel: 4,
         swallowLevel: 5,
-        symptomDate: new Date('2020-11-18T15:12:40.528Z'),
+        symptomDate: new Date('2020-11-18T15:12:40.528Z').getTime(),
         tireLevel: 6,
       },
     ],
@@ -47,7 +50,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
         nauseaLevel: 7,
         painLevel: 7,
         swallowLevel: 7,
-        symptomDate: new Date('2020-11-13T00:47:56.014Z'),
+        symptomDate: new Date('2020-11-13T00:47:56.014Z').getTime(),
         tireLevel: 7,
       },
       {
@@ -59,7 +62,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
         nauseaLevel: 7,
         painLevel: 7,
         swallowLevel: 7,
-        symptomDate: new Date('2020-11-13T00:43:17.630Z'),
+        symptomDate: new Date('2020-11-13T00:43:17.630Z').getTime(),
         tireLevel: 7,
       },
     ],
@@ -76,7 +79,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
         nauseaLevel: 7,
         painLevel: 7,
         swallowLevel: 7,
-        symptomDate: new Date('2020-11-11T16:47:09.896Z'),
+        symptomDate: new Date('2020-11-11T16:47:09.896Z').getTime(),
         tireLevel: 7,
       },
     ],
@@ -93,16 +96,12 @@ const symptomsViewRegistries: ViewRegistry[] = [
         nauseaLevel: 7,
         painLevel: 7,
         swallowLevel: 7,
-        symptomDate: new Date('2020-11-10T23:57:34.122Z'),
+        symptomDate: new Date('2020-11-10T23:57:34.122Z').getTime(),
         tireLevel: 7,
       },
     ],
   },
 ]
-const date = new Date('Fri Nov 20 2020 22:18:33')
-const secondDate = new Date('Sat Nov 21 2020 22:18:33')
-const thirdDate = new Date('Sun Nov 22 2020 22:18:33')
-const secondHourDate = new Date('Fri Nov 20 2020 23:18:33')
 const threeDaySymptoms: Registry[] = [
   {
     id: 41,
@@ -467,7 +466,6 @@ const oneDaySymptoms: Registry[] = [
     },
   },
 ]
-
 const onlyOneHourSymptoms: Registry[] = [
   {
     id: 41,
@@ -624,7 +622,7 @@ describe('<SymptomsRegistryList />', () => {
             nauseaLevel: 3,
             painLevel: 4,
             swallowLevel: 5,
-            symptomDate: new Date('2020-11-13T00:47:56.014Z'),
+            symptomDate: new Date('2020-11-13T00:47:56.014Z').getTime(),
             tireLevel: 6,
           },
           {
@@ -636,7 +634,7 @@ describe('<SymptomsRegistryList />', () => {
             nauseaLevel: 7,
             painLevel: 7,
             swallowLevel: 7,
-            symptomDate: new Date('2020-11-13T00:43:17.630Z'),
+            symptomDate: new Date('2020-11-13T00:43:17.630Z').getTime(),
             tireLevel: 7,
           },
         ],
@@ -748,9 +746,9 @@ describe('<SymptomsRegistryList /> server side', () => {
 
     expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
+
   test('should return symptoms from same date', async () => {
     mockFind = jest.fn().mockResolvedValue(oneDaySymptoms)
-
     const expectedViewSymptomRegistries = {
       props: {
         viewRegistries: [
@@ -786,15 +784,16 @@ describe('<SymptomsRegistryList /> server side', () => {
         ],
       },
     }
+
     const viewSymptomsRegistries = await getServerSideProps(
       (null as unknown) as GetServerSidePropsContext
     )
 
     expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
+
   test('should return symptoms for only one day and hour', async () => {
     mockFind = jest.fn().mockResolvedValue(onlyOneHourSymptoms)
-
     const expectedViewSymptomRegistries = {
       props: {
         viewRegistries: [
@@ -818,31 +817,34 @@ describe('<SymptomsRegistryList /> server side', () => {
         ],
       },
     }
+
     const viewSymptomsRegistries = await getServerSideProps(
       (null as unknown) as GetServerSidePropsContext
     )
 
     expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
+
   test('should log error and return 500 HTTP code when there is an error', async () => {
     jest
       .spyOn(typeorm, 'createConnection')
       .mockRejectedValue('Connection error')
     global.console.error = jest.fn()
+
     const response = await getServerSideProps(
       (null as unknown) as GetServerSidePropsContext
     )
 
-    expect(response).toEqual(
-      expect.objectContaining({
-        props: {
-          viewRegistires: null,
-        },
-      })
-    )
+    expect(response).toEqual({
+      props: {
+        viewRegistries: null,
+      },
+    })
   })
+
   test('should return nothing when no symptoms are registered', async () => {
     mockFind = jest.fn().mockResolvedValue([])
+
     const viewSymptomsRegistries = await getServerSideProps(
       (null as unknown) as GetServerSidePropsContext
     )
