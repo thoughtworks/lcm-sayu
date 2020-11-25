@@ -9,25 +9,12 @@ import { DateBox } from 'src/components/DateBox/DateBox'
 import { ErrorCodes } from 'src/components/Error'
 
 import { RegistryDTO } from 'src/dto/RegistryDTO'
-import 'intl'
-import 'intl/locale-data/jsonp/es'
-
 import { RegistryService } from 'src/services/RegistryService'
-global.Intl = require('intl')
 
 export type ViewRegistry = {
-  day: string
+  day: number
   registries: RegistryDTO[]
 }
-
-const options = {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  timezone: 'UTC',
-}
-
 type SymptomsRegistryListProp = {
   viewRegistries: ViewRegistry[] | null
 }
@@ -45,18 +32,6 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
     return null
   }
 
-  const capitalize = (word: string): string => {
-    return word.charAt(0).toUpperCase() + word.slice(1)
-  }
-
-  let monthInfo = ''
-  if (viewRegistries?.length != 0) {
-    monthInfo =
-      capitalize(viewRegistries?.slice(0, 1)[0].day.split(' ')[3]) +
-      ', ' +
-      viewRegistries?.slice(0, 1)[0].day.split(' ')[5]
-  }
-
   return (
     <>
       <Text fontSize={['lg']}>Historial de síntomas</Text>
@@ -66,20 +41,18 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
           <SymptomsLegend />
         </Box>
         <Text fontSize={['lg']} width={277} textAlign="left">
-          {monthInfo}
+          {viewRegistries?.length != 0
+            ? formatMonthAndYear(viewRegistries?.slice(0, 1)[0].day)
+            : ''}
         </Text>
         {viewRegistries?.length != 0 ? (
           viewRegistries?.map(({ day, registries }) => (
             <div key={day}>
-              <DateBox
-                symptomDate={capitalize(day.split(' ')[0] + day.split(' ')[1])}
-              />
+              <DateBox symptomDate={formatDayAndNumberDate(day)} />
               {registries.map((registry) => (
                 <SymptomsDailyValues
                   key={registry.id}
-                  symptomDate={new Date(registry.symptomDate)
-                    .toLocaleTimeString('es-CL')
-                    .slice(0, 5)}
+                  symptomDate={formatHourAndMinutes(registry.symptomDate)}
                   painLevel={registry.painLevel}
                   tireLevel={registry.tireLevel}
                   appetiteLevel={registry.appetiteLevel}
@@ -125,7 +98,7 @@ const toViewRegistries = (registries: RegistryDTO[]): ViewRegistry[] => {
       daysRegistry.push(registry)
     } else {
       viewRegistries.push({
-        day: new Intl.DateTimeFormat('es-CL', options).format(symptomsDay),
+        day: symptomsDay.getTime(),
         registries: daysRegistry,
       })
       daysRegistry = []
@@ -140,19 +113,110 @@ const toViewRegistries = (registries: RegistryDTO[]): ViewRegistry[] => {
     (!symptomsGroupSaved || daysRegistry.length === 1)
   ) {
     viewRegistries.push({
-      day: new Intl.DateTimeFormat('es-CL', options).format(symptomsDay),
+      day: symptomsDay.getTime(),
       registries: daysRegistry,
     })
   }
 
   if (viewRegistries.length === 0) {
     viewRegistries.push({
-      day: new Intl.DateTimeFormat('es-CL', options).format(symptomsDay),
+      day: symptomsDay.getTime(),
       registries: daysRegistry,
     })
   }
 
   return viewRegistries
+}
+
+const formatHourAndMinutes = (unformattedDate: number) => {
+  const date = new Date(unformattedDate)
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const formattedHour = hour + ':' + minute
+  return formattedHour
+}
+
+const formatDayAndNumberDate = (unformattedDate: number) => {
+  let formattedDay: string
+  const date = new Date(unformattedDate)
+  const day = date.getDay()
+  const numberDate = date.getDate()
+  switch (day) {
+    case 0:
+      formattedDay = 'Domingo'
+      break
+    case 1:
+      formattedDay = 'Lunes'
+      break
+    case 2:
+      formattedDay = 'Martes'
+      break
+    case 3:
+      formattedDay = 'Miércoles'
+      break
+    case 4:
+      formattedDay = 'Jueves'
+      break
+    case 5:
+      formattedDay = 'Viernes'
+      break
+    case 6:
+      formattedDay = 'Sábado'
+      break
+    default:
+      formattedDay = ''
+  }
+  const formattedDate = formattedDay + ',' + numberDate
+  return formattedDate
+}
+
+const formatMonthAndYear = (unformattedDate: number) => {
+  let formattedMonth: string
+  const date = new Date(unformattedDate)
+  const month = date.getMonth()
+  const year = date.getFullYear()
+  switch (month) {
+    case 0:
+      formattedMonth = 'Enero'
+      break
+    case 1:
+      formattedMonth = 'Febrero'
+      break
+    case 2:
+      formattedMonth = 'Marzo'
+      break
+    case 3:
+      formattedMonth = 'Abril'
+      break
+    case 4:
+      formattedMonth = 'Mayo'
+      break
+    case 5:
+      formattedMonth = 'Junio'
+      break
+    case 6:
+      formattedMonth = 'Julio'
+      break
+    case 7:
+      formattedMonth = 'Agosto'
+      break
+    case 8:
+      formattedMonth = 'Septiembre'
+      break
+    case 9:
+      formattedMonth = 'Octubre'
+      break
+    case 10:
+      formattedMonth = 'Noviembre'
+      break
+    case 11:
+      formattedMonth = 'Diciembre'
+      break
+    default:
+      formattedMonth = ''
+  }
+  const formattedDate = formattedMonth + ', ' + year
+  return formattedDate
 }
 
 export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = async () => {
