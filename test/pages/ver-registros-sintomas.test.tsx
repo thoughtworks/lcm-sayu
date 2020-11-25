@@ -22,7 +22,7 @@ const thirdDate = new Date('Sun Nov 22 2020 22:18:33')
 const secondHourDate = new Date('Fri Nov 20 2020 23:18:33')
 const symptomsViewRegistries: ViewRegistry[] = [
   {
-    day: 'miércoles, 18 de noviembre de 2020',
+    day: new Date('2020-11-18T15:12:40.528Z').getTime(),
     registries: [
       {
         airLevel: 1,
@@ -39,7 +39,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
     ],
   },
   {
-    day: 'jueves, 12 de noviembre de 2020',
+    day: new Date('2020-11-13T00:47:56.014Z').getTime(),
     registries: [
       {
         airLevel: 7,
@@ -68,7 +68,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
     ],
   },
   {
-    day: 'miércoles, 11 de noviembre de 2020',
+    day: new Date('2020-11-11T16:47:09.896Z').getTime(),
     registries: [
       {
         airLevel: 7,
@@ -85,7 +85,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
     ],
   },
   {
-    day: 'martes, 10 de noviembre de 2020',
+    day: new Date('2020-11-10T23:57:34.122Z').getTime(),
     registries: [
       {
         airLevel: 7,
@@ -611,7 +611,7 @@ describe('<SymptomsRegistryList />', () => {
   test('should display date when only one day is registered', () => {
     const oneDayRegistries: ViewRegistry[] = [
       {
-        day: 'jueves, 12 de noviembre de 2020',
+        day: new Date('2020-11-13T00:47:56.014Z').getTime(),
         registries: [
           {
             airLevel: 1,
@@ -686,7 +686,7 @@ describe('<SymptomsRegistryList /> server side', () => {
       props: {
         viewRegistries: [
           {
-            day: 'viernes, 20 de noviembre de 2020',
+            day: date.getTime(),
             registries: [
               {
                 id: 8,
@@ -703,7 +703,7 @@ describe('<SymptomsRegistryList /> server side', () => {
             ],
           },
           {
-            day: 'sábado, 21 de noviembre de 2020',
+            day: secondDate.getTime(),
             registries: [
               {
                 id: 16,
@@ -720,7 +720,7 @@ describe('<SymptomsRegistryList /> server side', () => {
             ],
           },
           {
-            day: 'domingo, 22 de noviembre de 2020',
+            day: thirdDate.getTime(),
             registries: [
               {
                 id: 24,
@@ -753,7 +753,7 @@ describe('<SymptomsRegistryList /> server side', () => {
       props: {
         viewRegistries: [
           {
-            day: 'viernes, 20 de noviembre de 2020',
+            day: date.getTime(),
             registries: [
               {
                 id: 8,
@@ -798,7 +798,7 @@ describe('<SymptomsRegistryList /> server side', () => {
       props: {
         viewRegistries: [
           {
-            day: 'viernes, 20 de noviembre de 2020',
+            day: date.getTime(),
             registries: [
               {
                 id: 8,
