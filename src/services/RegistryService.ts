@@ -91,8 +91,8 @@ export class RegistryService {
   }
   private toRegistriesDTO(registries: Registry[]): RegistryDTO[] {
     const registriesDTO: RegistryDTO[] = []
-    let symptomsDate: Date = new Date()
-    let currentDate: Date = new Date()
+    let symptomsDate = 0
+    let currentDate = 0
 
     let firstIterationOfTheDay = true
 
@@ -113,15 +113,29 @@ export class RegistryService {
 
     registries.forEach((registry) => {
       symptomsUniqueID += 1
-      currentDate = registry.creationDate
+      currentDate = registry.creationDate.getTime()
 
       if (firstIterationOfTheDay) {
         symptomsDate = currentDate
         firstIterationOfTheDay = false
       }
 
-      if (currentDate.getTime() != symptomsDate.getTime()) {
-        registriesDTO.push(registryDTO)
+      if (currentDate != symptomsDate) {
+        const toPushRegistryDTO: RegistryDTO = {
+          id: registryDTO.id,
+          symptomDate: registryDTO.symptomDate,
+          painLevel: registryDTO.painLevel,
+          tireLevel: registryDTO.tireLevel,
+          appetiteLevel: registryDTO.appetiteLevel,
+          nauseaLevel: registryDTO.nauseaLevel,
+          swallowLevel: registryDTO.swallowLevel,
+          airLevel: registryDTO.airLevel,
+          depositionLevel: registryDTO.depositionLevel,
+          feverLevel: registryDTO.feverLevel,
+        }
+
+        registriesDTO.push(toPushRegistryDTO)
+
         firstIterationOfTheDay = true
       }
       registryDTO = this.setSymptomLevels(
@@ -132,7 +146,19 @@ export class RegistryService {
     })
 
     if (!firstIterationOfTheDay) {
-      registriesDTO.push(registryDTO)
+      const toPushRegistryDTO: RegistryDTO = {
+        id: registryDTO.id,
+        symptomDate: registryDTO.symptomDate,
+        painLevel: registryDTO.painLevel,
+        tireLevel: registryDTO.tireLevel,
+        appetiteLevel: registryDTO.appetiteLevel,
+        nauseaLevel: registryDTO.nauseaLevel,
+        swallowLevel: registryDTO.swallowLevel,
+        airLevel: registryDTO.airLevel,
+        depositionLevel: registryDTO.depositionLevel,
+        feverLevel: registryDTO.feverLevel,
+      }
+      registriesDTO.push(toPushRegistryDTO)
     }
 
     return registriesDTO
@@ -143,13 +169,6 @@ export class RegistryService {
     registryDTO: RegistryDTO,
     symptomsUniqueID: number
   ) {
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      timezone: 'UTC',
-    }
     registryDTO.symptomDate = registry.creationDate.getTime()
     registryDTO.id = symptomsUniqueID
     switch (registry.symptom.name) {

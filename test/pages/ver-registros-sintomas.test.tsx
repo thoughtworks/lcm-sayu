@@ -1,11 +1,12 @@
 import React from 'react'
-import { GetServerSideProps } from 'next'
+import { GetServerSidePropsContext } from 'next'
 import { render, screen, cleanup } from 'test/testUtils'
 import {
   SymptomsRegistryList,
   ViewRegistry,
   getServerSideProps,
 } from 'src/steps/SymptomsRegistryList'
+import { Registry } from 'src/model/Registry'
 
 const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
@@ -160,7 +161,8 @@ const symptomsViewRegistries: ViewRegistry[] = [
 ]
 const date = new Date('Fri Nov 20 2020 22:18:33')
 const secondDate = new Date('Sat Nov 21 2020 22:18:33')
-const twoDaySymptoms: Registry[] = [
+const thirdDate = new Date('Sun Nov 22 2020 22:18:33')
+const threeDaySymptoms: Registry[] = [
   {
     id: 41,
     creationDate: date,
@@ -182,7 +184,7 @@ const twoDaySymptoms: Registry[] = [
   {
     id: 43,
     creationDate: date,
-    value: 1,
+    value: 6,
     symptom: {
       id: 3,
       name: 'Cansancio',
@@ -305,7 +307,87 @@ const twoDaySymptoms: Registry[] = [
       name: 'Dolor',
     },
   },
+  {
+    id: 57,
+    creationDate: thirdDate,
+    value: 1,
+    symptom: {
+      id: 1,
+      name: 'Fiebre',
+    },
+  },
+  {
+    id: 58,
+    creationDate: thirdDate,
+    value: 0,
+    symptom: {
+      id: 2,
+      name: 'Constipación',
+    },
+  },
+  {
+    id: 59,
+    creationDate: thirdDate,
+    value: 2,
+    symptom: {
+      id: 3,
+      name: 'Cansancio',
+    },
+  },
+  {
+    id: 60,
+    creationDate: thirdDate,
+    value: 6,
+    symptom: {
+      id: 4,
+      name: 'Falta de aire',
+    },
+  },
+  {
+    id: 61,
+    creationDate: thirdDate,
+    value: 9,
+    symptom: {
+      id: 5,
+      name: 'Dificultad para tragar',
+    },
+  },
+  {
+    id: 62,
+    creationDate: thirdDate,
+    value: 3,
+    symptom: {
+      id: 6,
+      name: 'Apetito',
+    },
+  },
+  {
+    id: 63,
+    creationDate: thirdDate,
+    value: 6,
+    symptom: {
+      id: 7,
+      name: 'Náuseas',
+    },
+  },
+  {
+    id: 64,
+    creationDate: thirdDate,
+    value: 2,
+    symptom: {
+      id: 8,
+      name: 'Dolor',
+    },
+  },
 ]
+
+let mockFind = jest.fn().mockResolvedValue(threeDaySymptoms)
+jest.mock('typeorm', () => ({
+  createConnection: () => ({
+    getRepository: () => ({ find: mockFind }),
+    close: jest.fn(),
+  }),
+}))
 
 describe('<SymptomsRegistryList />', () => {
   beforeEach(() => {
@@ -432,12 +514,74 @@ describe('<SymptomsRegistryList />', () => {
   })
 })
 
-describe.skip('<SymptomsRegistryList /> server side', () => {
+describe.only('<SymptomsRegistryList /> server side', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
   test('should return symptoms from different dates', async () => {
-    await getServerSideProps()
+    const expectedViewSymptomRegistries = {
+      props: {
+        viewRegistries: [
+          {
+            day: 'viernes, 20 de noviembre de 2020',
+            registries: [
+              {
+                id: 8,
+                symptomDate: date.getTime(),
+                painLevel: 4,
+                tireLevel: 6,
+                appetiteLevel: 4,
+                nauseaLevel: 3,
+                swallowLevel: 6,
+                airLevel: 5,
+                depositionLevel: true,
+                feverLevel: true,
+              },
+            ],
+          },
+          {
+            day: 'sábado, 21 de noviembre de 2020',
+            registries: [
+              {
+                id: 16,
+                symptomDate: secondDate.getTime(),
+                painLevel: 4,
+                tireLevel: 1,
+                appetiteLevel: 4,
+                nauseaLevel: 3,
+                swallowLevel: 6,
+                airLevel: 5,
+                depositionLevel: true,
+                feverLevel: true,
+              },
+            ],
+          },
+          {
+            day: 'domingo, 22 de noviembre de 2020',
+            registries: [
+              {
+                id: 24,
+                symptomDate: thirdDate.getTime(),
+                painLevel: 2,
+                tireLevel: 2,
+                appetiteLevel: 3,
+                nauseaLevel: 6,
+                swallowLevel: 9,
+                airLevel: 6,
+                depositionLevel: false,
+                feverLevel: true,
+              },
+            ],
+          },
+        ],
+      },
+    }
+
+    const viewSymptomsRegistries = await getServerSideProps(
+      (null as unknown) as GetServerSidePropsContext
+    )
+
+    expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
 })
