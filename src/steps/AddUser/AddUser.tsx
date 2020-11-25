@@ -1,17 +1,20 @@
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { useForm, FormProvider } from 'react-hook-form'
+
 import { SubmitButton } from 'src/components/SubmitButton'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import UserEmail from 'src/components/UserEmail'
 import RoleRadioButton from 'src/components/RoleRadioButton'
 import Link from 'src/components/Link'
+import { SuccessCodes } from 'src/components/Success'
+import { ErrorCodes } from 'src/components/Error'
 
 import styles from './AddUser.module.scss'
 
 const AddUser = () => {
   const methods = useForm({
-    mode: 'onChange',
+    mode: 'onBlur',
   })
   const router = useRouter()
   return (
@@ -28,9 +31,11 @@ const AddUser = () => {
 
             try {
               await axios.post('/api/user-save', userData)
-              router.push('/registro-exitoso-usuario')
+              router.push(
+                `/_success?key=${SuccessCodes.SUCCESSFUL_USER_REGISTRY}`
+              )
             } catch (err) {
-              router.push('/_error')
+              router.push(`/_error?error=${ErrorCodes.USER_REGISTRY_ERROR}`)
             }
           })}
         >

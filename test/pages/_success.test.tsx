@@ -47,4 +47,21 @@ describe('_success', () => {
       expect(successMessage).toBeInTheDocument()
     })
   })
+
+  describe('<SuccessfulUserRegistry />', () => {
+    beforeEach(() => {
+      mockQuery.key = SuccessCodes.SUCCESSFUL_USER_REGISTRY
+      render(<SuccessPage />)
+      jest.clearAllMocks()
+    })
+
+    afterEach(cleanup)
+
+    test('should show access denied message', () => {
+      const successMessage = screen.getByText(
+        /^¡Se ha registrado el usuario de manera exitosa!$/
+      )
+      expect(successMessage).toBeInTheDocument()
+    })
+  })
 })

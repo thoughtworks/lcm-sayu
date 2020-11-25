@@ -5,6 +5,7 @@ import {
   SuccessCodes,
   GenericSuccess,
   SuccessfulSymptomRegistry,
+  SuccessfulUserRegistry,
 } from 'src/components/Success'
 
 const Success: FunctionComponent = () => {
@@ -14,6 +15,8 @@ const Success: FunctionComponent = () => {
   switch (key as string) {
     case SuccessCodes.SUCCESSFUL_SYMPTOM_REGISTRY:
       return <SuccessfulSymptomRegistry />
+    case SuccessCodes.SUCCESSFUL_USER_REGISTRY:
+      return <SuccessfulUserRegistry />
     default:
       return <GenericSuccess />
   }

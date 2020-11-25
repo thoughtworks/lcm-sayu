@@ -30,6 +30,9 @@ describe('<AddUser />', () => {
   })
 
   test('should show add user form', async () => {
+    jest
+      .spyOn(axios, 'post')
+      .mockResolvedValue({ data: { emailAlreadyExist: true } })
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')
 
@@ -47,7 +50,9 @@ describe('<AddUser />', () => {
       })
     )
 
-    expect(mockPush).toHaveBeenCalledWith('/registro-exitoso-usuario')
+    expect(mockPush).toHaveBeenCalledWith(
+      '/_success?key=SuccessfulUserRegistry'
+    )
   })
 
   test('should show required email error when when email is empty', async () => {
@@ -80,8 +85,11 @@ describe('<AddUser />', () => {
   })
 
   test('should redirect to error page when there is an error', async () => {
-    jest.spyOn(axios, 'post').mockRejectedValue(null)
-
+    jest
+      .spyOn(axios, 'post')
+      .mockResolvedValueOnce({ data: { emailAlreadyExist: true } })
+      .mockResolvedValueOnce({ data: { emailAlreadyExist: true } })
+      .mockRejectedValueOnce(null)
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')
 
@@ -92,6 +100,17 @@ describe('<AddUser />', () => {
     const submitButton = screen.getByText(/^Guardar$/)
     await waitFor(() => userEvent.click(submitButton))
 
-    expect(mockPush).toHaveBeenCalledWith('/_error')
+    expect(mockPush).toHaveBeenCalledWith('/_error?error=UserRegistryError')
+  })
+
+  test('should show error message when email already exist', async () => {
+    jest
+      .spyOn(axios, 'post')
+      .mockResolvedValueOnce({ data: { emailAlreadyExist: false } })
+
+    const emailInput = screen.getByText(/^Correo electrónico$/)
+    userEvent.type(emailInput, 'test@test.com')
+    userEvent.tab()
+    expect(await screen.findByText(/^Correo ya existe$/)).toBeInTheDocument()
   })
 })

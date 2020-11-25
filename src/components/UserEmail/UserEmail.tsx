@@ -1,10 +1,25 @@
 import { FunctionComponent } from 'react'
 import { useFormContext } from 'react-hook-form'
+import axios from 'axios'
 
 import styles from './UserEmail.module.scss'
 
 const UserEmail: FunctionComponent = () => {
   const { register, errors } = useFormContext()
+  let errorMsg = ''
+  if (errors.userEmail) {
+    switch (errors.userEmail.type) {
+      case 'required':
+        errorMsg = 'Debes ingresar correo electrónico'
+        break
+      case 'pattern':
+        errorMsg = 'Debes ingresar correo electrónico válido'
+        break
+      case 'validate':
+        errorMsg = 'Correo ya existe'
+        break
+    }
+  }
   return (
     <div className={styles['user-email']}>
       <label htmlFor="userEmail">Correo electrónico</label>
@@ -14,15 +29,16 @@ const UserEmail: FunctionComponent = () => {
         type="email"
         ref={register({
           required: true,
-          pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/,
+          pattern: validEmailPattern,
+          validate: async (email: string) => {
+            const {
+              data: { emailAlreadyExist },
+            } = await axios.post('/api/validate-email', { email })
+            return !!emailAlreadyExist
+          },
         })}
       />
-      {errors.userEmail && (
-        <span className={styles.error}>
-          Debes ingresar correo electrónico
-          {errors.userEmail?.type === 'pattern' && ' válido'}
-        </span>
-      )}
+      {errorMsg && <span className={styles.error}>{errorMsg}</span>}
     </div>
   )
 }

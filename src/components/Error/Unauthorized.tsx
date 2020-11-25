@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react'
+import { GenericError } from './GenericError'
 
 const Unauthorized: FunctionComponent = () => (
-  <h1>No tiene permisos para ver pagina</h1>
+  <GenericError msg="No tiene permisos para ver pagina" />
 )
 export { Unauthorized }

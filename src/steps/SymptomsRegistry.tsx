@@ -89,7 +89,7 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
     await axios.post('/api/registry-save', request)
     router.push(`/_success?key=${SuccessCodes.SUCCESSFUL_SYMPTOM_REGISTRY}`)
   } catch (err) {
-    router.push(`/_error?error=${ErrorCodes.FailedSymptomsRegistry}`)
+    router.push(`/_error?error=${ErrorCodes.FAILED_SYMPTOMS_REGISTRY}`)
   }
 }
 export default withSession(SymptomsRegistry, 'tutor')

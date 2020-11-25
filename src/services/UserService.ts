@@ -11,4 +11,15 @@ export class UserService {
       connection.close()
     }
   }
+
+  async existByEmail(email: string): Promise<boolean> {
+    const connection = await createConnection()
+    try {
+      const userRepository = connection.getRepository('User')
+      const user = await userRepository.findOne({ email })
+      return !!user
+    } finally {
+      connection.close()
+    }
+  }
 }
