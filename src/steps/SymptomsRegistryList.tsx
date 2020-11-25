@@ -45,8 +45,8 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
     return null
   }
 
-  const capitalize = (word?: string): string => {
-    return word ? word.charAt(0).toUpperCase() + word.slice(1) : ''
+  const capitalize = (word: string): string => {
+    return word.charAt(0).toUpperCase() + word.slice(1)
   }
 
   let monthInfo = ''
