@@ -15,7 +15,7 @@ import 'intl/locale-data/jsonp/es'
 import { RegistryService } from 'src/services/RegistryService'
 global.Intl = require('intl')
 
-type ViewRegistry = {
+export type ViewRegistry = {
   day: string
   registries: RegistryDTO[]
 }
