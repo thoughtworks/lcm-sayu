@@ -124,7 +124,7 @@ describe('_error', () => {
     })
   })
 
-  describe('<FailedSymptomRetrieval />', () => {
+  describe('<FailedSymptomsRetrieval />', () => {
     beforeEach(() => {
       mockQuery.error = 'FailedSymptomsRetrieval'
       render(<ErrorPage statusCode={0} />)
@@ -143,6 +143,11 @@ describe('_error', () => {
     test('should show welcome screen when button is clicked', () => {
       const cancelButton = screen.getByText(/salir/i)
       expect(cancelButton).toHaveAttribute('href', '/')
+    })
+
+    test('should redirect to symptoms retrieval page when retry button is clicked', () => {
+      const retryButton = screen.getByText(/volver a intentarlo/i)
+      expect(retryButton).toHaveAttribute('href', '/ver-registros-sintomas')
     })
   })
 })
