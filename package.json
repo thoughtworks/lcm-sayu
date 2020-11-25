@@ -50,8 +50,7 @@
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.9.6",
     "sass": "^1.29.0",
-    "typeorm": "^0.2.28",
-    "intl": "^1.2.5"
+    "typeorm": "^0.2.28"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
