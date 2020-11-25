@@ -13,6 +13,8 @@ import Link from 'src/components/Link'
 import { ErrorCodes } from 'src/components/Error'
 
 import withSession from 'src/hoc/WithSession'
+import { Role } from 'src/model/Role'
+import { SuccessCodes } from 'src/components/Success'
 
 function SymptomsRegistry() {
   const router = useRouter()
@@ -85,7 +87,7 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
   }
   try {
     await axios.post('/api/registry-save', request)
-    router.push('/registro-exitoso-sintomas')
+    router.push(`/_success?key=${SuccessCodes.SUCCESSFUL_SYMPTOM_REGISTRY}`)
   } catch (err) {
     router.push(`/_error?error=${ErrorCodes.FailedSymptomsRegistry}`)
   }

@@ -1,0 +1,8 @@
+POST {{host}}/api/user-save HTTP/1.1
+content-type: application/json
+Cookie: {{cookie}}
+
+{
+    "userEmail": "test@test.com",
+    "role": "invalido"
+}

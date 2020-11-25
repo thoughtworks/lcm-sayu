@@ -90,7 +90,9 @@ describe('Home page', () => {
     const registerButton = screen.getByText(/Registrar/i)
     userEvent.click(registerButton)
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
-    expect(mockPush).toHaveBeenCalledWith('/registro-exitoso-sintomas')
+    expect(mockPush).toHaveBeenCalledWith(
+      '/_success?key=SuccessfulSymptomRegistry'
+    )
   })
 
   test('should redirect to failed symptoms register when there is an error', async () => {

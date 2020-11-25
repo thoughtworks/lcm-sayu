@@ -86,7 +86,7 @@ describe('_error', () => {
       expect(failureMessage).toBeInTheDocument()
     })
 
-    test('should have a rety button', () => {
+    test('should have a retry button', () => {
       const retryButton = screen.getByText(/volver a intentarlo/i)
       expect(retryButton).toHaveAttribute('href', '/')
     })

@@ -26,8 +26,12 @@ const AddUser = () => {
               role,
             }
 
-            await axios.post('/api/registry-save', userData)
-            router.push('/registro-exitoso-usuario')
+            try {
+              await axios.post('/api/user-save', userData)
+              router.push('/registro-exitoso-usuario')
+            } catch (err) {
+              router.push('/_error')
+            }
           })}
         >
           <div className={styles['user-email']}>

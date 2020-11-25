@@ -11,6 +11,7 @@ module.exports = new EntitySchema({
     },
     email: {
       type: 'text',
+      unique: true,
     },
     role: {
       type: 'text',

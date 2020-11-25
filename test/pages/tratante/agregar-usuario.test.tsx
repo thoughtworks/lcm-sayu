@@ -41,7 +41,7 @@ describe('<AddUser />', () => {
     userEvent.click(submitButton)
 
     await waitFor(() =>
-      expect(axios.post).toHaveBeenCalledWith('/api/registry-save', {
+      expect(axios.post).toHaveBeenCalledWith('/api/user-save', {
         userEmail: 'test@test.com',
         role: 'tratante',
       })
@@ -77,5 +77,21 @@ describe('<AddUser />', () => {
     const cancelButton = screen.getByText(/^Cancelar$/)
 
     expect(cancelButton).toHaveAttribute('href', '/')
+  })
+
+  test('should redirect to error page when there is an error', async () => {
+    jest.spyOn(axios, 'post').mockRejectedValue(null)
+
+    const emailInput = screen.getByText(/^Correo electrónico$/)
+    userEvent.type(emailInput, 'test@test.com')
+
+    expect(screen.getByText(/^Rol de la persona$/)).toBeInTheDocument()
+    const tratanteRadioButton = screen.getByText(/^Profesional tratante$/)
+    userEvent.click(tratanteRadioButton)
+
+    const submitButton = screen.getByText(/^Guardar$/)
+    await waitFor(() => userEvent.click(submitButton))
+
+    expect(mockPush).toHaveBeenCalledWith('/_error')
   })
 })
