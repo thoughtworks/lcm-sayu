@@ -56,7 +56,7 @@ const SymptomsLegend = () => (
               className={styles['constipacion-legend'] + ' ' + styles['legend']}
             />
           </Box>
-          <Box fontSize="xs">Constipación</Box>
+          <Box fontSize="xs">Deposiciones</Box>
         </Stack>
         <Stack isInline>
           <Box>
