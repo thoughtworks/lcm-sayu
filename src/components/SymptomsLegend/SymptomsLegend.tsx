@@ -8,25 +8,31 @@ const SymptomsLegend = () => (
       <Stack>
         <Stack isInline>
           <Box>
-            <div className={styles.dolor_legend} />
+            <div className={styles['dolor-legend'] + ' ' + styles['legend']} />
           </Box>
           <Box fontSize="xs">Dolor</Box>
         </Stack>
         <Stack isInline>
           <Box>
-            <div className={styles.cansancio_legend} />
+            <div
+              className={styles['cansancio-legend'] + ' ' + styles['legend']}
+            />
           </Box>
           <Box fontSize="xs">Cansancio</Box>
         </Stack>
         <Stack isInline>
           <Box>
-            <div className={styles.apetito_legend} />
+            <div
+              className={styles['apetito-legend'] + ' ' + styles['legend']}
+            />
           </Box>
           <Box fontSize="xs">Apetito</Box>
         </Stack>
         <Stack isInline>
           <Box>
-            <div className={styles.nauseas_legend} />
+            <div
+              className={styles['nauseas-legend'] + ' ' + styles['legend']}
+            />
           </Box>
           <Box fontSize="xs">Náuseas</Box>
         </Stack>
@@ -34,25 +40,27 @@ const SymptomsLegend = () => (
       <Stack>
         <Stack isInline>
           <Box>
-            <div className={styles.tragar_legend} />
+            <div className={styles['tragar-legend'] + ' ' + styles['legend']} />
           </Box>
           <Box fontSize="xs">Tragar</Box>
         </Stack>
         <Stack isInline>
           <Box>
-            <div className={styles.aire_legend} />
+            <div className={styles['aire-legend'] + ' ' + styles['legend']} />
           </Box>
           <Box fontSize="xs">Falta de Aire</Box>
         </Stack>
         <Stack isInline>
           <Box>
-            <div className={styles.constipacion_legend} />
+            <div
+              className={styles['constipacion-legend'] + ' ' + styles['legend']}
+            />
           </Box>
           <Box fontSize="xs">Constipación</Box>
         </Stack>
         <Stack isInline>
           <Box>
-            <div className={styles.fiebre_legend} />
+            <div className={styles['fiebre-legend'] + ' ' + styles['legend']} />
           </Box>
           <Box fontSize="xs">Fiebre</Box>
         </Stack>

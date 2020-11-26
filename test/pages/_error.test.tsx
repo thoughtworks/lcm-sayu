@@ -54,7 +54,7 @@ describe('_error', () => {
 
     test('should show failure message', () => {
       const failureMessage = screen.getByText(
-        /Ha ocurrido un error, espera unos minutos e inténtalo nuevamente/i
+        /^Ha ocurrido un error, espera unos minutos e inténtalo nuevamente.$/
       )
       expect(failureMessage).toBeInTheDocument()
     })

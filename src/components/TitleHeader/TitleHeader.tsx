@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Flex, Text } from '@chakra-ui/core'
-import { Navigation } from '../Navigation/Navigation'
+import { Navigation } from 'src/components/Navigation/Navigation'
 
 const TitleHeader = () => {
   return (
