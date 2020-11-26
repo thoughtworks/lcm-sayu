@@ -2,8 +2,7 @@ import React from 'react'
 import { GetServerSidePropsContext } from 'next'
 import typeorm from 'typeorm'
 import { render, screen, cleanup } from 'test/testUtils'
-import {
-  SymptomsRegistryList,
+import SymptomsRegistryList, {
   ViewRegistry,
   getServerSideProps,
 } from 'src/steps/SymptomsRegistryList'
@@ -31,6 +30,10 @@ jest.mock('typeorm', () => ({
     getRepository: () => ({ find: mockFind }),
     close: jest.fn(),
   }),
+}))
+
+jest.mock('next-auth/client', () => ({
+  useSession: jest.fn().mockReturnValue([{ role: 'tutor' }, false]),
 }))
 
 describe('<SymptomsRegistryList />', () => {

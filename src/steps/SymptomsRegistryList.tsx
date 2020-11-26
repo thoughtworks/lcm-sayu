@@ -11,6 +11,7 @@ import { ErrorCodes } from 'src/components/Error'
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { RegistryService } from 'src/services/RegistryService'
 import { Navigation } from 'src/components/Navigation/Navigation'
+import withSession from 'src/hoc/WithSession'
 
 export type ViewRegistry = {
   day: number
@@ -193,4 +194,4 @@ export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = 
   return { props: { viewRegistries } }
 }
 
-export { SymptomsRegistryList }
+export default withSession(SymptomsRegistryList, 'tutor')

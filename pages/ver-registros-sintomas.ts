@@ -1,4 +1,1 @@
-export {
-  SymptomsRegistryList as default,
-  getServerSideProps,
-} from 'src/steps/SymptomsRegistryList'
+export { default, getServerSideProps } from 'src/steps/SymptomsRegistryList'
