@@ -18,7 +18,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
         nauseaLevel: 3,
         painLevel: 4,
         swallowLevel: 5,
-        symptomDate: new Date('2020-11-18T15:12:40.528Z').getTime(),
+        symptomDate: new Date('2020-11-18T15:09:40.528Z').getTime(),
         tireLevel: 6,
       },
     ],
@@ -70,7 +70,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
     ],
   },
   {
-    day: new Date('2020-11-10T23:57:34.122Z').getTime(),
+    day: new Date('2020-11-09T23:57:34.122Z').getTime(),
     registries: [
       {
         airLevel: 7,
@@ -81,7 +81,7 @@ const symptomsViewRegistries: ViewRegistry[] = [
         nauseaLevel: 7,
         painLevel: 7,
         swallowLevel: 7,
-        symptomDate: new Date('2020-11-10T23:57:34.122Z').getTime(),
+        symptomDate: new Date('2020-11-09T23:57:34.122Z').getTime(),
         tireLevel: 7,
       },
     ],

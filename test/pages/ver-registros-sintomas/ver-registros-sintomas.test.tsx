@@ -56,7 +56,7 @@ describe('<SymptomsRegistryList />', () => {
     const dayWednesday18 = screen.getByText(/^Miércoles,18$/)
     const dayThursday = screen.getByText(/^Jueves,12$/)
     const dayWednesday11 = screen.getByText(/^Miércoles,11$/)
-    const dayTuesday = screen.getByText(/^Martes,10$/)
+    const dayTuesday = screen.getByText(/^Lunes,09$/)
 
     expect(dayWednesday18).toBeInTheDocument()
     expect(dayThursday).toBeInTheDocument()
@@ -64,7 +64,7 @@ describe('<SymptomsRegistryList />', () => {
     expect(dayTuesday).toBeInTheDocument()
   })
 
-  test('should display hour and symptoms value registered for Wednesday 12', () => {
+  test('should display hour and symptoms value registered for Wednesday 18', () => {
     render(<SymptomsRegistryList viewRegistries={symptomsViewRegistries} />)
 
     const air = screen.getByText(/^1$/)
@@ -73,7 +73,7 @@ describe('<SymptomsRegistryList />', () => {
     const nausea = screen.getByText(/^3$/)
     const pain = screen.getByText(/^4$/)
     const swallow = screen.getByText(/^5$/)
-    const hour = screen.getByText(/^12:12$/)
+    const hour = screen.getByText(/^12:09$/)
     const tire = screen.getByText(/^6$/)
 
     expect(air).toBeInTheDocument()

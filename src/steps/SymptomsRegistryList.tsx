@@ -137,8 +137,8 @@ const toViewRegistries = (registries: RegistryDTO[]): ViewRegistry[] => {
 
 const formatHourAndMinutes = (unformattedDate: number) => {
   const date = new Date(unformattedDate)
-  const hour = date.getHours()
-  const minute = date.getMinutes()
+  const hour = formatTwoDigitNumber(date.getHours())
+  const minute = formatTwoDigitNumber(date.getMinutes())
   const formattedHour = hour + ':' + minute
   return formattedHour
 }
@@ -146,7 +146,7 @@ const formatHourAndMinutes = (unformattedDate: number) => {
 const formatDayAndNumberDate = (unformattedDate: number) => {
   const date = new Date(unformattedDate)
   const day = date.getDay()
-  const numberDate = date.getDate()
+  const numberDate = formatTwoDigitNumber(date.getDate())
   const dayValues = [
     'Domingo',
     'Lunes',
@@ -180,6 +180,12 @@ const formatMonthAndYear = (unformattedDate: number) => {
   ]
   const formattedDate = monthValues[month] + ', ' + year
   return formattedDate
+}
+
+const formatTwoDigitNumber = (toFormatNumber: number): string => {
+  return toFormatNumber < 10
+    ? '0' + toFormatNumber.toString()
+    : toFormatNumber.toString()
 }
 
 export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = async () => {
