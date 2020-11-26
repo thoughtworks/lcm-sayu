@@ -1,3 +1,16 @@
+.symptomBox {
+  width: 100%;
+  align-content: space-between;
+  align-items: center;
+}
+.symptomList {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
 .dolor_value {
   width: 21px;
   height: 21px;
@@ -6,6 +19,7 @@
   font-size: 10px;
   color: #fff;
   text-align: center;
+  margin: 1px 1px 1px 1px;
   background: #00afa2;
 }
 .cansancio_value {
@@ -17,6 +31,7 @@
   color: #fff;
   text-align: center;
   background: #616ee4;
+  margin: 1px 1px 1px 1px;
 }
 .apetito_value {
   width: 21px;
@@ -27,6 +42,7 @@
   color: #fff;
   text-align: center;
   background: #ffca2a;
+  margin: 1px 1px 1px 1px;
 }
 .nauseas_value {
   width: 21px;
@@ -37,6 +53,7 @@
   color: #fff;
   text-align: center;
   background: #163eb3;
+  margin: 1px 1px 1px 1px;
 }
 .tragar_value {
   width: 21px;
@@ -47,6 +64,7 @@
   color: #fff;
   text-align: center;
   background: #e63e6c;
+  margin: 1px 1px 1px 1px;
 }
 .aire_value {
   width: 21px;
@@ -57,6 +75,7 @@
   color: #fff;
   text-align: center;
   background: #b3cf71;
+  margin: 1px 1px 1px 1px;
 }
 .deposicion_value {
   width: 21px;
@@ -67,6 +86,7 @@
   color: #fff;
   text-align: center;
   background: #ee7342;
+  margin: 1px 1px 1px 1px;
 }
 .fiebre_value {
   width: 21px;
@@ -77,4 +97,5 @@
   color: #fff;
   text-align: center;
   background: #168db3;
+  margin: 1px 1px 1px 1px;
 }

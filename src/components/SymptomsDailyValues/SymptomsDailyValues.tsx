@@ -1,6 +1,6 @@
 import styles from './symptomsDailyValues.module.scss'
 import React from 'react'
-import { Stack, Box, Text, Icon } from '@chakra-ui/core'
+import { Box, Text, Icon } from '@chakra-ui/core'
 
 type SymptomsLevel = {
   symptomDate: string
@@ -25,9 +25,9 @@ const SymptomsDailyValues = ({
   depositionLevel,
   feverLevel,
 }: SymptomsLevel) => (
-  <Box mb={2}>
-    <Stack isInline spacing={1}>
-      <Text fontSize={'xs'} ml={2} lineHeight={'tall'}>
+  <Box mb={2} className={styles.symptomBox}>
+    <div className={styles.symptomList}>
+      <Text fontSize={'xs'} ml={1} lineHeight={'tall'}>
         {symptomDate}
       </Text>
       <Box ml={1}>
@@ -56,8 +56,8 @@ const SymptomsDailyValues = ({
       <Box>
         <div className={styles.fiebre_value}>{feverLevel ? 'SI' : 'NO'}</div>
       </Box>
-      <Icon name="delete" ml={3} mt={'3px'} />
-    </Stack>
+      <Icon name="delete" ml={1} mt={'3px'} />
+    </div>
   </Box>
 )
 
