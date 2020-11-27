@@ -1,10 +1,12 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, InputHTMLAttributes } from 'react'
 import { useFormContext } from 'react-hook-form'
 import axios from 'axios'
 
 import styles from './UserEmail.module.scss'
 
-const UserEmail: FunctionComponent = () => {
+const UserEmail: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = (
+  props
+) => {
   const { register, errors } = useFormContext()
 
   let errorMsg = ''
@@ -20,14 +22,17 @@ const UserEmail: FunctionComponent = () => {
       break
   }
 
+  const inputName = 'userEmail'
   return (
     <div className={styles['user-email']}>
-      <label htmlFor="userEmail">Correo electrónico</label>
+      <label htmlFor={inputName}>Correo electrónico</label>
       <input
-        id="userEmail"
-        name="userEmail"
+        id={inputName}
+        name={inputName}
         type="email"
-        className={errors.userEmail && styles['invalid']}
+        className={errors[inputName] && styles['invalid']}
+        aria-invalid={!!errors[inputName]}
+        {...props}
         ref={register({
           required: true,
           pattern: validEmailPattern,
@@ -39,7 +44,11 @@ const UserEmail: FunctionComponent = () => {
           },
         })}
       />
-      {errorMsg && <p className={styles.error}>{errorMsg}</p>}
+      {errorMsg && (
+        <p role="alert" className={styles.error}>
+          {errorMsg}
+        </p>
+      )}
     </div>
   )
 }

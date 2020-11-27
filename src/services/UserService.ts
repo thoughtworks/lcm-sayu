@@ -16,7 +16,7 @@ export class UserService {
     const connection = await createConnection()
     try {
       const userRepository = connection.getRepository('User')
-      const user = await userRepository.findOne({ email })
+      const user = await userRepository.findOne({ email: email.toLowerCase() })
       return !!user
     } finally {
       connection.close()
