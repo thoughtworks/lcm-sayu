@@ -1,11 +1,12 @@
 import React from 'react'
 import { signOut, useSession } from 'next-auth/client'
-
 import { Flex, Image, Text, Stack } from '@chakra-ui/core'
+
+import ButtonLink from 'src/components/ButtonLink'
 import withSession from 'src/hoc/WithSession'
+import { Role } from 'src/model/Role'
 
 import styles from './WelcomeSayu.module.scss'
-import Link from 'src/components/Link'
 
 const WelcomeSayu = () => {
   const [session, loading] = useSession()
@@ -50,18 +51,22 @@ const WelcomeSayu = () => {
         {Role.CUIDADOR === session?.role && (
           <div className={styles.actions}>
             <div>
-              <Link href="/seleccion-nivel-dolor" label="Registrar síntomas" />
+              <ButtonLink
+                href="/seleccion-nivel-dolor"
+                label="Registrar síntomas"
+              />
             </div>
             <div className={styles['symptom-registry-list-link']}>
-              <Link
+              <ButtonLink
                 href="/ver-registros-sintomas"
                 label="Ver historial de síntomas"
+                secondaryStyle
               />
             </div>
           </div>
         )}
         {Role.TRATANTE === session?.role && (
-          <Link
+          <ButtonLink
             href="/tratante/gestion-usuario"
             label="Gestionar usuarios"
             secondaryStyle
@@ -71,4 +76,4 @@ const WelcomeSayu = () => {
     </Flex>
   )
 }
-export default withSession(WelcomeSayu, 'tutor')
+export default withSession(WelcomeSayu, [Role.CUIDADOR, Role.TRATANTE])

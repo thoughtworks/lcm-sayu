@@ -9,7 +9,7 @@ import { PainBox } from 'src/components/PainBox/PainBox'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { SubmitButton } from 'src/components/SubmitButton'
 import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRadioButton'
-import Link from 'src/components/Link'
+import ButtonLink from 'src/components/ButtonLink'
 import { ErrorCodes } from 'src/components/Error'
 
 import withSession from 'src/hoc/WithSession'
@@ -66,7 +66,7 @@ function SymptomsRegistry() {
           <SubmitButton label="Registrar" />
         </Stack>
         <Stack marginTop={2} width="100%" align="center">
-          <Link href="/" label="Cancelar" secondaryStyle />
+          <ButtonLink href="/" label="Cancelar" secondaryStyle />
         </Stack>
       </form>
     </>
@@ -92,4 +92,4 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
     router.push(`/_error?error=${ErrorCodes.FAILED_SYMPTOMS_REGISTRY}`)
   }
 }
-export default withSession(SymptomsRegistry, 'tutor')
+export default withSession(SymptomsRegistry, [Role.CUIDADOR])

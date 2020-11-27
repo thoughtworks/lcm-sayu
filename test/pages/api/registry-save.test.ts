@@ -28,7 +28,7 @@ const dateNow = 1604083287383
 global.Date.now = jest.fn().mockReturnValue(dateNow)
 
 jest.mock('next-auth/client', () => ({
-  getSession: jest.fn().mockReturnValue({ role: 'tutor' }),
+  getSession: jest.fn().mockReturnValue({ role: 'cuidador' }),
 }))
 describe('Symptom api', () => {
   const symptom = {

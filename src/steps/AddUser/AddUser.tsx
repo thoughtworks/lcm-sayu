@@ -6,9 +6,12 @@ import { SubmitButton } from 'src/components/SubmitButton'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import UserEmail from 'src/components/UserEmail'
 import RoleRadioButton from 'src/components/RoleRadioButton'
-import Link from 'src/components/Link'
+import ButtonLink from 'src/components/ButtonLink'
 import { SuccessCodes } from 'src/components/Success'
 import { ErrorCodes } from 'src/components/Error'
+
+import withSession from 'src/hoc/WithSession'
+import { Role } from 'src/model/Role'
 
 import styles from './AddUser.module.scss'
 
@@ -47,7 +50,7 @@ const AddUser = () => {
           </div>
           <SubmitButton label="Guardar" />
           <div className={styles['cancel-link']}>
-            <Link label="Cancelar" href="/" secondaryStyle />
+            <ButtonLink label="Cancelar" href="/" secondaryStyle />
           </div>
         </form>
       </FormProvider>
@@ -55,4 +58,4 @@ const AddUser = () => {
   )
 }
 
-export default AddUser
+export default withSession(AddUser, [Role.TRATANTE])

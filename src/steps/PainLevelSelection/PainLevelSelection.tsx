@@ -6,6 +6,7 @@ import { FaceButton } from 'src/components/FaceButton/FaceButton'
 import withSession from 'src/hoc/WithSession'
 
 import styles from './PainLevelSelection.module.scss'
+import { Role } from 'src/model/Role'
 
 const PainLevelSelection = () => {
   return (
@@ -38,4 +39,4 @@ const PainLevelSelection = () => {
   )
 }
 
-export default withSession(PainLevelSelection, 'tutor')
+export default withSession(PainLevelSelection, [Role.CUIDADOR])

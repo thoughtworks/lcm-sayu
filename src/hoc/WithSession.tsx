@@ -2,10 +2,11 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { useSession, getSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { Role } from 'src/model/Role'
 
 function withSession<P>(
   WrappedComponent: React.ComponentType<P>,
-  roles: 'tutor' | 'enfermero'
+  roles: Role[]
 ): (props: P) => JSX.Element {
   return (props: P) => {
     const [session, loading] = useSession()

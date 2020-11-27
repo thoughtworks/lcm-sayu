@@ -1,5 +1,6 @@
 import { NextApiHandler } from 'next'
 import { withSessionServer } from 'src/hoc/WithSession'
+import { Role } from 'src/model/Role'
 
 import { RegistryService } from 'src/services/RegistryService'
 
@@ -16,4 +17,4 @@ const handler: NextApiHandler = async (req, res) => {
   res.send(null)
 }
 
-export default withSessionServer(handler, 'tutor')
+export default withSessionServer(handler, [Role.CUIDADOR])

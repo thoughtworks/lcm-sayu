@@ -124,22 +124,15 @@ describe('_error', () => {
     })
   })
 
-<<<<<<< HEAD
   describe('<FailedSymptomsRetrieval />', () => {
     beforeEach(() => {
       mockQuery.error = 'FailedSymptomsRetrieval'
-=======
-  describe('<UserRegistryError />', () => {
-    beforeEach(() => {
-      mockQuery.error = 'UserRegistryError'
->>>>>>> 93244a3... [@benja] Added user registry error
       render(<ErrorPage statusCode={0} />)
       jest.clearAllMocks()
     })
 
     afterEach(cleanup)
 
-<<<<<<< HEAD
     test('should show failure message', () => {
       const failureMessage = screen.getByText(
         /Ha ocurrido un error, espera unos minutos e inténtalo nuevamente/i
@@ -156,13 +149,22 @@ describe('_error', () => {
       const retryButton = screen.getByText(/volver a intentarlo/i)
       expect(retryButton).toHaveAttribute('href', '/ver-registros-sintomas')
     })
-=======
+  })
+
+  describe('<UserRegistryError />', () => {
+    beforeEach(() => {
+      mockQuery.error = 'UserRegistryError'
+      render(<ErrorPage statusCode={0} />)
+      jest.clearAllMocks()
+    })
+
+    afterEach(cleanup)
+
     test('should show user registry error message', () => {
       const failureMessage = screen.getByText(
         /^Ha ocurrido un error al intentar guardar el usuario.$/
       )
       expect(failureMessage).toBeInTheDocument()
     })
->>>>>>> 93244a3... [@benja] Added user registry error
   })
 })

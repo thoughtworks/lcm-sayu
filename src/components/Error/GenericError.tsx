@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import Link from 'src/components/Link'
+import ButtonLink from 'src/components/ButtonLink'
 
 import styles from './GenericError.module.scss'
 
@@ -13,11 +13,11 @@ const GenericError: FunctionComponent<{ msg?: string; retryUrl?: string }> = ({
 
     {retryUrl && (
       <div className={styles['retry']}>
-        <Link href={retryUrl} label="Volver a intentarlo" />{' '}
+        <ButtonLink href={retryUrl} label="Volver a intentarlo" />{' '}
       </div>
     )}
 
-    <Link href="/" label="Salir" secondaryStyle={!!retryUrl} />
+    <ButtonLink href="/" label="Salir" secondaryStyle={!!retryUrl} />
   </main>
 )
 export { GenericError }
