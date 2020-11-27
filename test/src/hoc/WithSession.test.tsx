@@ -4,6 +4,7 @@ import NextAuth, { Session } from 'next-auth/client'
 
 import { withSessionServer } from 'src/hoc/WithSession'
 import WelcomeSayu from 'pages/index'
+import { Role } from 'src/model/Role'
 
 const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
@@ -31,7 +32,7 @@ describe('WithSession', () => {
       role: 'foo',
     } as unknown) as Session)
     const handler = jest.fn() as NextApiHandler
-    const response = await withSessionServer(handler, 'tutor')
+    const response = await withSessionServer(handler, [Role.CUIDADOR])
     const mockRequest = ({} as unknown) as NextApiRequest
     const mockResponse = ({
       send: jest.fn(),

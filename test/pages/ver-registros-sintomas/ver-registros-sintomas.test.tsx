@@ -98,7 +98,7 @@ describe('<SymptomsRegistryList />', () => {
   test('should display date when only one day is registered', () => {
     const oneDayRegistries: ViewRegistry[] = [
       {
-        day: new Date('2020-11-13T00:47:56.014Z').getTime(),
+        day: new Date(2020, 10, 12, 21, 47, 56).getTime(),
         registries: [
           {
             airLevel: 1,
@@ -109,7 +109,7 @@ describe('<SymptomsRegistryList />', () => {
             nauseaLevel: 3,
             painLevel: 4,
             swallowLevel: 5,
-            symptomDate: new Date('2020-11-13T00:47:56.014Z').getTime(),
+            symptomDate: new Date(2020, 10, 12, 21, 47, 56).getTime(),
             tireLevel: 6,
           },
           {
@@ -121,7 +121,7 @@ describe('<SymptomsRegistryList />', () => {
             nauseaLevel: 7,
             painLevel: 7,
             swallowLevel: 7,
-            symptomDate: new Date('2020-11-13T00:43:17.630Z').getTime(),
+            symptomDate: new Date(2020, 10, 12, 21, 43, 56).getTime(),
             tireLevel: 7,
           },
         ],
