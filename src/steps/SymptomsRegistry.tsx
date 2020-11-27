@@ -9,10 +9,12 @@ import { PainBox } from 'src/components/PainBox/PainBox'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { SubmitButton } from 'src/components/SubmitButton'
 import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRadioButton'
-import Link from 'src/components/Link'
+import ButtonLink from 'src/components/ButtonLink'
 import { ErrorCodes } from 'src/components/Error'
 
 import withSession from 'src/hoc/WithSession'
+import { Role } from 'src/model/Role'
+import { SuccessCodes } from 'src/components/Success'
 
 function SymptomsRegistry() {
   const router = useRouter()
@@ -21,7 +23,12 @@ function SymptomsRegistry() {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit(painLevel, router))}>
-        <TitleHeader />
+        <TitleHeader
+          closeButton
+          title="Cuéntale a sayu cómo te sientes hoy"
+          subtitle="Registro de dolor"
+        />
+
         <PainBox painLevel={painLevel} />
         <Text fontSize="md" mb="8" mt="8">
           ¿Tienes otros síntomas? <br /> Regístralos considerando que 0 es
@@ -59,7 +66,7 @@ function SymptomsRegistry() {
           <SubmitButton label="Registrar" />
         </Stack>
         <Stack marginTop={2} width="100%" align="center">
-          <Link href="/" label="Cancelar" secondaryStyle />
+          <ButtonLink href="/" label="Cancelar" secondaryStyle />
         </Stack>
       </form>
     </>
@@ -80,9 +87,9 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
   }
   try {
     await axios.post('/api/registry-save', request)
-    router.push('/registro-exitoso-sintomas')
+    router.push(`/_success?key=${SuccessCodes.SUCCESSFUL_SYMPTOM_REGISTRY}`)
   } catch (err) {
-    router.push(`/_error?error=${ErrorCodes.FailedSymptomsRegistry}`)
+    router.push(`/_error?error=${ErrorCodes.FAILED_SYMPTOMS_REGISTRY}`)
   }
 }
-export default withSession(SymptomsRegistry, 'tutor')
+export default withSession(SymptomsRegistry, [Role.CUIDADOR])

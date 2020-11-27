@@ -11,37 +11,67 @@ jest.mock('next/router', () => ({
 jest.mock('next-auth/client')
 
 describe('Home page', () => {
-  const mockSession: Session = {
-    user: {
-      email: 'test@test.com',
-      name: 'test',
-      image: 'http://test.com/test.png',
-    },
-    expires: '',
-  }
-  beforeEach(() => {
-    jest.clearAllMocks()
+  describe('Cuidador Role', () => {
+    const mockSession: Session = {
+      user: {
+        email: 'test@test.com',
+        name: 'test',
+        image: 'http://test.com/test.png',
+      },
+      expires: '',
+      role: 'cuidador',
+    }
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
+
+    afterEach(cleanup)
+
+    test('when click on the button should redirect to index', () => {
+      jest.spyOn(NextAuth, 'useSession').mockReturnValue([mockSession, false])
+
+      render(<WelcomeSayu />)
+
+      const button = screen.getByText(/registrar síntomas/i)
+      expect(button).toHaveAttribute('href', '/seleccion-nivel-dolor')
+    })
+
+    test('when click on logout button should call signout', () => {
+      jest.spyOn(NextAuth, 'useSession').mockReturnValue([mockSession, false])
+      const mockSignOut = jest.spyOn(NextAuth, 'signout')
+      render(<WelcomeSayu />)
+
+      const signoutButton = screen.getByText(/^salir$/i)
+      userEvent.click(signoutButton)
+
+      expect(mockSignOut).toHaveBeenCalled()
+    })
   })
 
-  afterEach(cleanup)
+  describe('Tratante Role', () => {
+    const mockSession: Session = {
+      user: {
+        email: 'test@test.com',
+        name: 'test',
+        image: 'http://test.com/test.png',
+      },
+      expires: '',
+      role: 'tratante',
+    }
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
 
-  test('when click on the button should redirect to index', () => {
-    jest.spyOn(NextAuth, 'useSession').mockReturnValue([mockSession, false])
+    afterEach(cleanup)
+    test('when tratante role login should show  Gestionar Usuarios button', () => {
+      jest.spyOn(NextAuth, 'useSession').mockReturnValue([mockSession, false])
+      render(<WelcomeSayu />)
 
-    render(<WelcomeSayu />)
-
-    const button = screen.getByText(/registrar síntomas/i)
-    expect(button).toHaveAttribute('href', '/seleccion-nivel-dolor')
-  })
-
-  test('when click on logout button should call signout', () => {
-    jest.spyOn(NextAuth, 'useSession').mockReturnValue([mockSession, false])
-    const mockSignOut = jest.spyOn(NextAuth, 'signout')
-    render(<WelcomeSayu />)
-
-    const signoutButton = screen.getByText(/^salir$/i)
-    userEvent.click(signoutButton)
-
-    expect(mockSignOut).toHaveBeenCalled()
+      const userManagementButton = screen.getByText(/^gestionar usuarios$/i)
+      expect(userManagementButton).toHaveAttribute(
+        'href',
+        '/tratante/gestion-usuario'
+      )
+    })
   })
 })

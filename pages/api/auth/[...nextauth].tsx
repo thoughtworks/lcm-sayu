@@ -2,6 +2,7 @@ import { NextApiHandler } from 'next'
 import NextAuth, { User } from 'next-auth'
 import { SessionBase } from 'next-auth/_utils'
 import Providers from 'next-auth/providers'
+import { Role } from 'src/model/Role'
 
 const {
   TYPEORM_CONNECTION,
@@ -26,7 +27,7 @@ const options = {
   secret: process.env.SECRET,
   callbacks: {
     session: async (session: SessionBase) => {
-      return { ...session, role: 'tutor' }
+      return { ...session, role: Role.CUIDADOR }
     },
     signIn: async (user: User) => {
       const ALLOWED_USERS = [

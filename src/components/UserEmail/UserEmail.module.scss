@@ -1,0 +1,20 @@
+@import 'src/styles/colors';
+.user-email {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    border-radius: 4px;
+    border: 1px solid #e3e8ef;
+    height: 36px;
+    padding-left: 10px;
+
+    &.invalid {
+      border-color: $error-red;
+    }
+  }
+  .error {
+    font-size: 10px;
+    color: $error-red;
+  }
+}

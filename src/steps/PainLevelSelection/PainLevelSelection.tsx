@@ -6,11 +6,16 @@ import { FaceButton } from 'src/components/FaceButton/FaceButton'
 import withSession from 'src/hoc/WithSession'
 
 import styles from './PainLevelSelection.module.scss'
+import { Role } from 'src/model/Role'
 
 const PainLevelSelection = () => {
   return (
     <main id={styles['pain-level-selection']}>
-      <TitleHeader />
+      <TitleHeader
+        closeButton
+        title="Cuéntale a sayu cómo te sientes hoy"
+        subtitle="Registro de dolor"
+      />
 
       <Text fontSize="sm" color="grey">
         Muéstrale a tu hijo/hija este dibujo y explícale lo siguiente: "Elige la
@@ -34,4 +39,4 @@ const PainLevelSelection = () => {
   )
 }
 
-export default withSession(PainLevelSelection, 'tutor')
+export default withSession(PainLevelSelection, [Role.CUIDADOR])

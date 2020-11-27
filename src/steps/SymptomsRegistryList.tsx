@@ -10,8 +10,9 @@ import { ErrorCodes } from 'src/components/Error'
 
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { RegistryService } from 'src/services/RegistryService'
-import { Navigation } from 'src/components/Navigation/Navigation'
 import withSession from 'src/hoc/WithSession'
+import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
+import { Role } from 'src/model/Role'
 
 export type ViewRegistry = {
   day: number
@@ -27,7 +28,7 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
 
   useEffect(() => {
     if (!viewRegistries) {
-      router.push(`/_error?error=${ErrorCodes.FailedSymptomsRetrieval}`)
+      router.push(`/_error?error=${ErrorCodes.FAILED_SYMPTOMS_RETRIEVAL}`)
     }
   })
   if (!viewRegistries) {
@@ -36,7 +37,7 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
 
   return (
     <>
-      <Navigation />
+      <TitleHeader closeButton />
       <Text fontSize={['lg']} mt={2}>
         Historial de síntomas
       </Text>
@@ -200,4 +201,4 @@ export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = 
   return { props: { viewRegistries } }
 }
 
-export default withSession(SymptomsRegistryList, 'tutor')
+export default withSession(SymptomsRegistryList, [Role.CUIDADOR])

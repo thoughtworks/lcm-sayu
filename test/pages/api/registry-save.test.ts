@@ -4,7 +4,6 @@ import typeorm from 'typeorm'
 import { Symptom } from 'src/model/Symptom'
 
 import handler from 'pages/api/registry-save'
-import { cleanup } from '../../testUtils'
 
 const symptoms: Symptom[] = [
   { id: 1, name: 'Cansancio' },
@@ -29,7 +28,7 @@ const dateNow = 1604083287383
 global.Date.now = jest.fn().mockReturnValue(dateNow)
 
 jest.mock('next-auth/client', () => ({
-  getSession: jest.fn().mockReturnValue({ role: 'tutor' }),
+  getSession: jest.fn().mockReturnValue({ role: 'cuidador' }),
 }))
 describe('Symptom api', () => {
   const symptom = {
@@ -46,8 +45,6 @@ describe('Symptom api', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
-
-  afterEach(cleanup)
 
   test('should save symptoms', async () => {
     const creationDate = new Date(dateNow)

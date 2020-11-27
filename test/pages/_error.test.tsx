@@ -60,12 +60,12 @@ describe('_error', () => {
     })
 
     test('should show face scale screen when button is clicked', () => {
-      const retryButton = screen.getByText(/volver a intentarlo/i)
+      const retryButton = screen.getByText(/^Volver a intentarlo$/)
       expect(retryButton).toHaveAttribute('href', '/seleccion-nivel-dolor')
     })
 
     test('should show welcome screen when button is clicked', () => {
-      const cancelButton = screen.getByText(/salir/i)
+      const cancelButton = screen.getByText(/^Salir$/)
       expect(cancelButton).toHaveAttribute('href', '/')
     })
   })
@@ -81,13 +81,13 @@ describe('_error', () => {
 
     test('should show access denied message', () => {
       const failureMessage = screen.getByText(
-        /ha ocurrido un error durante la autenticación/i
+        /^Ha ocurrido un error durante la autenticación$/
       )
       expect(failureMessage).toBeInTheDocument()
     })
 
-    test('should have a rety button', () => {
-      const retryButton = screen.getByText(/volver a intentarlo/i)
+    test('should have a retry button', () => {
+      const retryButton = screen.getByText(/^Salir$/)
       expect(retryButton).toHaveAttribute('href', '/')
     })
   })
@@ -103,7 +103,7 @@ describe('_error', () => {
 
     test('should show unauthorized message', () => {
       const failureMessage = screen.getByText(
-        /no tiene permisos para ver pagina/i
+        /^No tiene permisos para ver pagina$/
       )
       expect(failureMessage).toBeInTheDocument()
     })
@@ -119,7 +119,7 @@ describe('_error', () => {
     afterEach(cleanup)
 
     test('should show unauthorized message', () => {
-      const failureMessage = screen.getByText(/ha ocurrido un error/i)
+      const failureMessage = screen.getByText(/^Ha ocurrido un error ❌.$/)
       expect(failureMessage).toBeInTheDocument()
     })
   })
@@ -148,6 +148,23 @@ describe('_error', () => {
     test('should redirect to symptoms retrieval page when retry button is clicked', () => {
       const retryButton = screen.getByText(/volver a intentarlo/i)
       expect(retryButton).toHaveAttribute('href', '/ver-registros-sintomas')
+    })
+  })
+
+  describe('<UserRegistryError />', () => {
+    beforeEach(() => {
+      mockQuery.error = 'UserRegistryError'
+      render(<ErrorPage statusCode={0} />)
+      jest.clearAllMocks()
+    })
+
+    afterEach(cleanup)
+
+    test('should show user registry error message', () => {
+      const failureMessage = screen.getByText(
+        /^Ha ocurrido un error al intentar guardar el usuario.$/
+      )
+      expect(failureMessage).toBeInTheDocument()
     })
   })
 })

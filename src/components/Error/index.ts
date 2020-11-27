@@ -1,6 +1,7 @@
 export { GenericError } from './GenericError'
-export { AuthenticationDeniedError } from './AutheticationDeniedError'
+export { AuthenticationDeniedError } from './AuthenticationDeniedError'
 export { Unauthorized } from './Unauthorized'
 export { FailedSymptomsRegistry } from './FailedSymptomsRegistry'
 export { FailedSymptomsRetrieval } from './FailedSymptomsRetrieval'
+export { UserRegistryError } from './UserRegistryError'
 export { ErrorCodes } from './ErrorCodes'

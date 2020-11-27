@@ -2,10 +2,11 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { useSession, getSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { Role } from 'src/model/Role'
 
-export default function withSession<P>(
+function withSession<P>(
   WrappedComponent: React.ComponentType<P>,
-  roles: 'tutor' | 'enfermero'
+  roles: Role[]
 ): (props: P) => JSX.Element {
   return (props: P) => {
     const [session, loading] = useSession()
@@ -15,6 +16,7 @@ export default function withSession<P>(
       if (!session && !loading) {
         router.push('/login')
       }
+
       if (session && !roles.includes(session.role)) {
         router.push('/_error?error=Unauthorized')
       }
@@ -22,13 +24,12 @@ export default function withSession<P>(
     return <WrappedComponent {...props} />
   }
 }
-const withSessionServer = (
-  handler: NextApiHandler,
-  role: 'tutor' | 'enfermero'
-) => {
+
+const withSessionServer = (handler: NextApiHandler, roles: Role[]) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getSession({ req })
-    if (!session || session.role !== role) {
+
+    if (!roles.includes(session?.role)) {
       res.status(401)
       res.send(null)
       console.error('Access denied for user', session)
@@ -38,4 +39,6 @@ const withSessionServer = (
     return handler(req, res)
   }
 }
+
+export default withSession
 export { withSessionServer }

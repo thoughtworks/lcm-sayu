@@ -1,0 +1,17 @@
+.error {
+  display: flex;
+  flex-direction: column;
+
+  img {
+    margin: 120px auto 55px;
+  }
+
+  p {
+    margin-bottom: 55px;
+    text-align: center;
+  }
+
+  .retry {
+    margin-bottom: 10px;
+  }
+}

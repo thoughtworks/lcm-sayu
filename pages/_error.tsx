@@ -9,6 +9,7 @@ import {
   Unauthorized,
   FailedSymptomsRegistry,
   FailedSymptomsRetrieval,
+  UserRegistryError,
 } from 'src/components/Error'
 
 const Error: FunctionComponent<{ statusCode: number }> = ({ statusCode }) => {
@@ -16,14 +17,16 @@ const Error: FunctionComponent<{ statusCode: number }> = ({ statusCode }) => {
   const { error } = router.query
 
   switch (error as string) {
-    case ErrorCodes.AccessDenied:
+    case ErrorCodes.ACCESS_DENIED:
       return <AuthenticationDeniedError />
-    case ErrorCodes.Unauthorized:
+    case ErrorCodes.UNAUTHORIZED:
       return <Unauthorized />
-    case ErrorCodes.FailedSymptomsRegistry:
+    case ErrorCodes.FAILED_SYMPTOMS_REGISTRY:
       return <FailedSymptomsRegistry />
-    case ErrorCodes.FailedSymptomsRetrieval:
+    case ErrorCodes.FAILED_SYMPTOMS_RETRIEVAL:
       return <FailedSymptomsRetrieval />
+    case ErrorCodes.USER_REGISTRY_ERROR:
+      return <UserRegistryError />
     default:
       switch (statusCode) {
         default:

@@ -1,18 +1,47 @@
-import React from 'react'
-import { Box, Flex, Text } from '@chakra-ui/core'
-import { Navigation } from 'src/components/Navigation/Navigation'
+import React, { FunctionComponent } from 'react'
+import { Image, Box, Flex, Text } from '@chakra-ui/core'
+import { useRouter } from 'next/router'
 
-const TitleHeader = () => {
+type TitleHeaderProps = {
+  closeButton?: boolean
+  title?: string
+  subtitle?: string
+}
+
+const TitleHeader: FunctionComponent<TitleHeaderProps> = ({
+  closeButton,
+  title,
+  subtitle,
+}) => {
+  const router = useRouter()
   return (
     <Box marginTop={5}>
-      <Navigation />
+      <Flex justify="space-between">
+        <button type="button" onClick={() => router.back()}>
+          <Image src="/img/back_arrow.svg" alt="Ir atrás" />
+        </button>
+        {closeButton && (
+          <button
+            type="button"
+            onClick={() => {
+              router.push('/')
+            }}
+          >
+            <Image src="/img/close_icon.svg" alt="Volver al home" />
+          </button>
+        )}
+      </Flex>
       <Flex direction="column">
-        <Text marginTop={5} fontSize="lg">
-          Cuéntale a sayu cómo te sientes hoy
-        </Text>
-        <Text fontWeight="bold" marginTop={5} fontSize="sm">
-          Registro de dolor
-        </Text>
+        {title && (
+          <Text marginTop={5} fontSize="lg">
+            {title}
+          </Text>
+        )}
+        {subtitle && (
+          <Text fontWeight="bold" marginTop={5} fontSize="sm">
+            {subtitle}
+          </Text>
+        )}
       </Flex>
     </Box>
   )
