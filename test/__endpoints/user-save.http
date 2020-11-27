@@ -3,6 +3,6 @@ content-type: application/json
 Cookie: {{cookie}}
 
 {
-    "userEmail": "test@test.com",
-    "role": "invalido"
+    "userEmail": "test1@test.com",
+    "role": "tratante"
 }

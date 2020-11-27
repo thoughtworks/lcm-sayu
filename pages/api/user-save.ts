@@ -8,11 +8,16 @@ import { UserService } from 'src/services/UserService'
 const handler: NextApiHandler = async (req, res) => {
   const user = req.body
 
-  const userToSave: User = new User(user.userEmail, user.role)
+  try {
+    const userToSave: User = new User(user.userEmail, user.role)
 
-  const userService = new UserService()
-  await userService.saveUser(userToSave)
-  res.status(200)
+    const userService = new UserService()
+    await userService.saveUser(userToSave)
+    res.status(200)
+  } catch (err) {
+    res.status(500)
+    console.error(err?.message || err, user)
+  }
   res.send(null)
 }
 

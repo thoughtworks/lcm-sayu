@@ -43,7 +43,7 @@ const AddUser = () => {
           })}
         >
           <div className={styles['user-email']}>
-            <UserEmail />
+            <UserEmail autoFocus />
           </div>
           <div className={styles['roles']}>
             <RoleRadioButton />
