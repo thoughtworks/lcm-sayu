@@ -4,7 +4,7 @@ import { Radio, RadioGroup, Text } from '@chakra-ui/core'
 
 const symptonInfo: { [key: string]: any } = {
   Constipación: {
-    name: 'Constipación',
+    name: 'Deposiciones',
     description: '¿Ha tenido en las últimas 24 horas deposiciones?',
   },
   Fiebre: {

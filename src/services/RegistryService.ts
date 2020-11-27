@@ -1,6 +1,7 @@
+import { createConnection } from 'typeorm'
+import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { Registry } from 'src/model/Registry'
 import { Symptom } from 'src/model/Symptom'
-import { createConnection } from 'typeorm'
 
 export class RegistryService {
   async saveRegistry(symptomsToRegister: any): Promise<void> {
@@ -22,6 +23,22 @@ export class RegistryService {
         })
       const registryRepository = connection.getRepository('Registry')
       await registryRepository.save(registryList)
+    } finally {
+      connection.close()
+    }
+  }
+
+  async registriesRetrieval(): Promise<RegistryDTO[]> {
+    const connection = await createConnection()
+    try {
+      const registryRepository = connection.getRepository<Registry>('Registry')
+      const symptomsRegistries = await registryRepository.find({
+        relations: ['symptom'],
+        order: {
+          creationDate: 'DESC',
+        },
+      })
+      return this.toRegistriesDTO(symptomsRegistries)
     } finally {
       connection.close()
     }
@@ -71,5 +88,114 @@ export class RegistryService {
       default:
         false
     }
+  }
+  private toRegistriesDTO(registries: Registry[]): RegistryDTO[] {
+    const registriesDTO: RegistryDTO[] = []
+    let symptomsDate = 0
+    let currentDate = 0
+
+    let firstIterationOfTheDay = true
+
+    let symptomsUniqueID = 0
+
+    let registryDTO: RegistryDTO = {
+      id: 0,
+      symptomDate: 0,
+      painLevel: 0,
+      tireLevel: 0,
+      appetiteLevel: 0,
+      nauseaLevel: 0,
+      swallowLevel: 0,
+      airLevel: 0,
+      depositionLevel: false,
+      feverLevel: false,
+    }
+
+    registries.forEach((registry) => {
+      symptomsUniqueID += 1
+      currentDate = registry.creationDate.getTime()
+
+      if (firstIterationOfTheDay) {
+        symptomsDate = currentDate
+        firstIterationOfTheDay = false
+      }
+
+      if (currentDate != symptomsDate) {
+        const toPushRegistryDTO: RegistryDTO = {
+          id: registryDTO.id,
+          symptomDate: registryDTO.symptomDate,
+          painLevel: registryDTO.painLevel,
+          tireLevel: registryDTO.tireLevel,
+          appetiteLevel: registryDTO.appetiteLevel,
+          nauseaLevel: registryDTO.nauseaLevel,
+          swallowLevel: registryDTO.swallowLevel,
+          airLevel: registryDTO.airLevel,
+          depositionLevel: registryDTO.depositionLevel,
+          feverLevel: registryDTO.feverLevel,
+        }
+
+        registriesDTO.push(toPushRegistryDTO)
+
+        firstIterationOfTheDay = true
+      }
+      registryDTO = this.setSymptomLevels(
+        registry,
+        registryDTO,
+        symptomsUniqueID
+      )
+    })
+
+    if (!firstIterationOfTheDay) {
+      const toPushRegistryDTO: RegistryDTO = {
+        id: registryDTO.id,
+        symptomDate: registryDTO.symptomDate,
+        painLevel: registryDTO.painLevel,
+        tireLevel: registryDTO.tireLevel,
+        appetiteLevel: registryDTO.appetiteLevel,
+        nauseaLevel: registryDTO.nauseaLevel,
+        swallowLevel: registryDTO.swallowLevel,
+        airLevel: registryDTO.airLevel,
+        depositionLevel: registryDTO.depositionLevel,
+        feverLevel: registryDTO.feverLevel,
+      }
+      registriesDTO.push(toPushRegistryDTO)
+    }
+
+    return registriesDTO
+  }
+
+  private setSymptomLevels(
+    registry: Registry,
+    registryDTO: RegistryDTO,
+    symptomsUniqueID: number
+  ) {
+    registryDTO.symptomDate = registry.creationDate.getTime()
+    registryDTO.id = symptomsUniqueID
+    switch (registry.symptom.name) {
+      case 'Dolor':
+        registryDTO.painLevel = registry.value
+        break
+      case 'Cansancio':
+        registryDTO.tireLevel = registry.value
+        break
+      case 'Apetito':
+        registryDTO.appetiteLevel = registry.value
+        break
+      case 'Náuseas':
+        registryDTO.nauseaLevel = registry.value
+        break
+      case 'Dificultad para tragar':
+        registryDTO.swallowLevel = registry.value
+        break
+      case 'Falta de aire':
+        registryDTO.airLevel = registry.value
+        break
+      case 'Constipación':
+        registryDTO.depositionLevel = Boolean(registry.value)
+        break
+      case 'Fiebre':
+        registryDTO.feverLevel = Boolean(registry.value)
+    }
+    return registryDTO
   }
 }

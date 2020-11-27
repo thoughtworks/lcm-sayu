@@ -8,6 +8,7 @@ import {
   GenericError,
   Unauthorized,
   FailedSymptomsRegistry,
+  FailedSymptomsRetrieval,
 } from 'src/components/Error'
 
 const Error: FunctionComponent<{ statusCode: number }> = ({ statusCode }) => {
@@ -21,6 +22,8 @@ const Error: FunctionComponent<{ statusCode: number }> = ({ statusCode }) => {
       return <Unauthorized />
     case ErrorCodes.FailedSymptomsRegistry:
       return <FailedSymptomsRegistry />
+    case ErrorCodes.FailedSymptomsRetrieval:
+      return <FailedSymptomsRetrieval />
     default:
       switch (statusCode) {
         default:

@@ -1,0 +1,41 @@
+.symptom-list {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  .symptom-circle {
+    width: 21px;
+    height: 21px;
+    line-height: 20px;
+    border-radius: 50%;
+    font-size: 10px;
+    color: #fff;
+    text-align: center;
+    margin: 3px 1px 1px 1px;
+  }
+  .dolor-value {
+    background: #00afa2;
+  }
+  .cansancio-value {
+    background: #616ee4;
+  }
+  .apetito-value {
+    background: #ffca2a;
+  }
+  .nauseas-value {
+    background: #163eb3;
+  }
+  .tragar-value {
+    background: #e63e6c;
+  }
+  .aire-value {
+    background: #b3cf71;
+  }
+  .deposicion-value {
+    background: #ee7342;
+  }
+  .fiebre-value {
+    background: #168db3;
+  }
+}

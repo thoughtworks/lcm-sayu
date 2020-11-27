@@ -54,7 +54,7 @@ describe('_error', () => {
 
     test('should show failure message', () => {
       const failureMessage = screen.getByText(
-        /Ha ocurrido un error, espera unos minutos e inténtalo nuevamente/i
+        /^Ha ocurrido un error, espera unos minutos e inténtalo nuevamente.$/
       )
       expect(failureMessage).toBeInTheDocument()
     })
@@ -121,6 +121,33 @@ describe('_error', () => {
     test('should show unauthorized message', () => {
       const failureMessage = screen.getByText(/ha ocurrido un error/i)
       expect(failureMessage).toBeInTheDocument()
+    })
+  })
+
+  describe('<FailedSymptomsRetrieval />', () => {
+    beforeEach(() => {
+      mockQuery.error = 'FailedSymptomsRetrieval'
+      render(<ErrorPage statusCode={0} />)
+      jest.clearAllMocks()
+    })
+
+    afterEach(cleanup)
+
+    test('should show failure message', () => {
+      const failureMessage = screen.getByText(
+        /Ha ocurrido un error, espera unos minutos e inténtalo nuevamente/i
+      )
+      expect(failureMessage).toBeInTheDocument()
+    })
+
+    test('should show welcome screen when button is clicked', () => {
+      const cancelButton = screen.getByText(/salir/i)
+      expect(cancelButton).toHaveAttribute('href', '/')
+    })
+
+    test('should redirect to symptoms retrieval page when retry button is clicked', () => {
+      const retryButton = screen.getByText(/volver a intentarlo/i)
+      expect(retryButton).toHaveAttribute('href', '/ver-registros-sintomas')
     })
   })
 })

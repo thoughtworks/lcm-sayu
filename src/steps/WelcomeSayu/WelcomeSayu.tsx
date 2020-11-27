@@ -46,7 +46,17 @@ const WelcomeSayu = () => {
           hijo/hija.
         </Text>
         <Stack marginTop={70} />
-        <Link href="/seleccion-nivel-dolor" label="Registrar síntomas" />
+        <div className={styles.actions}>
+          <div>
+            <Link href="/seleccion-nivel-dolor" label="Registrar síntomas" />
+          </div>
+          <div className={styles['symptom-registry-list-link']}>
+            <Link
+              href="/ver-registros-sintomas"
+              label="Ver historial de síntomas"
+            />
+          </div>
+        </div>
       </Stack>
     </Flex>
   )
