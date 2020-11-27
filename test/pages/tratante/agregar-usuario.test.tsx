@@ -32,7 +32,7 @@ describe('<AddUser />', () => {
   test('should show add user form', async () => {
     jest
       .spyOn(axios, 'post')
-      .mockResolvedValue({ data: { emailAlreadyExist: true } })
+      .mockResolvedValue({ data: { emailAlreadyExist: false } })
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')
 
@@ -87,8 +87,8 @@ describe('<AddUser />', () => {
   test('should redirect to error page when there is an error', async () => {
     jest
       .spyOn(axios, 'post')
-      .mockResolvedValueOnce({ data: { emailAlreadyExist: true } })
-      .mockResolvedValueOnce({ data: { emailAlreadyExist: true } })
+      .mockResolvedValueOnce({ data: { emailAlreadyExist: false } })
+      .mockResolvedValueOnce({ data: { emailAlreadyExist: false } })
       .mockRejectedValueOnce(null)
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')
@@ -106,7 +106,7 @@ describe('<AddUser />', () => {
   test('should show error message when email already exist', async () => {
     jest
       .spyOn(axios, 'post')
-      .mockResolvedValueOnce({ data: { emailAlreadyExist: false } })
+      .mockResolvedValueOnce({ data: { emailAlreadyExist: true } })
 
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')

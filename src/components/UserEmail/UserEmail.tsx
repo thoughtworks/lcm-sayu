@@ -6,20 +6,20 @@ import styles from './UserEmail.module.scss'
 
 const UserEmail: FunctionComponent = () => {
   const { register, errors } = useFormContext()
+
   let errorMsg = ''
-  if (errors.userEmail) {
-    switch (errors.userEmail.type) {
-      case 'required':
-        errorMsg = 'Debes ingresar correo electrónico'
-        break
-      case 'pattern':
-        errorMsg = 'Debes ingresar correo electrónico válido'
-        break
-      case 'validate':
-        errorMsg = 'Correo ya existe'
-        break
-    }
+  switch (errors.userEmail?.type) {
+    case 'required':
+      errorMsg = 'Debes ingresar correo electrónico'
+      break
+    case 'pattern':
+      errorMsg = 'Debes ingresar correo electrónico válido'
+      break
+    case 'validate':
+      errorMsg = 'Correo ya existe'
+      break
   }
+
   return (
     <div className={styles['user-email']}>
       <label htmlFor="userEmail">Correo electrónico</label>
@@ -27,6 +27,7 @@ const UserEmail: FunctionComponent = () => {
         id="userEmail"
         name="userEmail"
         type="email"
+        className={errors.userEmail && styles['invalid']}
         ref={register({
           required: true,
           pattern: validEmailPattern,
@@ -34,11 +35,11 @@ const UserEmail: FunctionComponent = () => {
             const {
               data: { emailAlreadyExist },
             } = await axios.post('/api/validate-email', { email })
-            return !!emailAlreadyExist
+            return !emailAlreadyExist
           },
         })}
       />
-      {errorMsg && <span className={styles.error}>{errorMsg}</span>}
+      {errorMsg && <p className={styles.error}>{errorMsg}</p>}
     </div>
   )
 }
