@@ -42,13 +42,13 @@ const SymptomsLegend = () => (
           <Box>
             <div className={styles['tragar-legend'] + ' ' + styles['legend']} />
           </Box>
-          <Box fontSize="xs">Tragar</Box>
+          <Box fontSize="xs">Dificultad para tragar</Box>
         </Stack>
         <Stack isInline>
           <Box>
             <div className={styles['aire-legend'] + ' ' + styles['legend']} />
           </Box>
-          <Box fontSize="xs">Falta de Aire</Box>
+          <Box fontSize="xs">Falta de aire</Box>
         </Stack>
         <Stack isInline>
           <Box>
