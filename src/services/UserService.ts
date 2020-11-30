@@ -12,14 +12,19 @@ export class UserService {
     }
   }
 
-  async existByEmail(email: string): Promise<boolean> {
+  async getByEmail(email: string): Promise<User | undefined> {
     const connection = await createConnection()
     try {
-      const userRepository = connection.getRepository('User')
-      const user = await userRepository.findOne({ email: email.toLowerCase() })
-      return !!user
+      const userRepository = connection.getRepository<User>('User')
+      const user = await userRepository.findOne({ email })
+      return user
     } finally {
       connection.close()
     }
+  }
+
+  async existByEmail(email: string): Promise<boolean> {
+    const user = await this.getByEmail(email)
+    return !!user
   }
 }

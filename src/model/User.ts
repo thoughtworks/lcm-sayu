@@ -20,7 +20,11 @@ export class User {
       throw new Error('Email is invalid')
     }
 
-    return email.toLowerCase()
+    const emailParts = email.toLowerCase().split('@')
+    const idEmail = emailParts[0].replace(/\./g, '')
+    const emailDomain = emailParts[1]
+
+    return `${idEmail}@${emailDomain}`
   }
 
   private getValidRole(role: string): Role {

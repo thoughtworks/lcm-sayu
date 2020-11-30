@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen, cleanup, render } from 'test/testUtils'
+import { screen, cleanup, render, clearMocks } from 'test/testUtils'
 import SuccessPage from 'pages/_success'
 import { SuccessCodes } from 'src/components/Success'
 
@@ -14,8 +14,8 @@ jest.mock('next/router', () => ({
 describe('_success', () => {
   describe('<GenericSuccess />', () => {
     beforeEach(() => {
+      clearMocks()
       render(<SuccessPage />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)
@@ -33,9 +33,9 @@ describe('_success', () => {
 
   describe('<SuccessfulSymptomRegistry />', () => {
     beforeEach(() => {
+      clearMocks()
       mockQuery.key = SuccessCodes.SUCCESSFUL_SYMPTOM_REGISTRY
       render(<SuccessPage />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)
@@ -50,9 +50,9 @@ describe('_success', () => {
 
   describe('<SuccessfulUserRegistry />', () => {
     beforeEach(() => {
+      clearMocks()
       mockQuery.key = SuccessCodes.SUCCESSFUL_USER_REGISTRY
       render(<SuccessPage />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)

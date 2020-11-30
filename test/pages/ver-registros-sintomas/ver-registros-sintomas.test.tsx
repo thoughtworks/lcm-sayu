@@ -1,7 +1,7 @@
 import React from 'react'
 import { GetServerSidePropsContext } from 'next'
 import typeorm from 'typeorm'
-import { render, screen, cleanup } from 'test/testUtils'
+import { render, screen, cleanup, clearMocks } from 'test/testUtils'
 import SymptomsRegistryList, {
   ViewRegistry,
   getServerSideProps,
@@ -37,9 +37,7 @@ jest.mock('next-auth/client', () => ({
 }))
 
 describe('<SymptomsRegistryList />', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
+  beforeEach(clearMocks)
 
   afterEach(cleanup)
 
@@ -162,9 +160,7 @@ describe('<SymptomsRegistryList />', () => {
 })
 
 describe('<SymptomsRegistryList /> server side', () => {
-  beforeEach(() => {
-    jest.restoreAllMocks()
-  })
+  beforeEach(clearMocks)
 
   afterEach(cleanup)
 

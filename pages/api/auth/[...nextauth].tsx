@@ -1,8 +1,7 @@
 import { NextApiHandler } from 'next'
-import NextAuth, { User } from 'next-auth'
-import { SessionBase } from 'next-auth/_utils'
+import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
-import { Role } from 'src/model/Role'
+import { UserService } from 'src/services/UserService'
 
 const {
   TYPEORM_CONNECTION,
@@ -15,46 +14,43 @@ const {
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
-const options = {
-  // https://next-auth.js.org/configuration/providers
-  providers: [
-    Providers.Google({
-      clientId: process.env.GOOGLE_ID as string,
-      clientSecret: process.env.GOOGLE_SECRET as string,
-    }),
-  ],
-  database: `${TYPEORM_CONNECTION}://${TYPEORM_USERNAME}:${TYPEORM_PASSWORD}@${TYPEORM_HOST}:${TYPEORM_PORT}/${TYPEORM_DATABASE}`,
-  secret: process.env.SECRET,
-  callbacks: {
-    session: async (session: SessionBase) => {
-      return { ...session, role: Role.CUIDADOR }
-    },
-    signIn: async (user: User) => {
-      const ALLOWED_USERS = [
-        'bsoto@thoughtworks.com',
-        'bherrera@thoughtworks.com',
-        'aldemaro.diaz@thoughtworks.com',
-        'daniela.cortes@thoughtworks.com',
-        'dsantiba@thoughtworks.com',
-        'ncaceres@calvomackenna.cl',
-        'yanina.ovando@thoughtworks.com ',
-      ]
-      return ALLOWED_USERS.includes(user.email)
-    },
-    redirect: async () => {
-      const redirectTo: string | undefined = '/'
-      return redirectTo
-    },
-  },
-  session: {
-    jwt: true,
-  },
-  pages: {
-    error: '/_error',
-  },
-}
-
 const NextAuthHandler: NextApiHandler = (req, res) =>
-  NextAuth(req, res, options)
+  NextAuth(req, res, {
+    // https://next-auth.js.org/configuration/providers
+    providers: [
+      Providers.Google({
+        clientId: process.env.GOOGLE_ID as string,
+        clientSecret: process.env.GOOGLE_SECRET as string,
+      }),
+    ],
+    database: `${TYPEORM_CONNECTION}://${TYPEORM_USERNAME}:${TYPEORM_PASSWORD}@${TYPEORM_HOST}:${TYPEORM_PORT}/${TYPEORM_DATABASE}`,
+    secret: process.env.SECRET,
+    callbacks: {
+      session: async (session, user) => {
+        const userService = new UserService()
+
+        const allowedUser = await userService.getByEmail(user.email)
+        if (!allowedUser) {
+          return session
+        }
+
+        return { ...session, role: allowedUser.role }
+      },
+      signIn: async (user) => {
+        const userService = new UserService()
+        return userService.existByEmail(user.email)
+      },
+      redirect: async () => {
+        const redirectTo: string | undefined = '/'
+        return redirectTo
+      },
+    },
+    session: {
+      jwt: true,
+    },
+    pages: {
+      error: '/_error',
+    },
+  })
 
 export default NextAuthHandler

@@ -3,6 +3,7 @@ import typeorm from 'typeorm'
 
 import handler from 'pages/api/user-save'
 import { Role } from 'src/model/Role'
+import { clearMocks } from 'test/testUtils'
 
 const mockFind = jest.fn().mockResolvedValue(null)
 const mockSave = jest.fn().mockResolvedValue(null)
@@ -20,9 +21,7 @@ jest.mock('next-auth/client', () => ({
 }))
 
 describe('Symptom api', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
+  beforeEach(clearMocks)
 
   test('should save user', async () => {
     const user = {
@@ -170,5 +169,28 @@ describe('Symptom api', () => {
       userEmail: 'test@test.com',
     })
     expect(mockStatus).toHaveBeenCalledWith(500)
+  })
+
+  test('should save email in lower case without dots', async () => {
+    const user = {
+      userEmail: 'test.TEST.teSt@test.com',
+      role: Role.CUIDADOR,
+    }
+
+    const request: NextApiRequest = ({
+      body: user,
+    } as unknown) as NextApiRequest
+    const response: NextApiResponse = ({
+      send: jest.fn(),
+      status: jest.fn(),
+    } as unknown) as NextApiResponse
+
+    await handler(request, response)
+
+    expect(mockSave).toHaveBeenCalledWith({
+      email: 'testtesttest@test.com',
+      role: 'cuidador',
+      createdAt: new Date(dateNow),
+    })
   })
 })

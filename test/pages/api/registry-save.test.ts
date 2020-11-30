@@ -5,6 +5,8 @@ import { Symptom } from 'src/model/Symptom'
 
 import handler from 'pages/api/registry-save'
 
+import { clearMocks } from 'test/testUtils'
+
 const symptoms: Symptom[] = [
   { id: 1, name: 'Cansancio' },
   { id: 2, name: 'Apetito' },
@@ -42,9 +44,7 @@ describe('Symptom api', () => {
     tragar: 1,
   }
 
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
+  beforeEach(clearMocks)
 
   test('should save symptoms', async () => {
     const creationDate = new Date(dateNow)
