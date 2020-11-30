@@ -18,20 +18,27 @@ export type ViewRegistry = {
   day: number
   registries: RegistryDTO[]
 }
+
+export type MonthRegistry = {
+  month: number
+  year: number
+  viewRegistries: ViewRegistry[]
+}
+
 type SymptomsRegistryListProp = {
-  viewRegistries: ViewRegistry[] | null
+  monthRegistries: MonthRegistry[] | null
 }
 const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
-  viewRegistries,
+  monthRegistries,
 }) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (!viewRegistries) {
+    if (!monthRegistries) {
       router.push(`/_error?error=${ErrorCodes.FAILED_SYMPTOMS_RETRIEVAL}`)
     }
   })
-  if (!viewRegistries) {
+  if (!monthRegistries) {
     return null
   }
 
@@ -46,29 +53,31 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
         <Box>
           <SymptomsLegend />
         </Box>
-        <Text fontSize={['lg']} textAlign="left" width="100%">
-          {viewRegistries?.length != 0
-            ? formatMonthAndYear(viewRegistries?.slice(0, 1)[0].day)
-            : ''}
-        </Text>
         <Box width="100%" alignItems="center" alignContent="center">
-          {viewRegistries?.length != 0 ? (
-            viewRegistries?.map(({ day, registries }) => (
-              <div key={day}>
-                <DateBox symptomDate={formatDayAndNumberDate(day)} />
-                {registries.map((registry) => (
-                  <SymptomsDailyValues
-                    key={registry.id}
-                    symptomDate={formatHourAndMinutes(registry.symptomDate)}
-                    painLevel={registry.painLevel}
-                    tireLevel={registry.tireLevel}
-                    appetiteLevel={registry.appetiteLevel}
-                    nauseaLevel={registry.nauseaLevel}
-                    swallowLevel={registry.swallowLevel}
-                    airLevel={registry.airLevel}
-                    depositionLevel={registry.depositionLevel}
-                    feverLevel={registry.feverLevel}
-                  />
+          {monthRegistries?.length != 0 ? (
+            monthRegistries?.map(({ month, year, viewRegistries }) => (
+              <div key={month + year}>
+                <Text fontSize={['lg']} textAlign="left" width="100%">
+                  {formatMonth(month) + ', ' + year}
+                </Text>
+                {viewRegistries.map(({ day, registries }) => (
+                  <div key={day}>
+                    <DateBox symptomDate={formatDayAndNumberDate(day)} />
+                    {registries.map((registry) => (
+                      <SymptomsDailyValues
+                        key={registry.id}
+                        symptomDate={formatHourAndMinutes(registry.symptomDate)}
+                        painLevel={registry.painLevel}
+                        tireLevel={registry.tireLevel}
+                        appetiteLevel={registry.appetiteLevel}
+                        nauseaLevel={registry.nauseaLevel}
+                        swallowLevel={registry.swallowLevel}
+                        airLevel={registry.airLevel}
+                        depositionLevel={registry.depositionLevel}
+                        feverLevel={registry.feverLevel}
+                      />
+                    ))}
+                  </div>
                 ))}
               </div>
             ))
@@ -81,7 +90,7 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
   )
 }
 
-const toViewRegistries = (registries: RegistryDTO[]): ViewRegistry[] => {
+const toViewRegistries = (registries: RegistryDTO[]): MonthRegistry[] => {
   const viewRegistries: ViewRegistry[] = []
   let daysRegistry: RegistryDTO[] = []
   let firstIteration = true
@@ -90,7 +99,7 @@ const toViewRegistries = (registries: RegistryDTO[]): ViewRegistry[] => {
   let symptomsGroupSaved = false
 
   if (registries.length === 0) {
-    return viewRegistries
+    return []
   }
 
   registries.forEach((registry) => {
@@ -101,7 +110,6 @@ const toViewRegistries = (registries: RegistryDTO[]): ViewRegistry[] => {
       symptomsDay = currentDay
       firstIteration = false
     }
-
     if (currentDay.getDate() === symptomsDay.getDate()) {
       daysRegistry.push(registry)
     } else {
@@ -133,7 +141,57 @@ const toViewRegistries = (registries: RegistryDTO[]): ViewRegistry[] => {
     })
   }
 
-  return viewRegistries
+  return iterateMonth(viewRegistries)
+}
+
+const iterateMonth = (viewRegistries: ViewRegistry[]) => {
+  let firstI = true
+  let symptomsYear = 0
+  let symptomsMonth = 0
+  const monthRegistries: MonthRegistry[] = []
+  let oneMonthRegistry: ViewRegistry[] = []
+  let monthGroupSaved = false
+  viewRegistries.forEach((viewRegistry) => {
+    const currentMonth = new Date(viewRegistry.day).getMonth()
+    const currentYear = new Date(viewRegistry.day).getFullYear()
+    if (firstI) {
+      symptomsMonth = currentMonth
+      symptomsYear = currentYear
+      firstI = false
+    }
+    if (symptomsMonth === currentMonth) {
+      oneMonthRegistry.push(viewRegistry)
+    } else {
+      monthRegistries.push({
+        month: symptomsMonth,
+        year: symptomsYear,
+        viewRegistries: oneMonthRegistry,
+      })
+      oneMonthRegistry = []
+      oneMonthRegistry.push(viewRegistry)
+      symptomsMonth = currentMonth
+      symptomsYear = currentYear
+      monthGroupSaved = true
+    }
+  })
+  if (
+    monthRegistries.length != 0 &&
+    (!monthGroupSaved || oneMonthRegistry.length === 1)
+  ) {
+    monthRegistries.push({
+      month: symptomsMonth,
+      year: symptomsYear,
+      viewRegistries: oneMonthRegistry,
+    })
+  }
+  if (monthRegistries.length === 0) {
+    monthRegistries.push({
+      month: symptomsMonth,
+      year: symptomsYear,
+      viewRegistries: oneMonthRegistry,
+    })
+  }
+  return monthRegistries
 }
 
 const formatHourAndMinutes = (unformattedDate: number) => {
@@ -161,10 +219,7 @@ const formatDayAndNumberDate = (unformattedDate: number) => {
   return formattedDate
 }
 
-const formatMonthAndYear = (unformattedDate: number) => {
-  const date = new Date(unformattedDate)
-  const month = date.getMonth()
-  const year = date.getFullYear()
+const formatMonth = (unformattedMonth: number) => {
   const monthValues = [
     'Enero',
     'Febrero',
@@ -179,8 +234,8 @@ const formatMonthAndYear = (unformattedDate: number) => {
     'Noviembre',
     'Diciembre',
   ]
-  const formattedDate = monthValues[month] + ', ' + year
-  return formattedDate
+  const formattedMonth = monthValues[unformattedMonth]
+  return formattedMonth
 }
 
 const formatTwoDigitNumber = (toFormatNumber: number): string => {
@@ -190,15 +245,15 @@ const formatTwoDigitNumber = (toFormatNumber: number): string => {
 }
 
 export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = async () => {
-  let viewRegistries: ViewRegistry[] | null = null
+  let monthRegistries: MonthRegistry[] | null = null
   try {
     const registryService = new RegistryService()
     const symptomsRegistries = await registryService.registriesRetrieval()
-    viewRegistries = toViewRegistries(symptomsRegistries)
+    monthRegistries = toViewRegistries(symptomsRegistries)
   } catch (err) {
     console.error(err)
   }
-  return { props: { viewRegistries } }
+  return { props: { monthRegistries } }
 }
 
 export default withSession(SymptomsRegistryList, [Role.CUIDADOR])
