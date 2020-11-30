@@ -4,6 +4,7 @@ import { User } from 'src/model/User'
 
 import handler from 'pages/api/validate-email'
 import { Role } from 'src/model/Role'
+import { clearMocks } from 'test/testUtils'
 
 const user = new User('test@test.com', Role.CUIDADOR)
 const mockFind = jest.fn().mockResolvedValue(user)
@@ -18,9 +19,7 @@ jest.mock('next-auth/client', () => ({
   getSession: jest.fn().mockReturnValue({ role: 'tratante' }),
 }))
 describe('Validate email api', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
+  beforeEach(clearMocks)
 
   test('should return true if email already exists', async () => {
     const mockJson = jest.fn()

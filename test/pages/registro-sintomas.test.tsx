@@ -5,6 +5,7 @@ import {
   cleanup,
   userEvent,
   waitFor,
+  clearMocks,
 } from 'test/testUtils'
 import axios from 'axios'
 import SymptomsRegistry from 'pages/registro-sintomas'
@@ -28,7 +29,7 @@ jest.mock('next-auth/client', () => ({
 
 describe('Home page', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    clearMocks()
     render(<SymptomsRegistry />)
   })
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen, cleanup, render } from 'test/testUtils'
+import { screen, cleanup, render, clearMocks } from 'test/testUtils'
 import ErrorPage, { getServerSideProps } from 'pages/_error'
 
 const mockPush = jest.fn().mockResolvedValue(null)
@@ -12,9 +12,7 @@ jest.mock('next/router', () => ({
 
 describe('_error', () => {
   describe('getServerSideProps', () => {
-    beforeEach(() => {
-      jest.clearAllMocks()
-    })
+    beforeEach(clearMocks)
 
     test('should return response status code', () => {
       const expectedStatusCode = 400
@@ -45,9 +43,9 @@ describe('_error', () => {
 
   describe('<FailedSymptomRegistry />', () => {
     beforeEach(() => {
+      clearMocks()
       mockQuery.error = 'FailedSymptomsRegistry'
       render(<ErrorPage statusCode={0} />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)
@@ -72,9 +70,9 @@ describe('_error', () => {
 
   describe('<AuthenticationDeniedError />', () => {
     beforeEach(() => {
+      clearMocks()
       mockQuery.error = 'AccessDenied'
       render(<ErrorPage statusCode={0} />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)
@@ -94,9 +92,9 @@ describe('_error', () => {
 
   describe('<Unauthorized />', () => {
     beforeEach(() => {
+      clearMocks()
       mockQuery.error = 'Unauthorized'
       render(<ErrorPage statusCode={0} />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)
@@ -111,9 +109,9 @@ describe('_error', () => {
 
   describe('<GenericError />', () => {
     beforeEach(() => {
+      clearMocks()
       mockQuery.error = ''
       render(<ErrorPage statusCode={0} />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)
@@ -126,9 +124,9 @@ describe('_error', () => {
 
   describe('<FailedSymptomsRetrieval />', () => {
     beforeEach(() => {
+      clearMocks()
       mockQuery.error = 'FailedSymptomsRetrieval'
       render(<ErrorPage statusCode={0} />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)
@@ -153,9 +151,9 @@ describe('_error', () => {
 
   describe('<UserRegistryError />', () => {
     beforeEach(() => {
+      clearMocks()
       mockQuery.error = 'UserRegistryError'
       render(<ErrorPage statusCode={0} />)
-      jest.clearAllMocks()
     })
 
     afterEach(cleanup)

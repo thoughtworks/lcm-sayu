@@ -1,7 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 
-import { cleanup, render, screen, userEvent, waitFor } from 'test/testUtils'
+import {
+  cleanup,
+  clearMocks,
+  render,
+  screen,
+  userEvent,
+  waitFor,
+} from 'test/testUtils'
 import AddUser from 'pages/tratante/agregar-usuario'
 
 jest.mock('axios')
@@ -19,7 +26,7 @@ jest.mock('next/router', () => ({
 
 describe('<AddUser />', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    clearMocks()
     render(<AddUser />)
   })
 

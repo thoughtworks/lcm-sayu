@@ -3,6 +3,7 @@ import typeorm from 'typeorm'
 
 import handler from 'pages/api/user-save'
 import { Role } from 'src/model/Role'
+import { clearMocks } from 'test/testUtils'
 
 const mockFind = jest.fn().mockResolvedValue(null)
 const mockSave = jest.fn().mockResolvedValue(null)
@@ -20,10 +21,7 @@ jest.mock('next-auth/client', () => ({
 }))
 
 describe('Symptom api', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-    jest.restoreAllMocks()
-  })
+  beforeEach(clearMocks)
 
   test('should save user', async () => {
     const user = {

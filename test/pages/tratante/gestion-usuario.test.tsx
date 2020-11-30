@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render, screen } from 'test/testUtils'
+import { cleanup, clearMocks, render, screen } from 'test/testUtils'
 
 import UserManagement from 'pages/tratante/gestion-usuario'
 
@@ -9,7 +9,7 @@ jest.mock('next-auth/client', () => ({
 
 describe('<UserManagement />', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    clearMocks()
     render(<UserManagement />)
   })
 

@@ -1,4 +1,4 @@
-import { render, screen, userEvent, cleanup } from 'test/testUtils'
+import { render, screen, userEvent, cleanup, clearMocks } from 'test/testUtils'
 import NextAuth, { Session } from 'next-auth/client'
 
 import WelcomeSayu from 'pages/index'
@@ -21,9 +21,7 @@ describe('Home page', () => {
       expires: '',
       role: 'cuidador',
     }
-    beforeEach(() => {
-      jest.clearAllMocks()
-    })
+    beforeEach(clearMocks)
 
     afterEach(cleanup)
 
@@ -58,9 +56,7 @@ describe('Home page', () => {
       expires: '',
       role: 'tratante',
     }
-    beforeEach(() => {
-      jest.clearAllMocks()
-    })
+    beforeEach(clearMocks)
 
     afterEach(cleanup)
     test('when tratante role login should show  Gestionar Usuarios button', () => {

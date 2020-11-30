@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render, screen } from 'test/testUtils'
+import { cleanup, clearMocks, render, screen } from 'test/testUtils'
 import userEvent from '@testing-library/user-event'
 
 import PainLevelSelection from 'src/steps/PainLevelSelection'
@@ -16,8 +16,8 @@ jest.mock('next-auth/client', () => ({
 
 describe('<PainLevelSelection />', () => {
   beforeEach(() => {
+    clearMocks()
     render(<PainLevelSelection />)
-    jest.clearAllMocks()
   })
 
   afterEach(cleanup)
