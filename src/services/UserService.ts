@@ -1,4 +1,4 @@
-import { User } from 'src/model/User'
+import { getValidEmail, User } from 'src/model/User'
 import { createConnection } from 'typeorm'
 
 export class UserService {
@@ -15,8 +15,9 @@ export class UserService {
   async getByEmail(email: string): Promise<User | undefined> {
     const connection = await createConnection()
     try {
+      const validEmail = getValidEmail(email)
       const userRepository = connection.getRepository<User>('User')
-      const user = await userRepository.findOne({ email })
+      const user = await userRepository.findOne({ email: validEmail })
       return user
     } finally {
       connection.close()

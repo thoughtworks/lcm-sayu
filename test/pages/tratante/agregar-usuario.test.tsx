@@ -88,7 +88,7 @@ describe('<AddUser />', () => {
   test('should have a cancel button', async () => {
     const cancelButton = screen.getByText(/^Cancelar$/)
 
-    expect(cancelButton).toHaveAttribute('href', '/')
+    expect(cancelButton).toHaveAttribute('href', '/tratante/gestion-usuario')
   })
 
   test('should redirect to error page when there is an error', async () => {
@@ -118,6 +118,10 @@ describe('<AddUser />', () => {
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')
     userEvent.tab()
-    expect(await screen.findByText(/^Correo ya existe$/)).toBeInTheDocument()
+    expect(
+      await screen.findByText(
+        /^Debes ingresar un correo que no esté duplicado$/
+      )
+    ).toBeInTheDocument()
   })
 })

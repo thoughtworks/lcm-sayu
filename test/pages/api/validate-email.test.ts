@@ -47,9 +47,8 @@ describe('Validate email api', () => {
   })
 
   test('should log error  when there is  an error', async () => {
-    const errorTest = new Error('Connection refused')
     global.console.error = jest.fn()
-    mockFind.mockRejectedValue(errorTest)
+
     await handler(
       { body: { email: 'test@testcom' } } as NextApiRequest,
       ({
@@ -57,6 +56,8 @@ describe('Validate email api', () => {
       } as unknown) as NextApiResponse
     )
 
-    expect(global.console.error).toHaveBeenCalledWith(errorTest)
+    expect(global.console.error).toHaveBeenCalledWith(
+      new Error('Email is invalid')
+    )
   })
 })
