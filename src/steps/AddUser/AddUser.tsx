@@ -50,7 +50,11 @@ const AddUser = () => {
           </div>
           <SubmitButton label="Guardar" />
           <div className={styles['cancel-link']}>
-            <ButtonLink label="Cancelar" href="/" secondaryStyle />
+            <ButtonLink
+              label="Cancelar"
+              href="/tratante/gestion-usuario"
+              secondaryStyle
+            />
           </div>
         </form>
       </FormProvider>

@@ -18,7 +18,7 @@ const UserEmail: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = (
       errorMsg = 'Debes ingresar correo electrónico válido'
       break
     case 'validate':
-      errorMsg = 'Correo ya existe'
+      errorMsg = 'Debes ingresar un correo que no esté duplicado'
       break
   }
 
