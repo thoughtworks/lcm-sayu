@@ -15,6 +15,7 @@ import {
   threeDaySymptoms,
   oneDaySymptoms,
   onlyOneHourSymptoms,
+  differentMonthViewRegistry,
 } from './ver-registros-sintomas-data'
 
 const mockPush = jest.fn().mockResolvedValue(null)
@@ -46,6 +47,15 @@ describe('<SymptomsRegistryList />', () => {
 
     const month = screen.getByText(/^Noviembre, 2020$/)
     expect(month).toBeInTheDocument()
+  })
+
+  test('should display month/year of symptoms registered when two different months', () => {
+    render(<SymptomsRegistryList viewRegistries={differentMonthViewRegistry} />)
+
+    const november = screen.getByText(/^Noviembre, 2020$/)
+    const december = screen.getByText(/^Diciembre, 2020$/)
+    expect(november).toBeInTheDocument()
+    expect(december).toBeInTheDocument()
   })
 
   test('should display days of symptoms registered', () => {
@@ -333,5 +343,34 @@ describe('<SymptomsRegistryList /> server side', () => {
     )
 
     expect(viewSymptomsRegistries).toEqual({ props: { viewRegistries: [] } })
+  })
+})
+
+describe('<SymptomsRegistryList /> legend', () => {
+  beforeEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  afterEach(cleanup)
+
+  test('should show symptom names in legend', async () => {
+    render(<SymptomsRegistryList viewRegistries={symptomsViewRegistries} />)
+
+    const pain = screen.getByText(/^Dolor$/)
+    const tiredness = screen.getByText(/^Cansancio$/)
+    const apetite = screen.getByText(/^Apetito$/)
+    const nausea = screen.getByText(/^Náuseas$/)
+    const swallow = screen.getByText(/^Dificultad para tragar$/)
+    const air = screen.getByText(/^Falta de aire$/)
+    const deposition = screen.getByText(/^Deposiciones$/)
+    const fever = screen.getByText(/^Fiebre$/)
+    expect(pain).toBeInTheDocument()
+    expect(tiredness).toBeInTheDocument()
+    expect(apetite).toBeInTheDocument()
+    expect(nausea).toBeInTheDocument()
+    expect(swallow).toBeInTheDocument()
+    expect(air).toBeInTheDocument()
+    expect(deposition).toBeInTheDocument()
+    expect(fever).toBeInTheDocument()
   })
 })
