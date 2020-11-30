@@ -22,6 +22,7 @@ jest.mock('next-auth/client', () => ({
 describe('Symptom api', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    jest.restoreAllMocks()
   })
 
   test('should save user', async () => {
@@ -170,5 +171,28 @@ describe('Symptom api', () => {
       userEmail: 'test@test.com',
     })
     expect(mockStatus).toHaveBeenCalledWith(500)
+  })
+
+  test('should save email in lower case without dots', async () => {
+    const user = {
+      userEmail: 'test.TEST.teSt@test.com',
+      role: Role.CUIDADOR,
+    }
+
+    const request: NextApiRequest = ({
+      body: user,
+    } as unknown) as NextApiRequest
+    const response: NextApiResponse = ({
+      send: jest.fn(),
+      status: jest.fn(),
+    } as unknown) as NextApiResponse
+
+    await handler(request, response)
+
+    expect(mockSave).toHaveBeenCalledWith({
+      email: 'testtesttest@test.com',
+      role: 'cuidador',
+      createdAt: new Date(dateNow),
+    })
   })
 })
