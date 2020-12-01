@@ -37,6 +37,7 @@ export class RegistryService {
         order: {
           creationDate: 'DESC',
         },
+        take: 7,
       })
       return this.toRegistriesDTO(symptomsRegistries)
     } finally {
