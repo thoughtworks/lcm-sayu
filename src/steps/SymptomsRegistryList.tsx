@@ -57,7 +57,7 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
           {monthRegistries?.length != 0 ? (
             monthRegistries?.map(({ month, year, viewRegistries }) => (
               <div key={month + year}>
-                <Text fontSize={['lg']} textAlign="left" width="100%">
+                <Text fontSize={['lg']} textAlign="left" width="100%" mt={2}>
                   {formatMonth(month) + ', ' + year}
                 </Text>
                 {viewRegistries.map(({ day, registries }) => (
@@ -176,6 +176,7 @@ const iterateMonth = (viewRegistries: ViewRegistry[]) => {
       monthGroupSaved = true
     }
   })
+
   if (
     monthRegistries.length != 0 &&
     (!monthGroupSaved || oneMonthRegistry.length === 1)
