@@ -13,8 +13,10 @@
       border-color: $error-red;
     }
   }
+
   .error {
     font-size: 10px;
+    margin-top: 5px;
     color: $error-red;
   }
 }
