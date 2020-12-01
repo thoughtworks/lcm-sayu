@@ -14,16 +14,7 @@ import withSession from 'src/hoc/WithSession'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { Role } from 'src/model/Role'
 
-export type ViewRegistry = {
-  day: number
-  registries: RegistryDTO[]
-}
-
-export type MonthRegistry = {
-  month: number
-  year: number
-  viewRegistries: ViewRegistry[]
-}
+import styles from './SymptomsRegistryList.module.scss'
 
 type SymptomsRegistryListProp = {
   monthRegistries: MonthRegistry[] | null
@@ -43,22 +34,22 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
   }
 
   return (
-    <>
-      <TitleHeader closeButton />
-      <Text fontSize={['lg']} mt={2}>
-        Historial de síntomas
-      </Text>
+    <main id={styles['symptoms-registry-list']}>
+      <header>
+        <TitleHeader closeButton />
+        <h1>Historial de síntomas</h1>
+        <SymptomsLegend />
+      </header>
 
       <Stack align="center" mt={2} spacing={3}>
-        <Box>
-          <SymptomsLegend />
-        </Box>
         <Box width="100%" alignItems="center" alignContent="center">
           {monthRegistries?.length != 0 ? (
             monthRegistries?.map(({ month, year, viewRegistries }) => (
               <div key={month + year}>
-                <Text fontSize={['lg']} textAlign="left" width="100%" mt={2}>
-                  {formatMonth(month) + ', ' + year}
+                <Text fontSize={['lg']} textAlign="left" width="100%">
+                  {viewRegistries?.length != 0
+                    ? formatMonthAndYear(viewRegistries?.slice(0, 1)[0].day)
+                    : ''}
                 </Text>
                 {viewRegistries.map(({ day, registries }) => (
                   <div key={day}>
@@ -86,7 +77,7 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
           )}
         </Box>
       </Stack>
-    </>
+    </main>
   )
 }
 
@@ -257,6 +248,17 @@ export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = 
     console.error(err)
   }
   return { props: { monthRegistries } }
+}
+
+export type ViewRegistry = {
+  day: number
+  registries: RegistryDTO[]
+}
+
+export type MonthRegistry = {
+  month: number
+  year: number
+  viewRegistries: ViewRegistry[]
 }
 
 export default withSession(SymptomsRegistryList, [Role.CUIDADOR])

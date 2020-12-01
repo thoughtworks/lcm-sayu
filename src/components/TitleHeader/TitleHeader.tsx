@@ -15,7 +15,7 @@ const TitleHeader: FunctionComponent<TitleHeaderProps> = ({
 }) => {
   const router = useRouter()
   return (
-    <Box marginTop={5}>
+    <Box paddingTop={5}>
       <Flex justify="space-between">
         <button type="button" onClick={() => router.back()}>
           <Image src="/img/back_arrow.svg" alt="Ir atrás" />
