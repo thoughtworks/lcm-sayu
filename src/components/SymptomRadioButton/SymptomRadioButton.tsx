@@ -3,7 +3,7 @@ import { Control, Controller } from 'react-hook-form'
 import { Radio, RadioGroup, Text } from '@chakra-ui/core'
 
 const symptonInfo: { [key: string]: any } = {
-  Constipación: {
+  Deposiciones: {
     name: 'Deposiciones',
     description: '¿Ha tenido en las últimas 24 horas deposiciones?',
   },
@@ -14,7 +14,7 @@ const symptonInfo: { [key: string]: any } = {
 }
 
 type SymptomRadioButtonProps = {
-  symptomValue: 'Constipación' | 'Fiebre'
+  symptomValue: 'Deposiciones' | 'Fiebre'
   control: Control
 }
 

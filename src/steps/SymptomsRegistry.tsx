@@ -55,7 +55,7 @@ function SymptomsRegistry() {
             />
           </Box>
           <Box>
-            <SymptomRadioButton symptomValue="Constipación" control={control} />
+            <SymptomRadioButton symptomValue="Deposiciones" control={control} />
           </Box>
           <Box>
             <SymptomRadioButton symptomValue="Fiebre" control={control} />
