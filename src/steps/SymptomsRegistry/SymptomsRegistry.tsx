@@ -1,6 +1,6 @@
 import React from 'react'
 import { NextRouter, useRouter } from 'next/router'
-import { Text, Stack, Box } from '@chakra-ui/core'
+import { Stack, Box } from '@chakra-ui/core'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 
@@ -11,14 +11,21 @@ import { SubmitButton } from 'src/components/SubmitButton'
 import { SymptomRadioButton } from 'src/components/SymptomRadioButton/SymptomRadioButton'
 import ButtonLink from 'src/components/ButtonLink'
 import { ErrorCodes } from 'src/components/Error'
+import { SuccessCodes } from 'src/components/Success'
 
 import withSession from 'src/hoc/WithSession'
 import { Role } from 'src/model/Role'
-import { SuccessCodes } from 'src/components/Success'
+
+import styles from './SymptomsRegistry.module.scss'
 
 function SymptomsRegistry() {
   const router = useRouter()
-  const painLevel = parseInt(router.query['nivel-dolor'] as string, 10)
+  let painLevel
+  if (router.query['nivel-dolor'] || router.query['nivel-dolor'] === '0') {
+    painLevel = parseInt(router.query['nivel-dolor'] as string, 10)
+    painLevel = isNaN(painLevel) ? undefined : painLevel
+  }
+
   const { handleSubmit, control } = useForm()
   return (
     <>
@@ -30,10 +37,14 @@ function SymptomsRegistry() {
         />
 
         <PainBox painLevel={painLevel} />
-        <Text fontSize="md" mb="8" mt="8">
-          ¿Tienes otros síntomas? <br /> Regístralos considerando que 0 es
-          ausencia del síntoma y 10 es la mayor intensidad de este.
-        </Text>
+
+        <div className={styles['instructions']}>
+          <p>¿Tienes otros síntomas?</p>
+          <p>
+            Regístralos considerando que 0 es ausencia del síntoma y 10 es la
+            mayor intensidad de este.
+          </p>
+        </div>
 
         <Stack spacing={10}>
           <Box>
@@ -72,7 +83,7 @@ function SymptomsRegistry() {
     </>
   )
 }
-const onSubmit = (painLevel: number, router: NextRouter) => async (
+const onSubmit = (painLevel: number | undefined, router: NextRouter) => async (
   data: any
 ) => {
   const request = {

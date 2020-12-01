@@ -1,9 +1,9 @@
 import React from 'react'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 import styles from './FaceButton.module.scss'
 
-const faceInfo: { [key: string]: any } = {
+const faceInfo = {
   faceZero: {
     img: 'img/faces/FaceZero.svg',
     number: '0',
@@ -43,30 +43,27 @@ const faceInfo: { [key: string]: any } = {
 }
 
 type FaceButtonProps = {
-  painValue: string
+  painValue:
+    | 'faceZero'
+    | 'faceTwo'
+    | 'faceFour'
+    | 'faceSix'
+    | 'faceEight'
+    | 'faceTen'
 }
 
-const FaceButton = ({ painValue }: FaceButtonProps) => {
-  const router = useRouter()
-  return (
-    <section id={styles['face-button']}>
-      <button
-        onClick={() => {
-          router.push({
-            pathname: '/registro-sintomas',
-            query: { 'nivel-dolor': faceInfo[painValue].click },
-          })
-        }}
-      >
-        <img
-          className={styles['face-level']}
-          src={faceInfo[painValue].img}
-          alt={faceInfo[painValue].description}
-        />
-      </button>
+const FaceButton = ({ painValue }: FaceButtonProps) => (
+  <Link href={`/registro-sintomas?nivel-dolor=${faceInfo[painValue].click}`}>
+    <a className={styles['face-button']}>
+      <img
+        className={styles['face-level']}
+        src={faceInfo[painValue].img}
+        alt={faceInfo[painValue].description}
+      />
       <p className={styles['number']}>{faceInfo[painValue].number}</p>
       <p className={styles['description']}>{faceInfo[painValue].description}</p>
-    </section>
-  )
-}
+    </a>
+  </Link>
+)
+
 export { FaceButton }

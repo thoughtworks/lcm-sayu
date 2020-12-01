@@ -13,7 +13,7 @@ import SymptomsRegistry from 'pages/registro-sintomas'
 jest.mock('axios')
 
 const mockPush = jest.fn().mockResolvedValue(null)
-const mockQuery = {
+const mockQuery: { 'nivel-dolor': string | undefined } = {
   'nivel-dolor': '0',
 }
 jest.mock('next/router', () => ({
@@ -36,7 +36,7 @@ describe('Home page', () => {
   afterEach(cleanup)
 
   test('Should render pain box info', () => {
-    const painBoxDescription = screen.getByText(/sin dolor/i)
+    const painBoxDescription = screen.getByText(/^No duele$/)
     expect(painBoxDescription).toBeInTheDocument()
   })
 
@@ -48,20 +48,20 @@ describe('Home page', () => {
   })
 
   test('should show symptoms message', () => {
-    const moreSymptomsMessage = screen.getByText(/¿Tienes otros síntomas?/i)
+    const moreSymptomsMessage = screen.getByText(/^¿Tienes otros síntomas\?$/)
     expect(moreSymptomsMessage).toBeInTheDocument()
     const registerSymptomsMessage = screen.getByText(
-      /Regístralos considerando que 0 es ausencia del síntoma y 10 es la mayor intensidad de este./i
+      /^Regístralos considerando que 0 es ausencia del síntoma y 10 es la mayor intensidad de este\.$/
     )
     expect(registerSymptomsMessage).toBeInTheDocument()
   })
 
   test('should show Cansancio symptom', () => {
-    const cansancioText = screen.getByText(/^Cansancio$/i)
+    const cansancioText = screen.getByText(/^Cansancio$/)
     expect(cansancioText).toBeInTheDocument()
-    const minCansancioText = screen.getByText(/Sin cansancio/i)
+    const minCansancioText = screen.getByText(/^Sin cansancio$/)
     expect(minCansancioText).toBeInTheDocument()
-    const maxCansancioText = screen.getByText(/Máximo Cansancio/i)
+    const maxCansancioText = screen.getByText(/^Máximo cansancio$/)
     expect(maxCansancioText).toBeInTheDocument()
   })
 
@@ -74,21 +74,21 @@ describe('Home page', () => {
   })
 
   test('Should show the right symptom text', () => {
-    const nauseaText = screen.getByText(/^Náusea$/i)
+    const nauseaText = screen.getByText(/^Náusea$/)
     expect(nauseaText).toBeInTheDocument()
-    const minNauseaText = screen.getByText(/Sin náusea/i)
+    const minNauseaText = screen.getByText(/^Sin náusea$/)
     expect(minNauseaText).toBeInTheDocument()
-    const maxNauseaText = screen.getByText(/Máxima náusea/i)
+    const maxNauseaText = screen.getByText(/^Máxima náusea$/)
     expect(maxNauseaText).toBeInTheDocument()
   })
 
   test('should redirect to home when pressing cancel', () => {
-    const cancelButton = screen.getByText(/Cancelar/i)
+    const cancelButton = screen.getByText(/^Cancelar$/)
     expect(cancelButton).toHaveAttribute('href', '/')
   })
 
   test('should redirect to succesful symptoms registry when pressing register', async () => {
-    const registerButton = screen.getByText(/Registrar/i)
+    const registerButton = screen.getByText(/^Registrar$/)
     userEvent.click(registerButton)
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
     expect(mockPush).toHaveBeenCalledWith(
@@ -98,7 +98,7 @@ describe('Home page', () => {
 
   test('should redirect to failed symptoms register when there is an error', async () => {
     jest.spyOn(axios, 'post').mockRejectedValue(null)
-    const registerButton = screen.getByText(/Registrar/i)
+    const registerButton = screen.getByText(/^Registrar$/)
     userEvent.click(registerButton)
     await waitFor(() => expect(axios.post).toHaveBeenCalled())
     expect(mockPush).toHaveBeenCalledWith(
@@ -108,7 +108,7 @@ describe('Home page', () => {
 
   test('should press fever radio button', () => {
     const radioOption = screen
-      .getAllByText(/^sí$/i)[0]
+      .getAllByText(/^Sí$/)[0]
       .closest('label')
       ?.querySelector('input') as HTMLElement
     expect(radioOption).not.toBeChecked()
@@ -120,11 +120,23 @@ describe('Home page', () => {
     mockQuery['nivel-dolor'] = 'bla'
     render(<SymptomsRegistry />)
 
-    expect(screen.queryByText(/sin dolor/i)).not.toBeInTheDocument
-    expect(screen.queryByText(/duele un poco/i)).not.toBeInTheDocument
-    expect(screen.queryByText(/duele un poco más/i)).not.toBeInTheDocument
-    expect(screen.queryByText(/duele aún más/i)).not.toBeInTheDocument
-    expect(screen.queryByText(/duele mucho/i)).not.toBeInTheDocument
-    expect(screen.queryByText(/el peor dolor/i)).not.toBeInTheDocument
+    expect(screen.queryByText(/^No duele$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele un poco$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele un poco más$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele mucho$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele mucho más$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele al máximo$/)).not.toBeInTheDocument
+  })
+
+  test('should not render painbox when painLevel is undefined', () => {
+    mockQuery['nivel-dolor'] = undefined
+    render(<SymptomsRegistry />)
+
+    expect(screen.queryByText(/^No duele$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele un poco$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele un poco más$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele mucho$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele mucho más$/)).not.toBeInTheDocument
+    expect(screen.queryByText(/^Duele al máximo$/)).not.toBeInTheDocument
   })
 })
