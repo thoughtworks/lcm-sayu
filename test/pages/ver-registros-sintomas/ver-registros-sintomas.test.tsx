@@ -19,7 +19,6 @@ import {
   oneDayMonthRegistries,
   monday,
   tuesday,
-  wednesday,
 } from './ver-registros-sintomas-data'
 
 const mockPush = jest.fn().mockResolvedValue(null)
@@ -30,11 +29,13 @@ jest.mock('next/router', () => ({
 }))
 
 let mockFind = jest.fn().mockResolvedValue(threeDaySymptoms)
+const mockBetween = jest.fn().mockResolvedValue(null)
 jest.mock('typeorm', () => ({
   createConnection: () => ({
     getRepository: () => ({ find: mockFind }),
     close: jest.fn(),
   }),
+  Between: () => ({ Between: mockBetween }),
 }))
 
 jest.mock('next-auth/client', () => ({
@@ -265,23 +266,6 @@ describe('<SymptomsRegistryList /> server side', () => {
                     swallowLevel: 6,
                     airLevel: 5,
                     depositionLevel: true,
-                    feverLevel: true,
-                  },
-                ],
-              },
-              {
-                day: wednesday.getTime(),
-                registries: [
-                  {
-                    id: 24,
-                    symptomDate: wednesday.getTime(),
-                    painLevel: 2,
-                    tireLevel: 2,
-                    appetiteLevel: 3,
-                    nauseaLevel: 6,
-                    swallowLevel: 9,
-                    airLevel: 6,
-                    depositionLevel: false,
                     feverLevel: true,
                   },
                 ],
