@@ -141,11 +141,11 @@ const toViewRegistries = (registries: RegistryDTO[]): MonthRegistry[] => {
     })
   }
 
-  return iterateMonth(viewRegistries)
+  return toMonthRegistries(viewRegistries)
 }
 
-const iterateMonth = (viewRegistries: ViewRegistry[]) => {
-  let firstI = true
+const toMonthRegistries = (viewRegistries: ViewRegistry[]) => {
+  let firstIteration = true
   let symptomsYear = 0
   let symptomsMonth = 0
   const monthRegistries: MonthRegistry[] = []
@@ -156,10 +156,10 @@ const iterateMonth = (viewRegistries: ViewRegistry[]) => {
     monthGroupSaved = false
     const currentMonth = new Date(viewRegistry.day).getMonth()
     const currentYear = new Date(viewRegistry.day).getFullYear()
-    if (firstI) {
+    if (firstIteration) {
       symptomsMonth = currentMonth
       symptomsYear = currentYear
-      firstI = false
+      firstIteration = false
     }
     if (symptomsMonth === currentMonth) {
       oneMonthRegistry.push(viewRegistry)
