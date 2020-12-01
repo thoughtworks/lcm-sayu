@@ -420,6 +420,225 @@ const threeDaySymptoms: Registry[] = [
   },
 ]
 
+const differentMonthSymptoms: Registry[] = [
+  {
+    id: 41,
+    creationDate: monday,
+    value: 1,
+    symptom: {
+      id: 1,
+      name: 'Fiebre',
+    },
+  },
+  {
+    id: 42,
+    creationDate: monday,
+    value: 1,
+    symptom: {
+      id: 2,
+      name: 'Constipación',
+    },
+  },
+  {
+    id: 43,
+    creationDate: monday,
+    value: 6,
+    symptom: {
+      id: 3,
+      name: 'Cansancio',
+    },
+  },
+  {
+    id: 44,
+    creationDate: monday,
+    value: 5,
+    symptom: {
+      id: 4,
+      name: 'Falta de aire',
+    },
+  },
+  {
+    id: 45,
+    creationDate: monday,
+    value: 6,
+    symptom: {
+      id: 5,
+      name: 'Dificultad para tragar',
+    },
+  },
+  {
+    id: 46,
+    creationDate: monday,
+    value: 4,
+    symptom: {
+      id: 6,
+      name: 'Apetito',
+    },
+  },
+  {
+    id: 47,
+    creationDate: monday,
+    value: 3,
+    symptom: {
+      id: 7,
+      name: 'Náuseas',
+    },
+  },
+  {
+    id: 48,
+    creationDate: monday,
+    value: 4,
+    symptom: {
+      id: 8,
+      name: 'Dolor',
+    },
+  },
+  {
+    id: 49,
+    creationDate: tuesday,
+    value: 1,
+    symptom: {
+      id: 1,
+      name: 'Fiebre',
+    },
+  },
+  {
+    id: 50,
+    creationDate: tuesday,
+    value: 1,
+    symptom: {
+      id: 2,
+      name: 'Constipación',
+    },
+  },
+  {
+    id: 51,
+    creationDate: tuesday,
+    value: 1,
+    symptom: {
+      id: 3,
+      name: 'Cansancio',
+    },
+  },
+  {
+    id: 52,
+    creationDate: tuesday,
+    value: 5,
+    symptom: {
+      id: 4,
+      name: 'Falta de aire',
+    },
+  },
+  {
+    id: 53,
+    creationDate: tuesday,
+    value: 6,
+    symptom: {
+      id: 5,
+      name: 'Dificultad para tragar',
+    },
+  },
+  {
+    id: 54,
+    creationDate: tuesday,
+    value: 4,
+    symptom: {
+      id: 6,
+      name: 'Apetito',
+    },
+  },
+  {
+    id: 55,
+    creationDate: tuesday,
+    value: 3,
+    symptom: {
+      id: 7,
+      name: 'Náuseas',
+    },
+  },
+  {
+    id: 56,
+    creationDate: tuesday,
+    value: 4,
+    symptom: {
+      id: 8,
+      name: 'Dolor',
+    },
+  },
+  {
+    id: 57,
+    creationDate: wednesday,
+    value: 1,
+    symptom: {
+      id: 1,
+      name: 'Fiebre',
+    },
+  },
+  {
+    id: 58,
+    creationDate: wednesday,
+    value: 0,
+    symptom: {
+      id: 2,
+      name: 'Constipación',
+    },
+  },
+  {
+    id: 59,
+    creationDate: wednesday,
+    value: 2,
+    symptom: {
+      id: 3,
+      name: 'Cansancio',
+    },
+  },
+  {
+    id: 60,
+    creationDate: wednesday,
+    value: 6,
+    symptom: {
+      id: 4,
+      name: 'Falta de aire',
+    },
+  },
+  {
+    id: 61,
+    creationDate: wednesday,
+    value: 9,
+    symptom: {
+      id: 5,
+      name: 'Dificultad para tragar',
+    },
+  },
+  {
+    id: 62,
+    creationDate: wednesday,
+    value: 3,
+    symptom: {
+      id: 6,
+      name: 'Apetito',
+    },
+  },
+  {
+    id: 63,
+    creationDate: wednesday,
+    value: 6,
+    symptom: {
+      id: 7,
+      name: 'Náuseas',
+    },
+  },
+  {
+    id: 64,
+    creationDate: wednesday,
+    value: 2,
+    symptom: {
+      id: 8,
+      name: 'Dolor',
+    },
+  },
+]
+
 const oneDaySymptoms: Registry[] = [
   {
     id: 41,
@@ -1228,6 +1447,7 @@ export {
   secondHourDate,
   symptomsMonthRegistries,
   differentMonthViewRegistry,
+  differentMonthSymptoms,
   oneDayMonthRegistries,
   threeDaySymptoms,
   oneDaySymptoms,

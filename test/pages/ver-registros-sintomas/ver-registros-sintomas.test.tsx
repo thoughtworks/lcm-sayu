@@ -15,7 +15,11 @@ import {
   oneDaySymptoms,
   onlyOneHourSymptoms,
   differentMonthViewRegistry,
+  differentMonthSymptoms,
   oneDayMonthRegistries,
+  monday,
+  tuesday,
+  wednesday,
 } from './ver-registros-sintomas-data'
 
 const mockPush = jest.fn().mockResolvedValue(null)
@@ -213,6 +217,84 @@ describe('<SymptomsRegistryList /> server side', () => {
       (null as unknown) as GetServerSidePropsContext
     )
 
+    expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
+  })
+
+  test('should return symptoms from different months', async () => {
+    mockFind = jest.fn().mockResolvedValue(differentMonthSymptoms)
+    const expectedViewSymptomRegistries = {
+      props: {
+        monthRegistries: [
+          {
+            month: 10,
+            year: 2020,
+            viewRegistries: [
+              {
+                day: monday.getTime(),
+                registries: [
+                  {
+                    id: 8,
+                    symptomDate: monday.getTime(),
+                    painLevel: 4,
+                    tireLevel: 6,
+                    appetiteLevel: 4,
+                    nauseaLevel: 3,
+                    swallowLevel: 6,
+                    airLevel: 5,
+                    depositionLevel: true,
+                    feverLevel: true,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            month: 11,
+            year: 2020,
+            viewRegistries: [
+              {
+                day: tuesday.getTime(),
+                registries: [
+                  {
+                    id: 16,
+                    symptomDate: tuesday.getTime(),
+                    painLevel: 4,
+                    tireLevel: 1,
+                    appetiteLevel: 4,
+                    nauseaLevel: 3,
+                    swallowLevel: 6,
+                    airLevel: 5,
+                    depositionLevel: true,
+                    feverLevel: true,
+                  },
+                ],
+              },
+              {
+                day: wednesday.getTime(),
+                registries: [
+                  {
+                    id: 24,
+                    symptomDate: wednesday.getTime(),
+                    painLevel: 2,
+                    tireLevel: 2,
+                    appetiteLevel: 3,
+                    nauseaLevel: 6,
+                    swallowLevel: 9,
+                    airLevel: 6,
+                    depositionLevel: false,
+                    feverLevel: true,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    }
+
+    const viewSymptomsRegistries = await getServerSideProps(
+      (null as unknown) as GetServerSidePropsContext
+    )
     expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
 
