@@ -60,6 +60,9 @@ function SymptomsRegistry() {
           <Box>
             <SymptomRadioButton symptomValue="Fiebre" control={control} />
           </Box>
+          <Box>
+            <SymptomRadioButton symptomValue="Rescate" control={control} />
+          </Box>
         </Stack>
 
         <Stack marginTop={8} width="100%" align="center">

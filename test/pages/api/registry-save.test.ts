@@ -16,7 +16,8 @@ const symptoms: Symptom[] = [
   { id: 6, name: 'Náusea' },
   { id: 7, name: 'Constipación' },
   { id: 8, name: 'Falta de aire' },
-  { id: 9, name: 'Registro en BD no en Sistema' },
+  { id: 9, name: 'Rescate' },
+  { id: 10, name: 'Registro en BD no en Sistema' },
 ]
 const mockFind = jest.fn().mockResolvedValue(symptoms)
 const mockSave = jest.fn().mockResolvedValue(null)
