@@ -3,7 +3,6 @@ import { GetServerSidePropsContext } from 'next'
 import typeorm from 'typeorm'
 import { render, screen, cleanup, clearMocks } from 'test/testUtils'
 import SymptomsRegistryList, {
-  ViewRegistry,
   getServerSideProps,
 } from 'src/steps/SymptomsRegistryList'
 import {
@@ -11,11 +10,12 @@ import {
   secondDate,
   thirdDate,
   secondHourDate,
-  symptomsViewRegistries,
+  symptomsMonthRegistries,
   threeDaySymptoms,
   oneDaySymptoms,
   onlyOneHourSymptoms,
   differentMonthViewRegistry,
+  oneDayMonthRegistries,
 } from './ver-registros-sintomas-data'
 
 const mockPush = jest.fn().mockResolvedValue(null)
@@ -43,14 +43,16 @@ describe('<SymptomsRegistryList />', () => {
   afterEach(cleanup)
 
   test('should display month/year of symptoms registered', () => {
-    render(<SymptomsRegistryList viewRegistries={symptomsViewRegistries} />)
+    render(<SymptomsRegistryList monthRegistries={symptomsMonthRegistries} />)
 
     const month = screen.getByText(/^Noviembre, 2020$/)
     expect(month).toBeInTheDocument()
   })
 
   test('should display month/year of symptoms registered when two different months', () => {
-    render(<SymptomsRegistryList viewRegistries={differentMonthViewRegistry} />)
+    render(
+      <SymptomsRegistryList monthRegistries={differentMonthViewRegistry} />
+    )
 
     const november = screen.getByText(/^Noviembre, 2020$/)
     const december = screen.getByText(/^Diciembre, 2020$/)
@@ -59,7 +61,7 @@ describe('<SymptomsRegistryList />', () => {
   })
 
   test('should display days of symptoms registered', () => {
-    render(<SymptomsRegistryList viewRegistries={symptomsViewRegistries} />)
+    render(<SymptomsRegistryList monthRegistries={symptomsMonthRegistries} />)
 
     const dayWednesday18 = screen.getByText(/^Miércoles,18$/)
     const dayThursday = screen.getByText(/^Jueves,12$/)
@@ -73,7 +75,7 @@ describe('<SymptomsRegistryList />', () => {
   })
 
   test('should display hour and symptoms value registered for Wednesday 18', () => {
-    render(<SymptomsRegistryList viewRegistries={symptomsViewRegistries} />)
+    render(<SymptomsRegistryList monthRegistries={symptomsMonthRegistries} />)
 
     const air = screen.getByText(/^1$/)
     const appetite = screen.getByText(/^2$/)
@@ -95,7 +97,7 @@ describe('<SymptomsRegistryList />', () => {
   })
 
   test('should display message when no symptoms registered', async () => {
-    render(<SymptomsRegistryList viewRegistries={[]} />)
+    render(<SymptomsRegistryList monthRegistries={[]} />)
 
     const noRegistriesMessage = await screen.findByText(
       /^Aún no tienes registros$/
@@ -104,39 +106,7 @@ describe('<SymptomsRegistryList />', () => {
   })
 
   test('should display date when only one day is registered', () => {
-    const oneDayRegistries: ViewRegistry[] = [
-      {
-        day: new Date(2020, 10, 12, 21, 47, 56).getTime(),
-        registries: [
-          {
-            airLevel: 1,
-            appetiteLevel: 2,
-            depositionLevel: true,
-            feverLevel: true,
-            id: 17,
-            nauseaLevel: 3,
-            painLevel: 4,
-            swallowLevel: 5,
-            symptomDate: new Date(2020, 10, 12, 21, 47, 56).getTime(),
-            tireLevel: 6,
-          },
-          {
-            airLevel: 7,
-            appetiteLevel: 7,
-            depositionLevel: false,
-            feverLevel: false,
-            id: 25,
-            nauseaLevel: 7,
-            painLevel: 7,
-            swallowLevel: 7,
-            symptomDate: new Date(2020, 10, 12, 21, 43, 56).getTime(),
-            tireLevel: 7,
-          },
-        ],
-      },
-    ]
-
-    render(<SymptomsRegistryList viewRegistries={oneDayRegistries} />)
+    render(<SymptomsRegistryList monthRegistries={oneDayMonthRegistries} />)
 
     const dayThursday = screen.getByText(/^Jueves,12$/)
     expect(dayThursday).toBeInTheDocument()
@@ -161,7 +131,7 @@ describe('<SymptomsRegistryList />', () => {
   })
 
   test('should display message when an error happens', async () => {
-    render(<SymptomsRegistryList viewRegistries={null} />)
+    render(<SymptomsRegistryList monthRegistries={null} />)
 
     expect(mockPush).toHaveBeenCalledWith(
       '/_error?error=FailedSymptomsRetrieval'
@@ -177,55 +147,61 @@ describe('<SymptomsRegistryList /> server side', () => {
   test('should return symptoms from different dates', async () => {
     const expectedViewSymptomRegistries = {
       props: {
-        viewRegistries: [
+        monthRegistries: [
           {
-            day: date.getTime(),
-            registries: [
+            month: 10,
+            year: 2020,
+            viewRegistries: [
               {
-                id: 8,
-                symptomDate: date.getTime(),
-                painLevel: 4,
-                tireLevel: 6,
-                appetiteLevel: 4,
-                nauseaLevel: 3,
-                swallowLevel: 6,
-                airLevel: 5,
-                depositionLevel: true,
-                feverLevel: true,
+                day: date.getTime(),
+                registries: [
+                  {
+                    id: 8,
+                    symptomDate: date.getTime(),
+                    painLevel: 4,
+                    tireLevel: 6,
+                    appetiteLevel: 4,
+                    nauseaLevel: 3,
+                    swallowLevel: 6,
+                    airLevel: 5,
+                    depositionLevel: true,
+                    feverLevel: true,
+                  },
+                ],
               },
-            ],
-          },
-          {
-            day: secondDate.getTime(),
-            registries: [
               {
-                id: 16,
-                symptomDate: secondDate.getTime(),
-                painLevel: 4,
-                tireLevel: 1,
-                appetiteLevel: 4,
-                nauseaLevel: 3,
-                swallowLevel: 6,
-                airLevel: 5,
-                depositionLevel: true,
-                feverLevel: true,
+                day: secondDate.getTime(),
+                registries: [
+                  {
+                    id: 16,
+                    symptomDate: secondDate.getTime(),
+                    painLevel: 4,
+                    tireLevel: 1,
+                    appetiteLevel: 4,
+                    nauseaLevel: 3,
+                    swallowLevel: 6,
+                    airLevel: 5,
+                    depositionLevel: true,
+                    feverLevel: true,
+                  },
+                ],
               },
-            ],
-          },
-          {
-            day: thirdDate.getTime(),
-            registries: [
               {
-                id: 24,
-                symptomDate: thirdDate.getTime(),
-                painLevel: 2,
-                tireLevel: 2,
-                appetiteLevel: 3,
-                nauseaLevel: 6,
-                swallowLevel: 9,
-                airLevel: 6,
-                depositionLevel: false,
-                feverLevel: true,
+                day: thirdDate.getTime(),
+                registries: [
+                  {
+                    id: 24,
+                    symptomDate: thirdDate.getTime(),
+                    painLevel: 2,
+                    tireLevel: 2,
+                    appetiteLevel: 3,
+                    nauseaLevel: 6,
+                    swallowLevel: 9,
+                    airLevel: 6,
+                    depositionLevel: false,
+                    feverLevel: true,
+                  },
+                ],
               },
             ],
           },
@@ -244,33 +220,39 @@ describe('<SymptomsRegistryList /> server side', () => {
     mockFind = jest.fn().mockResolvedValue(oneDaySymptoms)
     const expectedViewSymptomRegistries = {
       props: {
-        viewRegistries: [
+        monthRegistries: [
           {
-            day: date.getTime(),
-            registries: [
+            month: 10,
+            year: 2020,
+            viewRegistries: [
               {
-                id: 8,
-                symptomDate: date.getTime(),
-                painLevel: 4,
-                tireLevel: 1,
-                appetiteLevel: 4,
-                nauseaLevel: 3,
-                swallowLevel: 6,
-                airLevel: 5,
-                depositionLevel: true,
-                feverLevel: true,
-              },
-              {
-                id: 16,
-                symptomDate: secondHourDate.getTime(),
-                painLevel: 4,
-                tireLevel: 1,
-                appetiteLevel: 4,
-                nauseaLevel: 3,
-                swallowLevel: 6,
-                airLevel: 5,
-                depositionLevel: true,
-                feverLevel: true,
+                day: date.getTime(),
+                registries: [
+                  {
+                    id: 8,
+                    symptomDate: date.getTime(),
+                    painLevel: 4,
+                    tireLevel: 1,
+                    appetiteLevel: 4,
+                    nauseaLevel: 3,
+                    swallowLevel: 6,
+                    airLevel: 5,
+                    depositionLevel: true,
+                    feverLevel: true,
+                  },
+                  {
+                    id: 16,
+                    symptomDate: secondHourDate.getTime(),
+                    painLevel: 4,
+                    tireLevel: 1,
+                    appetiteLevel: 4,
+                    nauseaLevel: 3,
+                    swallowLevel: 6,
+                    airLevel: 5,
+                    depositionLevel: true,
+                    feverLevel: true,
+                  },
+                ],
               },
             ],
           },
@@ -289,21 +271,27 @@ describe('<SymptomsRegistryList /> server side', () => {
     mockFind = jest.fn().mockResolvedValue(onlyOneHourSymptoms)
     const expectedViewSymptomRegistries = {
       props: {
-        viewRegistries: [
+        monthRegistries: [
           {
-            day: date.getTime(),
-            registries: [
+            month: 10,
+            year: 2020,
+            viewRegistries: [
               {
-                id: 8,
-                symptomDate: date.getTime(),
-                painLevel: 4,
-                tireLevel: 1,
-                appetiteLevel: 4,
-                nauseaLevel: 3,
-                swallowLevel: 6,
-                airLevel: 5,
-                depositionLevel: true,
-                feverLevel: true,
+                day: date.getTime(),
+                registries: [
+                  {
+                    id: 8,
+                    symptomDate: date.getTime(),
+                    painLevel: 4,
+                    tireLevel: 1,
+                    appetiteLevel: 4,
+                    nauseaLevel: 3,
+                    swallowLevel: 6,
+                    airLevel: 5,
+                    depositionLevel: true,
+                    feverLevel: true,
+                  },
+                ],
               },
             ],
           },
@@ -330,7 +318,7 @@ describe('<SymptomsRegistryList /> server side', () => {
 
     expect(response).toEqual({
       props: {
-        viewRegistries: null,
+        monthRegistries: null,
       },
     })
   })
@@ -338,11 +326,13 @@ describe('<SymptomsRegistryList /> server side', () => {
   test('should return nothing when no symptoms are registered', async () => {
     mockFind = jest.fn().mockResolvedValue([])
 
-    const viewSymptomsRegistries = await getServerSideProps(
+    const viewMonthSymptomsRegistries = await getServerSideProps(
       (null as unknown) as GetServerSidePropsContext
     )
 
-    expect(viewSymptomsRegistries).toEqual({ props: { viewRegistries: [] } })
+    expect(viewMonthSymptomsRegistries).toEqual({
+      props: { monthRegistries: [] },
+    })
   })
 })
 
@@ -354,7 +344,7 @@ describe('<SymptomsRegistryList /> legend', () => {
   afterEach(cleanup)
 
   test('should show symptom names in legend', async () => {
-    render(<SymptomsRegistryList viewRegistries={symptomsViewRegistries} />)
+    render(<SymptomsRegistryList monthRegistries={[]} />)
 
     const pain = screen.getByText(/^Dolor$/)
     const tiredness = screen.getByText(/^Cansancio$/)

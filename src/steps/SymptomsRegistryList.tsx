@@ -151,7 +151,9 @@ const iterateMonth = (viewRegistries: ViewRegistry[]) => {
   const monthRegistries: MonthRegistry[] = []
   let oneMonthRegistry: ViewRegistry[] = []
   let monthGroupSaved = false
+
   viewRegistries.forEach((viewRegistry) => {
+    monthGroupSaved = false
     const currentMonth = new Date(viewRegistry.day).getMonth()
     const currentYear = new Date(viewRegistry.day).getFullYear()
     if (firstI) {

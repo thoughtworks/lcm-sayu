@@ -1,148 +1,206 @@
-import { ViewRegistry } from 'src/steps/SymptomsRegistryList'
+import { MonthRegistry } from 'src/steps/SymptomsRegistryList'
 import { Registry } from 'src/model/Registry'
 
 const date = new Date(2020, 10, 21, 1, 18, 33)
 const secondDate = new Date(2020, 10, 22, 1, 18, 33)
 const thirdDate = new Date(2020, 10, 23, 1, 18, 33)
 const secondHourDate = new Date(2020, 10, 21, 2, 18, 33)
-const monday = new Date(2020, 11, 30, 1, 18, 33)
-const tuesday = new Date(2020, 12, 1, 1, 18, 33)
-const wednesday = new Date(2020, 12, 2, 1, 18, 33)
-const thursday = new Date(2020, 12, 3, 1, 18, 33)
-const friday = new Date(2020, 12, 4, 1, 18, 33)
-const saturday = new Date(2020, 12, 5, 1, 18, 33)
-const sunday = new Date(2020, 12, 6, 1, 18, 33)
+const monday = new Date(2020, 10, 30, 1, 18, 33)
+const tuesday = new Date(2020, 11, 1, 1, 18, 33)
+const wednesday = new Date(2020, 11, 2, 1, 18, 33)
+const thursday = new Date(2020, 11, 3, 1, 18, 33)
+const friday = new Date(2020, 11, 4, 1, 18, 33)
+const saturday = new Date(2020, 11, 5, 1, 18, 33)
+const sunday = new Date(2020, 11, 6, 1, 18, 33)
 
-const symptomsViewRegistries: ViewRegistry[] = [
+const symptomsMonthRegistries: MonthRegistry[] = [
   {
-    day: new Date(2020, 10, 18, 12, 9, 40).getTime(),
-    registries: [
+    month: 10,
+    year: 2020,
+    viewRegistries: [
       {
-        airLevel: 1,
-        appetiteLevel: 2,
-        depositionLevel: true,
-        feverLevel: true,
-        id: 1,
-        nauseaLevel: 3,
-        painLevel: 4,
-        swallowLevel: 5,
-        symptomDate: new Date(2020, 10, 18, 12, 9, 40).getTime(),
-        tireLevel: 6,
-      },
-    ],
-  },
-  {
-    day: new Date(2020, 10, 12, 0, 47, 56).getTime(),
-    registries: [
-      {
-        airLevel: 7,
-        appetiteLevel: 7,
-        depositionLevel: false,
-        feverLevel: false,
-        id: 17,
-        nauseaLevel: 7,
-        painLevel: 7,
-        swallowLevel: 7,
-        symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
-        tireLevel: 7,
+        day: new Date(2020, 10, 18, 12, 9, 40).getTime(),
+        registries: [
+          {
+            airLevel: 1,
+            appetiteLevel: 2,
+            depositionLevel: true,
+            feverLevel: true,
+            id: 1,
+            nauseaLevel: 3,
+            painLevel: 4,
+            swallowLevel: 5,
+            symptomDate: new Date(2020, 10, 18, 12, 9, 40).getTime(),
+            tireLevel: 6,
+          },
+        ],
       },
       {
-        airLevel: 7,
-        appetiteLevel: 7,
-        depositionLevel: false,
-        feverLevel: false,
-        id: 25,
-        nauseaLevel: 7,
-        painLevel: 7,
-        swallowLevel: 7,
-        symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
-        tireLevel: 7,
-      },
-    ],
-  },
-  {
-    day: new Date(2020, 10, 11, 16, 47, 9).getTime(),
-    registries: [
-      {
-        airLevel: 7,
-        appetiteLevel: 7,
-        depositionLevel: false,
-        feverLevel: false,
-        id: 33,
-        nauseaLevel: 7,
-        painLevel: 7,
-        swallowLevel: 7,
-        symptomDate: new Date(2020, 10, 11, 16, 47, 9).getTime(),
-        tireLevel: 7,
-      },
-    ],
-  },
-  {
-    day: new Date(2020, 10, 9, 23, 57, 34).getTime(),
-    registries: [
-      {
-        airLevel: 7,
-        appetiteLevel: 7,
-        depositionLevel: false,
-        feverLevel: false,
-        id: 40,
-        nauseaLevel: 7,
-        painLevel: 7,
-        swallowLevel: 7,
-        symptomDate: new Date(2020, 10, 9, 23, 57, 34).getTime(),
-        tireLevel: 7,
-      },
-    ],
-  },
-]
-const differentMonthViewRegistry: ViewRegistry[] = [
-  {
-    day: monday.getTime(),
-    registries: [
-      {
-        airLevel: 1,
-        appetiteLevel: 2,
-        depositionLevel: true,
-        feverLevel: true,
-        id: 1,
-        nauseaLevel: 3,
-        painLevel: 4,
-        swallowLevel: 5,
-        symptomDate: new Date(2020, 10, 18, 12, 9, 40).getTime(),
-        tireLevel: 6,
-      },
-    ],
-  },
-  {
-    day: tuesday.getTime(),
-    registries: [
-      {
-        airLevel: 7,
-        appetiteLevel: 7,
-        depositionLevel: false,
-        feverLevel: false,
-        id: 17,
-        nauseaLevel: 7,
-        painLevel: 7,
-        swallowLevel: 7,
-        symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
-        tireLevel: 7,
+        day: new Date(2020, 10, 12, 0, 47, 56).getTime(),
+        registries: [
+          {
+            airLevel: 7,
+            appetiteLevel: 7,
+            depositionLevel: false,
+            feverLevel: false,
+            id: 17,
+            nauseaLevel: 7,
+            painLevel: 7,
+            swallowLevel: 7,
+            symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
+            tireLevel: 7,
+          },
+          {
+            airLevel: 7,
+            appetiteLevel: 7,
+            depositionLevel: false,
+            feverLevel: false,
+            id: 25,
+            nauseaLevel: 7,
+            painLevel: 7,
+            swallowLevel: 7,
+            symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
+            tireLevel: 7,
+          },
+        ],
       },
       {
-        airLevel: 7,
-        appetiteLevel: 7,
-        depositionLevel: false,
-        feverLevel: false,
-        id: 25,
-        nauseaLevel: 7,
-        painLevel: 7,
-        swallowLevel: 7,
-        symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
-        tireLevel: 7,
+        day: new Date(2020, 10, 11, 16, 47, 9).getTime(),
+        registries: [
+          {
+            airLevel: 7,
+            appetiteLevel: 7,
+            depositionLevel: false,
+            feverLevel: false,
+            id: 33,
+            nauseaLevel: 7,
+            painLevel: 7,
+            swallowLevel: 7,
+            symptomDate: new Date(2020, 10, 11, 16, 47, 9).getTime(),
+            tireLevel: 7,
+          },
+        ],
+      },
+      {
+        day: new Date(2020, 10, 9, 23, 57, 34).getTime(),
+        registries: [
+          {
+            airLevel: 7,
+            appetiteLevel: 7,
+            depositionLevel: false,
+            feverLevel: false,
+            id: 40,
+            nauseaLevel: 7,
+            painLevel: 7,
+            swallowLevel: 7,
+            symptomDate: new Date(2020, 10, 9, 23, 57, 34).getTime(),
+            tireLevel: 7,
+          },
+        ],
       },
     ],
   },
 ]
+
+const differentMonthViewRegistry: MonthRegistry[] = [
+  {
+    month: 11,
+    year: 2020,
+    viewRegistries: [
+      {
+        day: tuesday.getTime(),
+        registries: [
+          {
+            airLevel: 7,
+            appetiteLevel: 7,
+            depositionLevel: false,
+            feverLevel: false,
+            id: 17,
+            nauseaLevel: 7,
+            painLevel: 7,
+            swallowLevel: 7,
+            symptomDate: new Date(2020, 11, 1, 0, 47, 56).getTime(),
+            tireLevel: 7,
+          },
+          {
+            airLevel: 7,
+            appetiteLevel: 7,
+            depositionLevel: false,
+            feverLevel: false,
+            id: 25,
+            nauseaLevel: 7,
+            painLevel: 7,
+            swallowLevel: 7,
+            symptomDate: new Date(2020, 11, 1, 2, 47, 56).getTime(),
+            tireLevel: 7,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    month: 10,
+    year: 2020,
+    viewRegistries: [
+      {
+        day: monday.getTime(),
+        registries: [
+          {
+            airLevel: 1,
+            appetiteLevel: 2,
+            depositionLevel: true,
+            feverLevel: true,
+            id: 1,
+            nauseaLevel: 3,
+            painLevel: 4,
+            swallowLevel: 5,
+            symptomDate: new Date(2020, 10, 30, 12, 9, 40).getTime(),
+            tireLevel: 6,
+          },
+        ],
+      },
+    ],
+  },
+]
+
+const oneDayMonthRegistries: MonthRegistry[] = [
+  {
+    month: 10,
+    year: 2020,
+    viewRegistries: [
+      {
+        day: new Date(2020, 10, 12, 21, 47, 56).getTime(),
+        registries: [
+          {
+            airLevel: 1,
+            appetiteLevel: 2,
+            depositionLevel: true,
+            feverLevel: true,
+            id: 17,
+            nauseaLevel: 3,
+            painLevel: 4,
+            swallowLevel: 5,
+            symptomDate: new Date(2020, 10, 12, 21, 47, 56).getTime(),
+            tireLevel: 6,
+          },
+          {
+            airLevel: 7,
+            appetiteLevel: 7,
+            depositionLevel: false,
+            feverLevel: false,
+            id: 25,
+            nauseaLevel: 7,
+            painLevel: 7,
+            swallowLevel: 7,
+            symptomDate: new Date(2020, 10, 12, 21, 43, 56).getTime(),
+            tireLevel: 7,
+          },
+        ],
+      },
+    ],
+  },
+]
+
 const threeDaySymptoms: Registry[] = [
   {
     id: 41,
@@ -361,6 +419,7 @@ const threeDaySymptoms: Registry[] = [
     },
   },
 ]
+
 const oneDaySymptoms: Registry[] = [
   {
     id: 41,
@@ -507,6 +566,7 @@ const oneDaySymptoms: Registry[] = [
     },
   },
 ]
+
 const onlyOneHourSymptoms: Registry[] = [
   {
     id: 41,
@@ -581,6 +641,7 @@ const onlyOneHourSymptoms: Registry[] = [
     },
   },
 ]
+
 const sevenDaySymptoms: Registry[] = [
   {
     id: 33,
@@ -1165,8 +1226,9 @@ export {
   secondDate,
   thirdDate,
   secondHourDate,
-  symptomsViewRegistries,
+  symptomsMonthRegistries,
   differentMonthViewRegistry,
+  oneDayMonthRegistries,
   threeDaySymptoms,
   oneDaySymptoms,
   onlyOneHourSymptoms,
