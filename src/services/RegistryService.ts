@@ -1,4 +1,4 @@
-import { createConnection } from 'typeorm'
+import { Between, createConnection } from 'typeorm'
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { Registry } from 'src/model/Registry'
 import { Symptom } from 'src/model/Symptom'
@@ -30,6 +30,12 @@ export class RegistryService {
 
   async registriesRetrieval(): Promise<RegistryDTO[]> {
     const connection = await createConnection()
+    const toDate = new Date()
+    const fromDate = new Date(
+      toDate.getFullYear(),
+      toDate.getMonth(),
+      toDate.getDate() - 6
+    )
     try {
       const registryRepository = connection.getRepository<Registry>('Registry')
       const symptomsRegistries = await registryRepository.find({
@@ -37,7 +43,9 @@ export class RegistryService {
         order: {
           creationDate: 'DESC',
         },
-        take: 7,
+        where: {
+          creationDate: Between(fromDate, toDate),
+        },
       })
       return this.toRegistriesDTO(symptomsRegistries)
     } finally {
