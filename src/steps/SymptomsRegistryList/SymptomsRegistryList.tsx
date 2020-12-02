@@ -64,6 +64,7 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
                         airLevel={registry.airLevel}
                         depositionLevel={registry.depositionLevel}
                         feverLevel={registry.feverLevel}
+                        rescueLevel={registry.rescueLevel}
                       />
                     ))}
                   </div>

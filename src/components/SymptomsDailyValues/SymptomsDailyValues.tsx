@@ -12,6 +12,7 @@ type SymptomsLevel = {
   airLevel: number
   depositionLevel: boolean
   feverLevel: boolean
+  rescueLevel: boolean
 }
 
 const SymptomsDailyValues = ({
@@ -24,8 +25,15 @@ const SymptomsDailyValues = ({
   airLevel,
   depositionLevel,
   feverLevel,
+  rescueLevel,
 }: SymptomsLevel) => (
-  <div className={styles['symptom-list']}>
+  <div
+    className={
+      rescueLevel
+        ? styles['symptom-list'] + ' ' + styles['with-rescue']
+        : styles['symptom-list']
+    }
+  >
     <Text fontSize={'xs'} ml={1} lineHeight={'tall'}>
       {symptomDate}
     </Text>
