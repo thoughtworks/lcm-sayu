@@ -16,7 +16,7 @@ import {
 const symptonInfo: { [key: string]: any } = {
   Cansancio: { min: 'Sin cansancio', max: 'Máximo cansancio' },
   Náusea: { min: 'Sin náusea', max: 'Máxima náusea' },
-  'Falta de apetito': { min: 'Sin apetito', max: 'Buen apetito' },
+  Apetito: { min: 'Sin apetito', max: 'Buen apetito' },
   'Falta de aire': { min: 'Sin falta de aire', max: 'Máxima falta de aire' },
   'Dificultad para tragar': {
     min: 'Sin dificultad para tragar',
@@ -28,7 +28,7 @@ type SliderProps = {
   symptomValue:
     | 'Cansancio'
     | 'Náusea'
-    | 'Falta de apetito'
+    | 'Apetito'
     | 'Falta de aire'
     | 'Dificultad para tragar'
   control: Control

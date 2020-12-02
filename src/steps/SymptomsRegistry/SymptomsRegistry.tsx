@@ -54,7 +54,7 @@ function SymptomsRegistry() {
             <SymptomSlider symptomValue="Náusea" control={control} />
           </Box>
           <Box>
-            <SymptomSlider symptomValue="Falta de apetito" control={control} />
+            <SymptomSlider symptomValue="Apetito" control={control} />
           </Box>
           <Box>
             <SymptomSlider symptomValue="Falta de aire" control={control} />
