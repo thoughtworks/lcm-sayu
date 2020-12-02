@@ -1,15 +1,20 @@
-import { Between, createConnection } from 'typeorm'
+import { Between } from 'typeorm'
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { Registry } from 'src/model/Registry'
 import { Symptom } from 'src/model/Symptom'
+import { User } from 'src/model/User'
 
-export class RegistryService {
-  async saveRegistry(symptomsToRegister: any): Promise<void> {
-    const connection = await createConnection()
+import { UserService } from './UserService'
+import { Service } from './Service'
+import { SymptomService } from './SymptomService'
+
+export class RegistryService extends Service {
+  async saveRegistry(symptomsToRegister: any, email: string): Promise<void> {
+    const user = await this.getUser(email)
+    const symptomList = await this.getSymptoms()
+
+    const connection = await this.getConnection()
     try {
-      const symptomList = await connection
-        .getRepository<Symptom>('Symptom')
-        .find()
       const registryList: Registry[] = symptomList
         .filter((symptom: Symptom) =>
           this.validateSymptom(symptom, symptomsToRegister)
@@ -19,7 +24,7 @@ export class RegistryService {
             symptom,
             symptomsToRegister
           ) as number
-          return new Registry(value, symptom)
+          return new Registry(value, symptom, user)
         })
       const registryRepository = connection.getRepository('Registry')
       await registryRepository.save(registryList)
@@ -29,7 +34,7 @@ export class RegistryService {
   }
 
   async registriesRetrieval(): Promise<RegistryDTO[]> {
-    const connection = await createConnection()
+    const connection = await this.getConnection()
     const toDate = new Date()
     const fromDate = new Date(
       toDate.getFullYear(),
@@ -206,5 +211,20 @@ export class RegistryService {
         registryDTO.feverLevel = Boolean(registry.value)
     }
     return registryDTO
+  }
+
+  private async getUser(email: string): Promise<User> {
+    const userService = new UserService()
+    const user = await userService.getByEmail(email)
+    if (!user) {
+      throw new Error(`User not found ${email}`)
+    }
+
+    return user
+  }
+
+  private async getSymptoms(): Promise<Symptom[]> {
+    const symptomService = new SymptomService()
+    return symptomService.getAllSymptoms()
   }
 }

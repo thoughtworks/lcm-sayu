@@ -20,4 +20,12 @@ module.exports = new EntitySchema({
       type: 'timestamp',
     },
   },
+  relations: {
+    registries: {
+      target: 'Registry',
+      type: 'one-to-many',
+      joinTable: true,
+      cascade: true,
+    },
+  },
 })

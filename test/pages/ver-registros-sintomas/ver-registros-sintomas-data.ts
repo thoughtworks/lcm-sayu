@@ -1,5 +1,9 @@
 import { MonthRegistry } from 'src/steps/SymptomsRegistryList'
 import { Registry } from 'src/model/Registry'
+import { User } from 'src/model/User'
+import { Role } from 'src/model/Role'
+
+const user = new User('test@test.com', Role.CUIDADOR)
 
 const date = new Date(2020, 10, 21, 1, 18, 33)
 const secondDate = new Date(2020, 10, 22, 1, 18, 33)
@@ -210,6 +214,7 @@ const threeDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 42,
@@ -219,6 +224,7 @@ const threeDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 43,
@@ -228,6 +234,7 @@ const threeDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 44,
@@ -237,6 +244,7 @@ const threeDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 45,
@@ -246,6 +254,7 @@ const threeDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 46,
@@ -255,6 +264,7 @@ const threeDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 47,
@@ -264,6 +274,7 @@ const threeDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 48,
@@ -273,6 +284,7 @@ const threeDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 49,
@@ -282,6 +294,7 @@ const threeDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 50,
@@ -291,6 +304,7 @@ const threeDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 51,
@@ -300,6 +314,7 @@ const threeDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 52,
@@ -309,6 +324,7 @@ const threeDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 53,
@@ -318,6 +334,7 @@ const threeDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 54,
@@ -327,6 +344,7 @@ const threeDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 55,
@@ -336,6 +354,7 @@ const threeDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 56,
@@ -345,6 +364,7 @@ const threeDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 57,
@@ -354,6 +374,7 @@ const threeDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 58,
@@ -363,6 +384,7 @@ const threeDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 59,
@@ -372,6 +394,7 @@ const threeDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 60,
@@ -381,6 +404,7 @@ const threeDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 61,
@@ -390,6 +414,7 @@ const threeDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 62,
@@ -399,6 +424,7 @@ const threeDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 63,
@@ -408,6 +434,7 @@ const threeDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 64,
@@ -417,6 +444,7 @@ const threeDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
 ]
 
@@ -429,6 +457,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 42,
@@ -438,6 +467,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 43,
@@ -447,6 +477,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 44,
@@ -456,6 +487,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 45,
@@ -465,6 +497,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 46,
@@ -474,6 +507,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 47,
@@ -483,6 +517,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 48,
@@ -492,6 +527,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 49,
@@ -501,6 +537,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 50,
@@ -510,6 +547,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 51,
@@ -519,6 +557,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 52,
@@ -528,6 +567,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 53,
@@ -537,6 +577,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 54,
@@ -546,6 +587,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 55,
@@ -555,6 +597,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 56,
@@ -564,6 +607,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
 ]
 
@@ -576,6 +620,7 @@ const oneDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 42,
@@ -585,6 +630,7 @@ const oneDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 43,
@@ -594,6 +640,7 @@ const oneDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 44,
@@ -603,6 +650,7 @@ const oneDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 45,
@@ -612,6 +660,7 @@ const oneDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 46,
@@ -621,6 +670,7 @@ const oneDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 47,
@@ -630,6 +680,7 @@ const oneDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 48,
@@ -639,6 +690,7 @@ const oneDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 49,
@@ -648,6 +700,7 @@ const oneDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 50,
@@ -657,6 +710,7 @@ const oneDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 51,
@@ -666,6 +720,7 @@ const oneDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 52,
@@ -675,6 +730,7 @@ const oneDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 53,
@@ -684,6 +740,7 @@ const oneDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 54,
@@ -693,6 +750,7 @@ const oneDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 55,
@@ -702,6 +760,7 @@ const oneDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 56,
@@ -711,6 +770,7 @@ const oneDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
 ]
 
@@ -723,6 +783,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 42,
@@ -732,6 +793,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 43,
@@ -741,6 +803,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 44,
@@ -750,6 +813,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 45,
@@ -759,6 +823,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 46,
@@ -768,6 +833,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 47,
@@ -777,6 +843,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 48,
@@ -786,6 +853,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
 ]
 
@@ -798,6 +866,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 34,
@@ -807,6 +876,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 35,
@@ -816,6 +886,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 36,
@@ -825,6 +896,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 37,
@@ -834,6 +906,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 38,
@@ -843,6 +916,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 39,
@@ -852,6 +926,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 40,
@@ -861,6 +936,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 41,
@@ -870,6 +946,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 42,
@@ -879,6 +956,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 43,
@@ -888,6 +966,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 44,
@@ -897,6 +976,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 45,
@@ -906,6 +986,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 46,
@@ -915,6 +996,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 47,
@@ -924,6 +1006,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 48,
@@ -933,6 +1016,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 49,
@@ -942,6 +1026,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 50,
@@ -951,6 +1036,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 51,
@@ -960,6 +1046,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 52,
@@ -969,6 +1056,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 53,
@@ -978,6 +1066,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 54,
@@ -987,6 +1076,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 55,
@@ -996,6 +1086,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 56,
@@ -1005,6 +1096,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 57,
@@ -1014,6 +1106,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 58,
@@ -1023,6 +1116,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 59,
@@ -1032,6 +1126,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 60,
@@ -1041,6 +1136,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 61,
@@ -1050,6 +1146,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 62,
@@ -1059,6 +1156,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 63,
@@ -1068,6 +1166,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 64,
@@ -1077,6 +1176,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 65,
@@ -1086,6 +1186,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 66,
@@ -1095,6 +1196,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 67,
@@ -1104,6 +1206,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 68,
@@ -1113,6 +1216,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 69,
@@ -1122,6 +1226,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 70,
@@ -1131,6 +1236,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 71,
@@ -1140,6 +1246,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 72,
@@ -1149,6 +1256,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 73,
@@ -1158,6 +1266,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 74,
@@ -1167,6 +1276,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 75,
@@ -1176,6 +1286,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 76,
@@ -1185,6 +1296,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 77,
@@ -1194,6 +1306,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 78,
@@ -1203,6 +1316,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 79,
@@ -1212,6 +1326,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 80,
@@ -1221,6 +1336,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 81,
@@ -1230,6 +1346,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 82,
@@ -1239,6 +1356,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 83,
@@ -1248,6 +1366,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 84,
@@ -1257,6 +1376,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 85,
@@ -1266,6 +1386,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 86,
@@ -1275,6 +1396,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 87,
@@ -1284,6 +1406,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 88,
@@ -1293,6 +1416,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
   {
     id: 89,
@@ -1302,6 +1426,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 1,
       name: 'Fiebre',
     },
+    user,
   },
   {
     id: 90,
@@ -1311,6 +1436,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 2,
       name: 'Deposiciones',
     },
+    user,
   },
   {
     id: 91,
@@ -1320,6 +1446,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 3,
       name: 'Cansancio',
     },
+    user,
   },
   {
     id: 92,
@@ -1329,6 +1456,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 4,
       name: 'Falta de aire',
     },
+    user,
   },
   {
     id: 93,
@@ -1338,6 +1466,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 5,
       name: 'Dificultad para tragar',
     },
+    user,
   },
   {
     id: 94,
@@ -1347,6 +1476,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 6,
       name: 'Apetito',
     },
+    user,
   },
   {
     id: 95,
@@ -1356,6 +1486,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 7,
       name: 'Náuseas',
     },
+    user,
   },
   {
     id: 96,
@@ -1365,6 +1496,7 @@ const sevenDaySymptoms: Registry[] = [
       id: 8,
       name: 'Dolor',
     },
+    user,
   },
 ]
 

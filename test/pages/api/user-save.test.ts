@@ -7,11 +7,16 @@ import { clearMocks } from 'test/testUtils'
 
 const mockFind = jest.fn().mockResolvedValue(null)
 const mockSave = jest.fn().mockResolvedValue(null)
-jest.mock('typeorm', () => ({
-  createConnection: () => ({
-    getRepository: () => ({ find: mockFind, save: mockSave }),
-    close: jest.fn(),
+const mockConnection = {
+  getRepository: () => ({
+    find: mockFind,
+    save: mockSave,
   }),
+  close: jest.fn(),
+}
+jest.mock('typeorm', () => ({
+  createConnection: () => mockConnection,
+  getConnection: () => mockConnection,
 }))
 const dateNow = 1604083287383
 global.Date.now = jest.fn().mockReturnValue(dateNow)
@@ -148,6 +153,9 @@ describe('Symptom api', () => {
     global.console.error = jest.fn()
     const mockStatus = jest.fn()
     jest.spyOn(typeorm, 'createConnection').mockRejectedValue('custom error')
+    jest.spyOn(typeorm, 'getConnection').mockImplementation(() => {
+      throw 'custom error'
+    })
 
     const user = {
       userEmail: 'test@test.com',
