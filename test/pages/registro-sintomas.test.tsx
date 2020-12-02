@@ -127,4 +127,14 @@ describe('Home page', () => {
     expect(screen.queryByText(/duele mucho/i)).not.toBeInTheDocument
     expect(screen.queryByText(/el peor dolor/i)).not.toBeInTheDocument
   })
+  test('should show rescue radio button', () => {
+    const rescueRadioButton = screen
+      .getAllByText(/^sí$/i)[2]
+      .closest('label')
+      ?.querySelector('input') as HTMLElement
+    expect(rescueRadioButton['id']).toBe('Rescate-1')
+    expect(rescueRadioButton).not.toBeChecked()
+    userEvent.click(rescueRadioButton)
+    expect(rescueRadioButton).toBeChecked()
+  })
 })
