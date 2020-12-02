@@ -275,6 +275,15 @@ const threeDaySymptoms: Registry[] = [
     },
   },
   {
+    id: 65,
+    creationDate: date,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
+    },
+  },
+  {
     id: 49,
     creationDate: secondDate,
     value: 1,
@@ -347,6 +356,15 @@ const threeDaySymptoms: Registry[] = [
     },
   },
   {
+    id: 66,
+    creationDate: secondDate,
+    value: 0,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
+    },
+  },
+  {
     id: 57,
     creationDate: thirdDate,
     value: 1,
@@ -416,6 +434,15 @@ const threeDaySymptoms: Registry[] = [
     symptom: {
       id: 8,
       name: 'Dolor',
+    },
+  },
+  {
+    id: 67,
+    creationDate: thirdDate,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
     },
   },
 ]
@@ -494,6 +521,15 @@ const differentMonthSymptoms: Registry[] = [
     },
   },
   {
+    id: 57,
+    creationDate: monday,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
+    },
+  },
+  {
     id: 49,
     creationDate: tuesday,
     value: 1,
@@ -563,6 +599,15 @@ const differentMonthSymptoms: Registry[] = [
     symptom: {
       id: 8,
       name: 'Dolor',
+    },
+  },
+  {
+    id: 58,
+    creationDate: tuesday,
+    value: 0,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
     },
   },
 ]
@@ -641,6 +686,15 @@ const oneDaySymptoms: Registry[] = [
     },
   },
   {
+    id: 57,
+    creationDate: date,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
+    },
+  },
+  {
     id: 49,
     creationDate: secondHourDate,
     value: 1,
@@ -710,6 +764,15 @@ const oneDaySymptoms: Registry[] = [
     symptom: {
       id: 8,
       name: 'Dolor',
+    },
+  },
+  {
+    id: 58,
+    creationDate: secondHourDate,
+    value: 0,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
     },
   },
 ]
@@ -785,6 +848,15 @@ const onlyOneHourSymptoms: Registry[] = [
     symptom: {
       id: 8,
       name: 'Dolor',
+    },
+  },
+  {
+    id: 49,
+    creationDate: date,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
     },
   },
 ]

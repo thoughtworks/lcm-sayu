@@ -122,6 +122,7 @@ export class RegistryService {
       airLevel: 0,
       depositionLevel: false,
       feverLevel: false,
+      rescueLevel: false,
     }
 
     registries.forEach((registry) => {
@@ -145,6 +146,7 @@ export class RegistryService {
           airLevel: registryDTO.airLevel,
           depositionLevel: registryDTO.depositionLevel,
           feverLevel: registryDTO.feverLevel,
+          rescueLevel: registryDTO.rescueLevel,
         }
 
         registriesDTO.push(toPushRegistryDTO)
@@ -170,6 +172,7 @@ export class RegistryService {
         airLevel: registryDTO.airLevel,
         depositionLevel: registryDTO.depositionLevel,
         feverLevel: registryDTO.feverLevel,
+        rescueLevel: registryDTO.rescueLevel,
       }
       registriesDTO.push(toPushRegistryDTO)
     }
@@ -209,6 +212,8 @@ export class RegistryService {
       case 'Fiebre':
         registryDTO.feverLevel = Boolean(registry.value)
         break
+      case 'Rescate':
+        registryDTO.rescueLevel = Boolean(registry.value)
     }
     return registryDTO
   }

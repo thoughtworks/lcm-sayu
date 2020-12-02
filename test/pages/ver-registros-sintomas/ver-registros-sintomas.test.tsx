@@ -161,7 +161,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                 day: date.getTime(),
                 registries: [
                   {
-                    id: 8,
+                    id: 9,
                     symptomDate: date.getTime(),
                     painLevel: 4,
                     tireLevel: 6,
@@ -171,6 +171,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                     airLevel: 5,
                     depositionLevel: true,
                     feverLevel: true,
+                    rescueLevel: true,
                   },
                 ],
               },
@@ -178,7 +179,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                 day: secondDate.getTime(),
                 registries: [
                   {
-                    id: 16,
+                    id: 18,
                     symptomDate: secondDate.getTime(),
                     painLevel: 4,
                     tireLevel: 1,
@@ -188,6 +189,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                     airLevel: 5,
                     depositionLevel: true,
                     feverLevel: true,
+                    rescueLevel: false,
                   },
                 ],
               },
@@ -195,7 +197,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                 day: thirdDate.getTime(),
                 registries: [
                   {
-                    id: 24,
+                    id: 27,
                     symptomDate: thirdDate.getTime(),
                     painLevel: 2,
                     tireLevel: 2,
@@ -205,6 +207,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                     airLevel: 6,
                     depositionLevel: false,
                     feverLevel: true,
+                    rescueLevel: true,
                   },
                 ],
               },
@@ -234,7 +237,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                 day: monday.getTime(),
                 registries: [
                   {
-                    id: 8,
+                    id: 9,
                     symptomDate: monday.getTime(),
                     painLevel: 4,
                     tireLevel: 6,
@@ -244,6 +247,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                     airLevel: 5,
                     depositionLevel: true,
                     feverLevel: true,
+                    rescueLevel: true,
                   },
                 ],
               },
@@ -257,7 +261,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                 day: tuesday.getTime(),
                 registries: [
                   {
-                    id: 16,
+                    id: 18,
                     symptomDate: tuesday.getTime(),
                     painLevel: 4,
                     tireLevel: 1,
@@ -267,6 +271,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                     airLevel: 5,
                     depositionLevel: true,
                     feverLevel: true,
+                    rescueLevel: false,
                   },
                 ],
               },
@@ -295,7 +300,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                 day: date.getTime(),
                 registries: [
                   {
-                    id: 8,
+                    id: 9,
                     symptomDate: date.getTime(),
                     painLevel: 4,
                     tireLevel: 1,
@@ -305,9 +310,10 @@ describe('<SymptomsRegistryList /> server side', () => {
                     airLevel: 5,
                     depositionLevel: true,
                     feverLevel: true,
+                    rescueLevel: true,
                   },
                   {
-                    id: 16,
+                    id: 18,
                     symptomDate: secondHourDate.getTime(),
                     painLevel: 4,
                     tireLevel: 1,
@@ -317,6 +323,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                     airLevel: 5,
                     depositionLevel: true,
                     feverLevel: true,
+                    rescueLevel: false,
                   },
                 ],
               },
@@ -346,7 +353,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                 day: date.getTime(),
                 registries: [
                   {
-                    id: 8,
+                    id: 9,
                     symptomDate: date.getTime(),
                     painLevel: 4,
                     tireLevel: 1,
@@ -356,6 +363,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                     airLevel: 5,
                     depositionLevel: true,
                     feverLevel: true,
+                    rescueLevel: true,
                   },
                 ],
               },
