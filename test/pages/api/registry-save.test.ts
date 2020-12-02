@@ -38,6 +38,7 @@ describe('Symptom api', () => {
     painlevel: 0,
     fiebre: 1,
     constipacion: 0,
+    rescate: 0,
     cansancio: 2,
     nausea: 3,
     apetito: 4,
@@ -104,6 +105,12 @@ describe('Symptom api', () => {
         creationDate: creationDate,
         id: undefined,
         symptom: { id: 8, name: 'Falta de aire' },
+        value: 0,
+      },
+      {
+        creationDate: creationDate,
+        id: undefined,
+        symptom: { id: 9, name: 'Rescate' },
         value: 0,
       },
     ])

@@ -3,6 +3,7 @@ content-type: application/json
 Cookie: {{cookie}}
 
 {
+    "rescate": 0,
     "fiebre": 1,
     "constipacion":0,
     "cansancio":1,

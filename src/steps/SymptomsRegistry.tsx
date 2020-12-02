@@ -80,6 +80,7 @@ const onSubmit = (painLevel: number, router: NextRouter) => async (
 ) => {
   const request = {
     painlevel: painLevel,
+    rescate: parseInt(data['Rescate'], 10) as number,
     fiebre: parseInt(data['Fiebre'], 10) as number,
     constipacion: parseInt(data['Constipación'], 10) as number,
     cansancio: data['Cansancio'],

@@ -49,6 +49,8 @@ export class RegistryService {
     symptomsToRegister: any
   ): number | undefined {
     switch (symptom.name) {
+      case 'Rescate':
+        return parseInt(symptomsToRegister['rescate'], 10)
       case 'Fiebre':
         return parseInt(symptomsToRegister['fiebre'], 10)
       case 'Constipación':
@@ -69,6 +71,8 @@ export class RegistryService {
   }
   private validateSymptom(symptom: Symptom, symptomsToRegister: any) {
     switch (symptom.name) {
+      case 'Rescate':
+        return 'rescate' in symptomsToRegister
       case 'Fiebre':
         return 'fiebre' in symptomsToRegister
       case 'Constipación':
@@ -195,6 +199,7 @@ export class RegistryService {
         break
       case 'Fiebre':
         registryDTO.feverLevel = Boolean(registry.value)
+        break
     }
     return registryDTO
   }
