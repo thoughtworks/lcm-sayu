@@ -46,10 +46,8 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
           {monthRegistries?.length != 0 ? (
             monthRegistries?.map(({ month, year, viewRegistries }) => (
               <div key={month + year}>
-                <Text fontSize={['lg']} textAlign="left" width="100%">
-                  {viewRegistries?.length != 0
-                    ? formatMonthAndYear(viewRegistries?.slice(0, 1)[0].day)
-                    : ''}
+                <Text fontSize={['lg']} textAlign="left" width="100%" mt={2}>
+                  {monthValues[month] + ', ' + year}
                 </Text>
                 {viewRegistries.map(({ day, registries }) => (
                   <div key={day}>
@@ -192,8 +190,7 @@ const formatHourAndMinutes = (unformattedDate: number) => {
   const date = new Date(unformattedDate)
   const hour = formatTwoDigitNumber(date.getHours())
   const minute = formatTwoDigitNumber(date.getMinutes())
-  const formattedHour = hour + ':' + minute
-  return formattedHour
+  return hour + ':' + minute
 }
 
 const formatDayAndNumberDate = (unformattedDate: number) => {
@@ -209,28 +206,23 @@ const formatDayAndNumberDate = (unformattedDate: number) => {
     'Viernes',
     'Sábado',
   ]
-  const formattedDate = dayValues[day] + ',' + numberDate
-  return formattedDate
+  return dayValues[day] + ',' + numberDate
 }
 
-const formatMonth = (unformattedMonth: number) => {
-  const monthValues = [
-    'Enero',
-    'Febrero',
-    'Marzo',
-    'Abril',
-    'Mayo',
-    'Junio',
-    'Julio',
-    'Agosto',
-    'Septiembre',
-    'Octubre',
-    'Noviembre',
-    'Diciembre',
-  ]
-  const formattedMonth = monthValues[unformattedMonth]
-  return formattedMonth
-}
+const monthValues = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+]
 
 const formatTwoDigitNumber = (toFormatNumber: number): string => {
   return toFormatNumber < 10
