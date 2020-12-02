@@ -1,3 +1,5 @@
+$img-size: 21px;
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -7,7 +9,8 @@
     display: flex;
 
     img {
-      width: 21px;
+      width: $img-size;
+      height: $img-size;
       border-radius: 11px;
     }
 
