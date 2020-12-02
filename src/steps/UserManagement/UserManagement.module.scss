@@ -1,7 +1,8 @@
-@import 'src/styles/colors';
+@use 'src/styles/colors';
 
 #user-management {
   margin-top: 27px;
+
   header {
     display: flex;
     flex-direction: column;
@@ -9,7 +10,7 @@
     h1 {
       margin-bottom: 3px;
       font-size: 18px;
-      color: $grey;
+      color: colors.$grey;
     }
 
     a {

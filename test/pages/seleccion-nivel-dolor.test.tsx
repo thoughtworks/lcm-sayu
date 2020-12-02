@@ -34,12 +34,11 @@ describe('<PainLevelSelection />', () => {
   })
 
   test('should render face info of face scale screen ', () => {
-    const faceNumberZeroButton = screen.getByAltText(/^no duele$/i)
-    userEvent.click(faceNumberZeroButton)
-    expect(mockPush).toHaveBeenCalledWith({
-      pathname: '/registro-sintomas',
-      query: { 'nivel-dolor': 0 },
-    })
+    const faceNumberZeroButton = screen.getByAltText(/^no duele$/i).closest('a')
+    expect(faceNumberZeroButton).toHaveAttribute(
+      'href',
+      '/registro-sintomas?nivel-dolor=0'
+    )
   })
 
   test('should go back when pressing back arrow', () => {

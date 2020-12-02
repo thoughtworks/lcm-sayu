@@ -16,7 +16,7 @@ import {
 const symptonInfo: { [key: string]: any } = {
   Cansancio: { min: 'Sin cansancio', max: 'Máximo cansancio' },
   Náusea: { min: 'Sin náusea', max: 'Máxima náusea' },
-  Apetito: { min: 'Buen apetito', max: 'Sin apetito' },
+  Apetito: { min: 'Sin apetito', max: 'Buen apetito' },
   'Falta de aire': { min: 'Sin falta de aire', max: 'Máxima falta de aire' },
   'Dificultad para tragar': {
     min: 'Sin dificultad para tragar',

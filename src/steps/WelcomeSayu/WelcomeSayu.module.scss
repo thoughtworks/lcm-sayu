@@ -1,22 +1,11 @@
+@use 'src/styles/colors';
+
+$img-size: 21px;
+
 .header {
   display: flex;
   justify-content: space-between;
 
-  .logout-button {
-    align-self: center;
-    display: flex;
-
-    img {
-      width: 21px;
-      border-radius: 11px;
-    }
-
-    a {
-      color: #6a5eda;
-      margin-left: 2px;
-      align-self: center;
-    }
-  }
   .logo-section {
     display: flex;
     height: 30px;
@@ -25,12 +14,31 @@
       width: 27px;
       margin-right: 5px;
     }
+
     .sayu-logo {
       width: 65px;
       margin-top: 5px;
     }
   }
+
+  .logout-button {
+    align-self: center;
+    display: flex;
+
+    img {
+      width: $img-size;
+      height: $img-size;
+      border-radius: 11px;
+    }
+
+    a {
+      color: colors.$dark-purple;
+      margin-left: 2px;
+      align-self: center;
+    }
+  }
 }
+
 .actions {
   width: 100%;
   .symptom-registry-list-link {
