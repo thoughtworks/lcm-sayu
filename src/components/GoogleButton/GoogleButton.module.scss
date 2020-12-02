@@ -1,8 +1,10 @@
+@use 'src/styles/colors';
+
 #google-button {
   display: flex;
-  color: #fff;
+  color: colors.$white;
   font-family: 'Roboto Medium';
-  background-color: #4285f4;
+  background-color: colors.$google-blue;
   border: 1px solid transparent;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
 
@@ -14,7 +16,7 @@
 
   .g-logo {
     padding: 10px;
-    background-color: #fff;
+    background-color: colors.$white;
 
     img {
       height: 18px;

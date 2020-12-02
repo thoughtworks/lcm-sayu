@@ -1,9 +1,9 @@
-@import 'src/styles/colors';
+@use 'src/styles/colors';
 
 .role {
   .role-values {
     display: inline-flex;
-    color: $light-grey;
+    color: colors.$light-grey;
     font-size: 12px;
 
     .role-value {

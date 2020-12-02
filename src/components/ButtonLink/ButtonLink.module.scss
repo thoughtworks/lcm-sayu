@@ -1,6 +1,5 @@
-$light-green: #00afa2;
-$white: #ffffff;
-$dark-green: #03877d;
+@use 'src/styles/colors';
+
 .button-link {
   display: inline-flex;
   width: 100%;
@@ -10,21 +9,21 @@ $dark-green: #03877d;
   border-radius: 0.25rem;
   font-size: 16px;
   font-weight: 600;
-  background-color: $light-green;
-  color: $white;
+  background-color: colors.$water-green;
+  color: colors.$white;
 
   &:hover {
-    background-color: $dark-green;
+    background-color: colors.$dark-green;
   }
 
   &.secondary {
-    background-color: $white;
-    color: $light-green;
-    border: 2px solid $light-green;
+    background-color: colors.$white;
+    color: colors.$water-green;
+    border: 2px solid colors.$water-green;
 
     &:hover {
-      background-color: $dark-green;
-      color: $white;
+      background-color: colors.$dark-green;
+      color: colors.$white;
     }
   }
 }
