@@ -11,7 +11,7 @@ export class User {
     this.role = this.getValidRole(role)
   }
 
-  public getValidEmail(email: string): string {
+  private getValidEmail(email: string): string {
     return getValidEmail(email)
   }
 

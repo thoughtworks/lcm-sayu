@@ -1,7 +1,8 @@
 import { getValidEmail, User } from 'src/model/User'
-import { Connection, createConnection, getConnection } from 'typeorm'
+import { Service } from './Service'
+import { Carer } from '../model/Carer'
 
-export class UserService {
+export class UserService extends Service {
   async saveUser(user: User): Promise<void> {
     const connection = await this.getConnection()
     try {
@@ -29,11 +30,18 @@ export class UserService {
     return !!user
   }
 
-  private async getConnection(): Promise<Connection> {
+  async getCarers(): Promise<Carer[]> {
+    const connection = await this.getConnection()
     try {
-      return await createConnection()
-    } catch (err) {
-      return getConnection()
+      const userRepository = connection.getRepository<User>('User')
+      const users = await userRepository.find()
+      return users.map(({ id }) => ({
+        id: id as number,
+        name: 'Juanito',
+        lastUpdated: 0,
+      }))
+    } finally {
+      connection.close()
     }
   }
 }

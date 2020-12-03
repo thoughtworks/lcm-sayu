@@ -59,14 +59,25 @@ describe('Home page', () => {
     beforeEach(clearMocks)
 
     afterEach(cleanup)
-    test('when tratante role login should show  Gestionar Usuarios button', () => {
+    test('when tratante role login should show Gestionar Usuarios button', () => {
       jest.spyOn(NextAuth, 'useSession').mockReturnValue([mockSession, false])
       render(<WelcomeSayu />)
 
-      const userManagementButton = screen.getByText(/^gestionar usuarios$/i)
+      const userManagementButton = screen.getByText(/^Gestionar usuarios$/)
       expect(userManagementButton).toHaveAttribute(
         'href',
         '/tratante/gestion-usuario'
+      )
+    })
+
+    test('when tratante role login should show  Ver Cuidadores button', () => {
+      jest.spyOn(NextAuth, 'useSession').mockReturnValue([mockSession, false])
+      render(<WelcomeSayu />)
+
+      const carerViewButton = screen.getByText(/^Ver cuidadores$/)
+      expect(carerViewButton).toHaveAttribute(
+        'href',
+        '/tratante/ver-cuidadores'
       )
     })
   })

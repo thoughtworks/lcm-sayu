@@ -16,8 +16,8 @@ describe('<UserManagement />', () => {
   afterEach(cleanup)
 
   test('should show an "add user" link', () => {
-    const addLink = screen.getByText(/^agregar usuario$/i)
+    const addLink = screen.getByText(/^Agregar usuario$/)
     expect(addLink).toHaveAttribute('href', '/tratante/agregar-usuario')
-    expect(screen.getByText(/^usuarios$/i)).toBeInTheDocument()
+    expect(screen.getByText(/^Usuarios$/)).toBeInTheDocument()
   })
 })
