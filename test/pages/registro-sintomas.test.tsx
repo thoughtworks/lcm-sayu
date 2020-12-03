@@ -149,4 +149,11 @@ describe('Home page', () => {
     userEvent.click(rescueRadioButton)
     expect(rescueRadioButton).toBeChecked()
   })
+  test('should hint rescue message when pain is higher than two', () => {
+    mockQuery['nivel-dolor'] = '4'
+    render(<SymptomsRegistry />)
+    expect(
+      screen.queryByText(/^Se recomienda administrar rescate de analgesia$/)
+    ).toBeInTheDocument()
+  })
 })
