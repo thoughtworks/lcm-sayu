@@ -17,6 +17,10 @@ const UserManagement = () => (
             Agregar usuario
           </a>
         </Link>
+        <section>
+          <div className={styles['user-list-title']}>Estado</div>
+          <div className={styles['user-list-title']}>Usuario</div>
+        </section>
       </header>
     </main>
   </>
