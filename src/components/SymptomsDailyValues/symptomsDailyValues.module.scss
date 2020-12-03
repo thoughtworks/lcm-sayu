@@ -8,6 +8,10 @@
   flex-direction: row;
   margin-bottom: 7px;
 
+  &.with-rescue {
+    background: colors.$pale-turquoise;
+  }
+
   .symptom-circle {
     width: 21px;
     height: 21px;
@@ -50,8 +54,4 @@
   .fiebre-value {
     background: colors.$light-blue;
   }
-}
-
-.with-rescue {
-  background: colors.$pale-turquoise;
 }
