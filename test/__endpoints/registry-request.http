@@ -5,7 +5,7 @@ Cookie: {{cookie}}
 {
     "rescate": 0,
     "fiebre": 1,
-    "constipacion":0,
+    "deposiciones":1,
     "cansancio":1,
     "nausea":5,
     "apetito":5,

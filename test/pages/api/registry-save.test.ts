@@ -14,7 +14,7 @@ const symptoms: Symptom[] = [
   { id: 4, name: 'Fiebre' },
   { id: 5, name: 'Dolor' },
   { id: 6, name: 'Náusea' },
-  { id: 7, name: 'Constipación' },
+  { id: 7, name: 'Deposiciones' },
   { id: 8, name: 'Falta de aire' },
   { id: 9, name: 'Rescate' },
   { id: 10, name: 'Registro en BD no en Sistema' },
@@ -37,7 +37,7 @@ describe('Symptom api', () => {
   const symptom = {
     painlevel: 0,
     fiebre: 1,
-    constipacion: 0,
+    deposiciones: 0,
     rescate: 0,
     cansancio: 2,
     nausea: 3,
@@ -98,7 +98,7 @@ describe('Symptom api', () => {
       {
         creationDate: creationDate,
         id: undefined,
-        symptom: { id: 7, name: 'Constipación' },
+        symptom: { id: 7, name: 'Deposiciones' },
         value: 0,
       },
       {

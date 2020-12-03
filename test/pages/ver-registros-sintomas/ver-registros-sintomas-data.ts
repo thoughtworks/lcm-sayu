@@ -227,7 +227,7 @@ const threeDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -308,7 +308,7 @@ const threeDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -389,7 +389,7 @@ const threeDaySymptoms: Registry[] = [
     value: 0,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -473,7 +473,7 @@ const differentMonthSymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -554,7 +554,7 @@ const differentMonthSymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -638,7 +638,7 @@ const oneDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -719,7 +719,7 @@ const oneDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -803,7 +803,7 @@ const onlyOneHourSymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -887,7 +887,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -959,7 +959,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -1031,7 +1031,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -1103,7 +1103,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -1175,7 +1175,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -1247,7 +1247,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -1319,7 +1319,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
@@ -1391,7 +1391,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 1,
     symptom: {
       id: 2,
-      name: 'Constipación',
+      name: 'Deposiciones',
     },
   },
   {
