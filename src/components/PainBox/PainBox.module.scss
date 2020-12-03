@@ -1,0 +1,17 @@
+@use 'src/styles/colors';
+
+.box {
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 16px;
+  margin-top: 12px;
+  color: colors.$light-purple;
+}
+
+.hint {
+  background: colors.$pale-turquoise;
+  font-size: 10px;
+  text-align: center;
+  margin-top: 13px;
+  color: colors.$light-grey;
+}

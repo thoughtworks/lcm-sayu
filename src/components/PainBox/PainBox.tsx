@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react'
-import { Image, Box, Flex, Text } from '@chakra-ui/core'
+import { Image, Flex, Text } from '@chakra-ui/core'
+import styles from './PainBox.module.scss'
 
 const painInformation: any = {
   '0': {
@@ -35,18 +36,17 @@ type PainBoxProps = {
 const PainBox: FunctionComponent<PainBoxProps> = ({ painLevel }) => (
   <>
     {painLevel !== undefined && (
-      <Box
-        border="1px solid"
-        borderRadius="4px"
-        padding="1em"
-        marginTop={3}
-        color="lightPurple"
-      >
+      <div className={styles['box']}>
         <Flex direction="column" align="center">
           <Text>{painInformation[painLevel].icon}</Text>
           <Text>{painInformation[painLevel].name}</Text>
         </Flex>
-      </Box>
+      </div>
+    )}
+    {painLevel !== undefined && painLevel > 2 && (
+      <p className={styles['hint']}>
+        Se recomienda administrar rescate de analgesia
+      </p>
     )}
   </>
 )
