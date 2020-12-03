@@ -428,5 +428,6 @@ describe('<SymptomsRegistryList /> legend', () => {
     expect(screen.getByText(/^Falta de aire$/)).toBeInTheDocument()
     expect(screen.getByText(/^Deposiciones$/)).toBeInTheDocument()
     expect(screen.getByText(/^Fiebre$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Rescate de analgesia$/)).toBeInTheDocument()
   })
 })
