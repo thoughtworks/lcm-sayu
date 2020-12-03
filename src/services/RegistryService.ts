@@ -60,8 +60,8 @@ export class RegistryService {
     switch (symptom.name) {
       case 'Fiebre':
         return parseInt(symptomsToRegister['fiebre'], 10)
-      case 'Constipación':
-        return parseInt(symptomsToRegister['constipacion'], 10)
+      case 'Deposiciones':
+        return parseInt(symptomsToRegister['deposiciones'], 10)
       case 'Cansancio':
         return parseInt(symptomsToRegister['cansancio'], 10)
       case 'Falta de aire':
@@ -80,8 +80,8 @@ export class RegistryService {
     switch (symptom.name) {
       case 'Fiebre':
         return 'fiebre' in symptomsToRegister
-      case 'Constipación':
-        return 'constipacion' in symptomsToRegister
+      case 'Deposiciones':
+        return 'deposiciones' in symptomsToRegister
       case 'Cansancio':
         return 'cansancio' in symptomsToRegister
       case 'Falta de aire':
@@ -199,7 +199,7 @@ export class RegistryService {
       case 'Falta de aire':
         registryDTO.airLevel = registry.value
         break
-      case 'Constipación':
+      case 'Deposiciones':
         registryDTO.depositionLevel = Boolean(registry.value)
         break
       case 'Fiebre':
