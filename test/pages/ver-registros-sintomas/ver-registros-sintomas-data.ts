@@ -304,6 +304,7 @@ const threeDaySymptoms: Registry[] = [
       id: 9,
       name: 'Rescate',
     },
+    user,
   },
   {
     id: 49,
@@ -393,6 +394,7 @@ const threeDaySymptoms: Registry[] = [
       id: 9,
       name: 'Rescate',
     },
+    user,
   },
   {
     id: 57,
@@ -482,6 +484,7 @@ const threeDaySymptoms: Registry[] = [
       id: 9,
       name: 'Rescate',
     },
+    user,
   },
 ]
 
@@ -574,6 +577,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 9,
       name: 'Rescate',
     },
+    user,
   },
   {
     id: 49,
@@ -663,6 +667,7 @@ const differentMonthSymptoms: Registry[] = [
       id: 9,
       name: 'Rescate',
     },
+    user,
   },
 ]
 
@@ -755,6 +760,7 @@ const oneDaySymptoms: Registry[] = [
       id: 9,
       name: 'Rescate',
     },
+    user,
   },
   {
     id: 49,
@@ -844,6 +850,7 @@ const oneDaySymptoms: Registry[] = [
       id: 9,
       name: 'Rescate',
     },
+    user,
   },
 ]
 
@@ -936,6 +943,7 @@ const onlyOneHourSymptoms: Registry[] = [
       id: 9,
       name: 'Rescate',
     },
+    user,
   },
 ]
 
