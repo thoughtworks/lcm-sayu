@@ -36,17 +36,19 @@ type PainBoxProps = {
 const PainBox: FunctionComponent<PainBoxProps> = ({ painLevel }) => (
   <>
     {painLevel !== undefined && (
-      <div className={styles['box']}>
-        <Flex direction="column" align="center">
-          <Text>{painInformation[painLevel].icon}</Text>
-          <Text>{painInformation[painLevel].name}</Text>
-        </Flex>
-      </div>
-    )}
-    {painLevel !== undefined && painLevel > 2 && (
-      <p className={styles['hint']}>
-        Se recomienda administrar rescate de analgesia
-      </p>
+      <span>
+        <div className={styles['box']}>
+          <Flex direction="column" align="center">
+            <Text>{painInformation[painLevel].icon}</Text>
+            <Text>{painInformation[painLevel].name}</Text>
+          </Flex>
+        </div>
+        {painLevel > 2 && (
+          <p className={styles['hint']}>
+            Se recomienda administrar rescate de analgesia
+          </p>
+        )}
+      </span>
     )}
   </>
 )
