@@ -7,6 +7,7 @@ import withSession from 'src/hoc/WithSession'
 import { Role } from 'src/model/Role'
 import { Carer } from 'src/model/Carer'
 import { UserService } from 'src/services/UserService'
+import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 
 const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
   carerList,
@@ -17,9 +18,13 @@ const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
       router.push('/tratante/agregar-usuario')
     }
   })
+
   return (
     <main>
-      <h1>Cuidadores</h1>
+      <header>
+        <TitleHeader />
+        <h1>Cuidadores</h1>
+      </header>
       <table>
         <thead>
           <tr>
@@ -31,9 +36,11 @@ const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
             <tr key={id}>
               <td>
                 <span>{name}</span>
-                <span>
-                  Última actualización: {formatLastUpdated(lastUpdated)}
-                </span>
+                {lastUpdated && (
+                  <span>
+                    Última actualización: {formatLastUpdated(lastUpdated)}
+                  </span>
+                )}
               </td>
               <td>
                 <Link href={`tratante/ver-historial/${id}`}>
@@ -71,7 +78,9 @@ export const getServerSideProps: GetServerSideProps<{
   try {
     const userService = new UserService()
     carerList = await userService.getCarers()
-  } catch (err) {}
+  } catch (err) {
+    console.error(err)
+  }
   return { props: { carerList } }
 }
 

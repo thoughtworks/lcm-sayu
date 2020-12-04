@@ -1,6 +1,8 @@
 import { getValidEmail, User } from 'src/model/User'
 import { Service } from './Service'
 import { Carer } from '../model/Carer'
+import { Role } from '../model/Role'
+import { RegistryService } from './RegistryService'
 
 export class UserService extends Service {
   async saveUser(user: User): Promise<void> {
@@ -32,16 +34,29 @@ export class UserService extends Service {
 
   async getCarers(): Promise<Carer[]> {
     const connection = await this.getConnection()
+
+    let users = []
     try {
       const userRepository = connection.getRepository<User>('User')
-      const users = await userRepository.find()
-      return users.map(({ id }) => ({
-        id: id as number,
-        name: 'Juanito',
-        lastUpdated: 0,
-      }))
+      users = await userRepository.find({
+        where: { role: Role.CUIDADOR },
+      })
     } finally {
-      connection.close()
+      await connection.close()
     }
+
+    const registryService = new RegistryService()
+    return Promise.all(
+      users.map(async (user) => {
+        const lastUserRegistry = await registryService.getLastRegistryByUser(
+          user
+        )
+        return {
+          id: user.id as number,
+          name: user.name || user.email,
+          lastUpdated: lastUserRegistry?.creationDate.getTime() || null,
+        }
+      })
+    )
   }
 }

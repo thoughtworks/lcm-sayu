@@ -1,14 +1,15 @@
 import React from 'react'
-import { cleanup, clearMocks, render, screen, within } from 'test/testUtils'
+import { GetServerSidePropsContext } from 'next'
 
 import CarerView from 'pages/tratante/ver-cuidadores'
 import { Role } from 'src/model/Role'
-import { User } from 'src/model/User'
-import { getServerSideProps } from '../../../src/steps/CarerView/CarerView'
-import { GetServerSidePropsContext } from 'next'
+import { getServerSideProps } from 'src/steps/CarerView'
+import { cleanup, clearMocks, render, screen, within } from 'test/testUtils'
 
 const dateNow = Date.now()
 global.Date.now = jest.fn().mockReturnValue(dateNow)
+global.console.error = jest.fn()
+
 const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
   useRouter: () => ({ push: mockPush }),
@@ -19,15 +20,16 @@ jest.mock('next-auth/client', () => ({
 }))
 
 const users = [
-  { id: 1, email: 'test1@test.com', role: Role.CUIDADOR },
+  { id: 1, name: 'test1', email: 'test1@test.com', role: Role.CUIDADOR },
   { id: 2, email: 'test2@test.com', role: Role.CUIDADOR },
-  { id: 3, email: 'test3@test.com', role: Role.CUIDADOR },
+  { id: 3, name: 'test3', email: 'test3@test.com', role: Role.CUIDADOR },
 ]
 
 const mockFind = jest.fn().mockResolvedValue(users)
+const mockFindOne = jest.fn().mockResolvedValue(null)
 jest.mock('typeorm', () => ({
   createConnection: () => ({
-    getRepository: () => ({ find: mockFind }),
+    getRepository: () => ({ find: mockFind, findOne: mockFindOne }),
     close: jest.fn(),
   }),
 }))
@@ -66,23 +68,60 @@ describe('<CarerView />', () => {
       '/tratante/ver-historial/1'
     )
   })
+
+  test('should show show last updated when it is undefined', async () => {
+    const carerList = [{ id: 1, name: 'test1', lastUpdated: undefined }]
+    render(<CarerView carerList={carerList} />)
+    expect(screen.getByText(/^test1$/)).toBeInTheDocument()
+    expect(
+      screen.queryByText(/^Última actualización: $/)
+    ).not.toBeInTheDocument()
+
+    const carerRow = within(
+      screen.getByText(/test1/).closest('tr') as HTMLElement
+    )
+    const detailedRegistryButton = carerRow
+      .getByAltText(/^Ver registros de test1$/)
+      .closest('a')
+    expect(detailedRegistryButton).toHaveAttribute(
+      'href',
+      '/tratante/ver-historial/1'
+    )
+  })
 })
 
 describe('<CarerView /> server side', () => {
   beforeEach(clearMocks)
 
   test('should return carers from DB', async () => {
+    mockFindOne
+      .mockResolvedValueOnce({ creationDate: new Date(dateNow) })
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce({ creationDate: new Date(dateNow) })
+
     const result = await getServerSideProps(
       (null as unknown) as GetServerSidePropsContext
     )
+
     expect(result).toEqual({
       props: {
         carerList: [
           { id: 1, name: 'test1', lastUpdated: dateNow },
-          { id: 2, name: 'test2', lastUpdated: dateNow },
+          { id: 2, name: 'test2@test.com', lastUpdated: null },
           { id: 3, name: 'test3', lastUpdated: dateNow },
         ],
       },
     })
+  })
+
+  test('should log when there is an error and return an empty array', async () => {
+    mockFindOne.mockRejectedValue(new Error('Custom error'))
+
+    const result = await getServerSideProps(
+      (null as unknown) as GetServerSidePropsContext
+    )
+
+    expect(result).toEqual({ props: { carerList: [] } })
+    expect(global.console.error).toHaveBeenCalledWith(new Error('Custom error'))
   })
 })

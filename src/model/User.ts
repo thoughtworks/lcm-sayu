@@ -4,6 +4,7 @@ import { Role } from './Role'
 export class User {
   readonly createdAt = new Date(Date.now())
   public id?: number
+  public name?: string
   readonly email: string
   readonly role: Role
   constructor(email: string, role: string) {

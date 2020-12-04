@@ -1,1 +1,1 @@
-export { default } from 'src/steps/CarerView'
+export { default, getServerSideProps } from 'src/steps/CarerView'

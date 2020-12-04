@@ -1,11 +1,12 @@
 import { Between } from 'typeorm'
+
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { Registry } from 'src/model/Registry'
 import { Symptom } from 'src/model/Symptom'
 import { User } from 'src/model/User'
 
-import { UserService } from './UserService'
 import { Service } from './Service'
+import { UserService } from './UserService'
 import { SymptomService } from './SymptomService'
 
 export class RegistryService extends Service {
@@ -58,6 +59,26 @@ export class RegistryService extends Service {
     }
   }
 
+  async getLastRegistryByUser(user: User): Promise<Registry | undefined> {
+    const connection = await this.getConnection()
+    try {
+      const registryRepository = connection.getRepository<Registry>('Registry')
+      const userLastRegistry = await registryRepository.findOne({
+        join: {
+          alias: 'registry',
+          innerJoin: {
+            user: 'registry.user',
+          },
+        },
+        where: { user: user },
+        order: { creationDate: 'DESC' },
+      })
+      return userLastRegistry
+    } finally {
+      connection.close()
+    }
+  }
+
   private getSymptomValue(
     symptom: Symptom,
     symptomsToRegister: any
@@ -83,6 +104,7 @@ export class RegistryService extends Service {
         return parseInt(symptomsToRegister['painlevel'], 10)
     }
   }
+
   private validateSymptom(symptom: Symptom, symptomsToRegister: any) {
     switch (symptom.name) {
       case 'Rescate':
