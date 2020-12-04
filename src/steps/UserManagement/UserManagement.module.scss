@@ -25,12 +25,40 @@
   }
   .user-list {
     width: 100%;
+    margin-top: 16px;
     thead {
       background: colors.$whisper-grey;
       th {
         padding: 10px;
         color: colors.$slate-blue;
         text-align: left;
+        font-size: 12px;
+        font-weight: normal;
+      }
+    }
+    tbody {
+      td {
+        .user-state {
+          margin-left: 17px;
+          width: 13px;
+          height: 13px;
+          line-height: 10px;
+          border-radius: 50%;
+          &.active {
+            background: colors.$light-green;
+          }
+          &.inactve {
+            background: colors.$red;
+          }
+        }
+        .role {
+          color: colors.$dark-grey;
+          font-size: 10px;
+        }
+        .bottom-row {
+          height: 1.43px;
+          background: colors.$whisper-grey;
+        }
       }
     }
   }

@@ -1,3 +1,4 @@
+import { Icon } from '@chakra-ui/core'
 import Link from 'next/link'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import withSession from 'src/hoc/WithSession'
@@ -28,12 +29,23 @@ const UserManagement = () => (
         </thead>
         <tbody>
           <tr>
-            <td>verde</td>
             <td>
-              <div>user@mail.com</div>
-              <div>persona cuidadora</div>
+              <div
+                className={`${styles['user-state']} ${styles['active']}`}
+              ></div>
             </td>
-            <td>&gt;</td>
+            <td>
+              <div>clopez@mail.com</div>
+              <div className={styles['role']}>persona cuidadora</div>
+            </td>
+            <td>
+              <Icon name="chevron-right" size={'25px'} />
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={3}>
+              <div className={styles['bottom-row']} />
+            </td>
           </tr>
         </tbody>
       </table>
