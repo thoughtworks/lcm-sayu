@@ -138,6 +138,7 @@ describe('Symptom api', () => {
         creationDate: creationDate,
         id: undefined,
         symptom: { id: 9, name: 'Rescate' },
+        user,
         value: 0,
       },
     ])
