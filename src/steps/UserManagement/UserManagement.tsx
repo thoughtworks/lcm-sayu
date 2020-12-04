@@ -17,11 +17,26 @@ const UserManagement = () => (
             Agregar usuario
           </a>
         </Link>
-        <section>
-          <div className={styles['user-list-title']}>Estado</div>
-          <div className={styles['user-list-title']}>Usuario</div>
-        </section>
       </header>
+
+      <table className={styles['user-list']}>
+        <thead>
+          <tr>
+            <th>Estado</th>
+            <th colSpan={2}>Usuario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>verde</td>
+            <td>
+              <div>user@mail.com</div>
+              <div>persona cuidadora</div>
+            </td>
+            <td>&gt;</td>
+          </tr>
+        </tbody>
+      </table>
     </main>
   </>
 )
