@@ -1,0 +1,14 @@
+@use 'src/styles/colors';
+
+#symptoms-registry-list {
+  header {
+    position: sticky;
+    top: 0px;
+    background-color: colors.$white;
+
+    h1 {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+  }
+}

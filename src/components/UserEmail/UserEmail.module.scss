@@ -1,22 +1,23 @@
-@import 'src/styles/colors';
+@use 'src/styles/colors';
+
 .user-email {
   display: flex;
   flex-direction: column;
 
   input {
     border-radius: 4px;
-    border: 1px solid #e3e8ef;
+    border: 1px solid colors.$white;
     height: 36px;
     padding-left: 10px;
 
     &.invalid {
-      border-color: $error-red;
+      border-color: colors.$red;
     }
   }
 
   .error {
     font-size: 10px;
     margin-top: 5px;
-    color: $error-red;
+    color: colors.$red;
   }
 }

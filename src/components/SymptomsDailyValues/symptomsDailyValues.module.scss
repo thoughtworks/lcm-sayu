@@ -1,41 +1,57 @@
+@use 'src/styles/colors';
+
 .symptom-list {
   width: 100%;
   justify-content: space-between;
   align-items: center;
   display: flex;
   flex-direction: row;
+  margin-bottom: 7px;
+
+  &.with-rescue {
+    background: colors.$pale-turquoise;
+  }
+
   .symptom-circle {
     width: 21px;
     height: 21px;
     line-height: 20px;
     border-radius: 50%;
     font-size: 10px;
-    color: #fff;
+    color: colors.$off-white;
     text-align: center;
     margin: 3px 1px 1px 1px;
   }
+
   .dolor-value {
-    background: #00afa2;
+    background: colors.$water-green;
   }
+
   .cansancio-value {
-    background: #616ee4;
+    background: colors.$purple;
   }
+
   .apetito-value {
-    background: #ffca2a;
+    background: colors.$yellow;
   }
+
   .nauseas-value {
-    background: #163eb3;
+    background: colors.$blue;
   }
+
   .tragar-value {
-    background: #e63e6c;
+    background: colors.$pink;
   }
+
   .aire-value {
-    background: #b3cf71;
+    background: colors.$light-green;
   }
+
   .deposicion-value {
-    background: #ee7342;
+    background: colors.$orange;
   }
+
   .fiebre-value {
-    background: #168db3;
+    background: colors.$light-blue;
   }
 }

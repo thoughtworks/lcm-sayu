@@ -1,9 +1,9 @@
 import { getValidEmail, User } from 'src/model/User'
-import { createConnection } from 'typeorm'
+import { Connection, createConnection, getConnection } from 'typeorm'
 
 export class UserService {
   async saveUser(user: User): Promise<void> {
-    const connection = await createConnection()
+    const connection = await this.getConnection()
     try {
       const userRepository = connection.getRepository('User')
       await userRepository.save(user)
@@ -13,7 +13,7 @@ export class UserService {
   }
 
   async getByEmail(email: string): Promise<User | undefined> {
-    const connection = await createConnection()
+    const connection = await this.getConnection()
     try {
       const validEmail = getValidEmail(email)
       const userRepository = connection.getRepository<User>('User')
@@ -27,5 +27,13 @@ export class UserService {
   async existByEmail(email: string): Promise<boolean> {
     const user = await this.getByEmail(email)
     return !!user
+  }
+
+  private async getConnection(): Promise<Connection> {
+    try {
+      return await createConnection()
+    } catch (err) {
+      return getConnection()
+    }
   }
 }

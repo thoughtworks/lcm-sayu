@@ -9,4 +9,5 @@ export type RegistryDTO = {
   airLevel: number
   depositionLevel: boolean
   feverLevel: boolean
+  rescueLevel: boolean
 }

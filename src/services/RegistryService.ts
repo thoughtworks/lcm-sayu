@@ -1,15 +1,20 @@
-import { createConnection } from 'typeorm'
+import { Between } from 'typeorm'
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { Registry } from 'src/model/Registry'
 import { Symptom } from 'src/model/Symptom'
+import { User } from 'src/model/User'
 
-export class RegistryService {
-  async saveRegistry(symptomsToRegister: any): Promise<void> {
-    const connection = await createConnection()
+import { UserService } from './UserService'
+import { Service } from './Service'
+import { SymptomService } from './SymptomService'
+
+export class RegistryService extends Service {
+  async saveRegistry(symptomsToRegister: any, email: string): Promise<void> {
+    const user = await this.getUser(email)
+    const symptomList = await this.getSymptoms()
+
+    const connection = await this.getConnection()
     try {
-      const symptomList = await connection
-        .getRepository<Symptom>('Symptom')
-        .find()
       const registryList: Registry[] = symptomList
         .filter((symptom: Symptom) =>
           this.validateSymptom(symptom, symptomsToRegister)
@@ -19,7 +24,7 @@ export class RegistryService {
             symptom,
             symptomsToRegister
           ) as number
-          return new Registry(value, symptom)
+          return new Registry(value, symptom, user)
         })
       const registryRepository = connection.getRepository('Registry')
       await registryRepository.save(registryList)
@@ -29,13 +34,22 @@ export class RegistryService {
   }
 
   async registriesRetrieval(): Promise<RegistryDTO[]> {
-    const connection = await createConnection()
+    const connection = await this.getConnection()
+    const toDate = new Date()
+    const fromDate = new Date(
+      toDate.getFullYear(),
+      toDate.getMonth(),
+      toDate.getDate() - 6
+    )
     try {
       const registryRepository = connection.getRepository<Registry>('Registry')
       const symptomsRegistries = await registryRepository.find({
         relations: ['symptom'],
         order: {
           creationDate: 'DESC',
+        },
+        where: {
+          creationDate: Between(fromDate, toDate),
         },
       })
       return this.toRegistriesDTO(symptomsRegistries)
@@ -49,10 +63,12 @@ export class RegistryService {
     symptomsToRegister: any
   ): number | undefined {
     switch (symptom.name) {
+      case 'Rescate':
+        return parseInt(symptomsToRegister['rescate'], 10)
       case 'Fiebre':
         return parseInt(symptomsToRegister['fiebre'], 10)
-      case 'Constipación':
-        return parseInt(symptomsToRegister['constipacion'], 10)
+      case 'Deposiciones':
+        return parseInt(symptomsToRegister['deposiciones'], 10)
       case 'Cansancio':
         return parseInt(symptomsToRegister['cansancio'], 10)
       case 'Falta de aire':
@@ -69,10 +85,12 @@ export class RegistryService {
   }
   private validateSymptom(symptom: Symptom, symptomsToRegister: any) {
     switch (symptom.name) {
+      case 'Rescate':
+        return 'rescate' in symptomsToRegister
       case 'Fiebre':
         return 'fiebre' in symptomsToRegister
-      case 'Constipación':
-        return 'constipacion' in symptomsToRegister
+      case 'Deposiciones':
+        return 'deposiciones' in symptomsToRegister
       case 'Cansancio':
         return 'cansancio' in symptomsToRegister
       case 'Falta de aire':
@@ -109,6 +127,7 @@ export class RegistryService {
       airLevel: 0,
       depositionLevel: false,
       feverLevel: false,
+      rescueLevel: false,
     }
 
     registries.forEach((registry) => {
@@ -132,6 +151,7 @@ export class RegistryService {
           airLevel: registryDTO.airLevel,
           depositionLevel: registryDTO.depositionLevel,
           feverLevel: registryDTO.feverLevel,
+          rescueLevel: registryDTO.rescueLevel,
         }
 
         registriesDTO.push(toPushRegistryDTO)
@@ -157,6 +177,7 @@ export class RegistryService {
         airLevel: registryDTO.airLevel,
         depositionLevel: registryDTO.depositionLevel,
         feverLevel: registryDTO.feverLevel,
+        rescueLevel: registryDTO.rescueLevel,
       }
       registriesDTO.push(toPushRegistryDTO)
     }
@@ -190,12 +211,30 @@ export class RegistryService {
       case 'Falta de aire':
         registryDTO.airLevel = registry.value
         break
-      case 'Constipación':
+      case 'Deposiciones':
         registryDTO.depositionLevel = Boolean(registry.value)
         break
       case 'Fiebre':
         registryDTO.feverLevel = Boolean(registry.value)
+        break
+      case 'Rescate':
+        registryDTO.rescueLevel = Boolean(registry.value)
     }
     return registryDTO
+  }
+
+  private async getUser(email: string): Promise<User> {
+    const userService = new UserService()
+    const user = await userService.getByEmail(email)
+    if (!user) {
+      throw new Error(`User not found ${email}`)
+    }
+
+    return user
+  }
+
+  private async getSymptoms(): Promise<Symptom[]> {
+    const symptomService = new SymptomService()
+    return symptomService.getAllSymptoms()
   }
 }

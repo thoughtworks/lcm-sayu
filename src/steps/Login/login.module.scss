@@ -1,6 +1,9 @@
+@use 'src/styles/colors';
+
 #login {
   margin: auto;
   width: 220px;
+
   header {
     margin-bottom: 150px;
     display: grid;
@@ -15,7 +18,7 @@
     .sayuDescription {
       grid-area: sayu-description;
       text-transform: uppercase;
-      color: #ffca2a;
+      color: colors.$yellow;
       margin-top: 3px;
       font-weight: bolder;
       font-size: 8.7px;
