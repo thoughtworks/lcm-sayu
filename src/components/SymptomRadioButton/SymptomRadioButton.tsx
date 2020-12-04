@@ -11,10 +11,14 @@ const symptonInfo: { [key: string]: any } = {
     name: 'Fiebre',
     description: '¿Ha tenido en las últimas 24 horas fiebre?',
   },
+  Rescate: {
+    name: 'Rescate',
+    description: '¿Se administró rescate?',
+  },
 }
 
 type SymptomRadioButtonProps = {
-  symptomValue: 'Deposiciones' | 'Fiebre'
+  symptomValue: 'Deposiciones' | 'Fiebre' | 'Rescate'
   control: Control
 }
 

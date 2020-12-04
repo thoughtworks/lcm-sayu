@@ -63,6 +63,8 @@ export class RegistryService extends Service {
     symptomsToRegister: any
   ): number | undefined {
     switch (symptom.name) {
+      case 'Rescate':
+        return parseInt(symptomsToRegister['rescate'], 10)
       case 'Fiebre':
         return parseInt(symptomsToRegister['fiebre'], 10)
       case 'Deposiciones':
@@ -83,6 +85,8 @@ export class RegistryService extends Service {
   }
   private validateSymptom(symptom: Symptom, symptomsToRegister: any) {
     switch (symptom.name) {
+      case 'Rescate':
+        return 'rescate' in symptomsToRegister
       case 'Fiebre':
         return 'fiebre' in symptomsToRegister
       case 'Deposiciones':
@@ -123,6 +127,7 @@ export class RegistryService extends Service {
       airLevel: 0,
       depositionLevel: false,
       feverLevel: false,
+      rescueLevel: false,
     }
 
     registries.forEach((registry) => {
@@ -146,6 +151,7 @@ export class RegistryService extends Service {
           airLevel: registryDTO.airLevel,
           depositionLevel: registryDTO.depositionLevel,
           feverLevel: registryDTO.feverLevel,
+          rescueLevel: registryDTO.rescueLevel,
         }
 
         registriesDTO.push(toPushRegistryDTO)
@@ -171,6 +177,7 @@ export class RegistryService extends Service {
         airLevel: registryDTO.airLevel,
         depositionLevel: registryDTO.depositionLevel,
         feverLevel: registryDTO.feverLevel,
+        rescueLevel: registryDTO.rescueLevel,
       }
       registriesDTO.push(toPushRegistryDTO)
     }
@@ -209,6 +216,9 @@ export class RegistryService extends Service {
         break
       case 'Fiebre':
         registryDTO.feverLevel = Boolean(registry.value)
+        break
+      case 'Rescate':
+        registryDTO.rescueLevel = Boolean(registry.value)
     }
     return registryDTO
   }

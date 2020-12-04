@@ -45,7 +45,9 @@ const SymptomSlider = ({ symptomValue, control }: SliderProps) => {
           <FormControl>
             <FormLabel htmlFor={name}>
               <Stack isInline>
-                <Text fontFamily="heading">{name}</Text>
+                <Text fontFamily="heading" fontSize="sm">
+                  {name}
+                </Text>
                 <Text color="lightPurple" fontFamily="heading">
                   {value}
                 </Text>

@@ -71,6 +71,9 @@ function SymptomsRegistry() {
           <Box>
             <SymptomRadioButton symptomValue="Fiebre" control={control} />
           </Box>
+          <Box>
+            <SymptomRadioButton symptomValue="Rescate" control={control} />
+          </Box>
         </Stack>
 
         <Stack marginTop={8} width="100%" align="center">
@@ -88,6 +91,7 @@ const onSubmit = (painLevel: number | undefined, router: NextRouter) => async (
 ) => {
   const request = {
     painlevel: painLevel,
+    rescate: parseInt(data['Rescate'], 10) as number,
     fiebre: parseInt(data['Fiebre'], 10) as number,
     deposiciones: parseInt(data['Deposiciones'], 10) as number,
     cansancio: data['Cansancio'],

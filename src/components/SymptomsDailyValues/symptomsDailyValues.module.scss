@@ -6,6 +6,11 @@
   align-items: center;
   display: flex;
   flex-direction: row;
+  margin-bottom: 7px;
+
+  &.with-rescue {
+    background: colors.$pale-turquoise;
+  }
 
   .symptom-circle {
     width: 21px;

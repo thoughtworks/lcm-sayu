@@ -1,6 +1,6 @@
 @use 'src/styles/colors';
 
-.legend {
+.bullet-legend {
   width: 8px;
   height: 8px;
   line-height: 10px;
@@ -40,4 +40,13 @@
 
 .fiebre-legend {
   background: colors.$light-blue;
+}
+.rescue-legend {
+  background: colors.$pale-turquoise;
+  font-size: 10px;
+}
+
+.symptom-legend-text {
+  font-size: 10px;
+  margin-left: 8px;
 }

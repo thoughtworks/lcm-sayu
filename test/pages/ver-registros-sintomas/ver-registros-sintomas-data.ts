@@ -36,6 +36,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             swallowLevel: 5,
             symptomDate: new Date(2020, 10, 18, 12, 9, 40).getTime(),
             tireLevel: 6,
+            rescueLevel: true,
           },
         ],
       },
@@ -53,6 +54,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             swallowLevel: 7,
             symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
             tireLevel: 7,
+            rescueLevel: true,
           },
           {
             airLevel: 7,
@@ -65,6 +67,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             swallowLevel: 7,
             symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
             tireLevel: 7,
+            rescueLevel: false,
           },
         ],
       },
@@ -82,6 +85,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             swallowLevel: 7,
             symptomDate: new Date(2020, 10, 11, 16, 47, 9).getTime(),
             tireLevel: 7,
+            rescueLevel: true,
           },
         ],
       },
@@ -99,6 +103,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             swallowLevel: 7,
             symptomDate: new Date(2020, 10, 9, 23, 57, 34).getTime(),
             tireLevel: 7,
+            rescueLevel: false,
           },
         ],
       },
@@ -125,6 +130,7 @@ const differentMonthViewRegistry: MonthRegistry[] = [
             swallowLevel: 7,
             symptomDate: new Date(2020, 11, 1, 0, 47, 56).getTime(),
             tireLevel: 7,
+            rescueLevel: true,
           },
           {
             airLevel: 7,
@@ -137,6 +143,7 @@ const differentMonthViewRegistry: MonthRegistry[] = [
             swallowLevel: 7,
             symptomDate: new Date(2020, 11, 1, 2, 47, 56).getTime(),
             tireLevel: 7,
+            rescueLevel: true,
           },
         ],
       },
@@ -160,6 +167,7 @@ const differentMonthViewRegistry: MonthRegistry[] = [
             swallowLevel: 5,
             symptomDate: new Date(2020, 10, 30, 12, 9, 40).getTime(),
             tireLevel: 6,
+            rescueLevel: true,
           },
         ],
       },
@@ -186,6 +194,7 @@ const oneDayMonthRegistries: MonthRegistry[] = [
             swallowLevel: 5,
             symptomDate: new Date(2020, 10, 12, 21, 47, 56).getTime(),
             tireLevel: 6,
+            rescueLevel: true,
           },
           {
             airLevel: 7,
@@ -198,6 +207,7 @@ const oneDayMonthRegistries: MonthRegistry[] = [
             swallowLevel: 7,
             symptomDate: new Date(2020, 10, 12, 21, 43, 56).getTime(),
             tireLevel: 7,
+            rescueLevel: true,
           },
         ],
       },
@@ -287,6 +297,16 @@ const threeDaySymptoms: Registry[] = [
     user,
   },
   {
+    id: 65,
+    creationDate: date,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
+    },
+    user,
+  },
+  {
     id: 49,
     creationDate: secondDate,
     value: 1,
@@ -367,6 +387,16 @@ const threeDaySymptoms: Registry[] = [
     user,
   },
   {
+    id: 66,
+    creationDate: secondDate,
+    value: 0,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
+    },
+    user,
+  },
+  {
     id: 57,
     creationDate: thirdDate,
     value: 1,
@@ -443,6 +473,16 @@ const threeDaySymptoms: Registry[] = [
     symptom: {
       id: 8,
       name: 'Dolor',
+    },
+    user,
+  },
+  {
+    id: 67,
+    creationDate: thirdDate,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
     },
     user,
   },
@@ -530,6 +570,16 @@ const differentMonthSymptoms: Registry[] = [
     user,
   },
   {
+    id: 57,
+    creationDate: monday,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
+    },
+    user,
+  },
+  {
     id: 49,
     creationDate: tuesday,
     value: 1,
@@ -606,6 +656,16 @@ const differentMonthSymptoms: Registry[] = [
     symptom: {
       id: 8,
       name: 'Dolor',
+    },
+    user,
+  },
+  {
+    id: 58,
+    creationDate: tuesday,
+    value: 0,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
     },
     user,
   },
@@ -693,6 +753,16 @@ const oneDaySymptoms: Registry[] = [
     user,
   },
   {
+    id: 57,
+    creationDate: date,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
+    },
+    user,
+  },
+  {
     id: 49,
     creationDate: secondHourDate,
     value: 1,
@@ -769,6 +839,16 @@ const oneDaySymptoms: Registry[] = [
     symptom: {
       id: 8,
       name: 'Dolor',
+    },
+    user,
+  },
+  {
+    id: 58,
+    creationDate: secondHourDate,
+    value: 0,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
     },
     user,
   },
@@ -852,6 +932,16 @@ const onlyOneHourSymptoms: Registry[] = [
     symptom: {
       id: 8,
       name: 'Dolor',
+    },
+    user,
+  },
+  {
+    id: 49,
+    creationDate: date,
+    value: 1,
+    symptom: {
+      id: 9,
+      name: 'Rescate',
     },
     user,
   },

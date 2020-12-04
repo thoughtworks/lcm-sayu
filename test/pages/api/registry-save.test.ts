@@ -16,7 +16,8 @@ const symptoms: Symptom[] = [
   { id: 6, name: 'Náusea' },
   { id: 7, name: 'Deposiciones' },
   { id: 8, name: 'Falta de aire' },
-  { id: 9, name: 'Registro en BD no en Sistema' },
+  { id: 9, name: 'Rescate' },
+  { id: 10, name: 'Registro en BD no en Sistema' },
 ]
 const mockFind = jest.fn().mockResolvedValue(symptoms)
 const mockFindOne = jest.fn().mockResolvedValue(null)
@@ -48,6 +49,7 @@ describe('Symptom api', () => {
     painlevel: 0,
     fiebre: 1,
     deposiciones: 0,
+    rescate: 0,
     cansancio: 2,
     nausea: 3,
     apetito: 4,
@@ -129,6 +131,13 @@ describe('Symptom api', () => {
         creationDate: creationDate,
         id: undefined,
         symptom: { id: 8, name: 'Falta de aire' },
+        user,
+        value: 0,
+      },
+      {
+        creationDate: creationDate,
+        id: undefined,
+        symptom: { id: 9, name: 'Rescate' },
         user,
         value: 0,
       },
