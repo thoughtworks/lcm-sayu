@@ -10,7 +10,7 @@ jest.mock('next-auth/client', () => ({
 describe('<UserManagement />', () => {
   beforeEach(() => {
     clearMocks()
-    render(<UserManagement />)
+    render(<UserManagement users={[]} />)
   })
 
   afterEach(cleanup)

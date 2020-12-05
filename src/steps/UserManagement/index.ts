@@ -1,1 +1,1 @@
-export { default } from './UserManagement'
+export { default, getServerSideProps } from './UserManagement'

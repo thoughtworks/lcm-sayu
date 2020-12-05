@@ -1,5 +1,6 @@
-import { getValidEmail, User } from 'src/model/User'
 import { Connection, createConnection, getConnection } from 'typeorm'
+import { UserDTO } from 'src/dto/UserDTO'
+import { getValidEmail, User } from 'src/model/User'
 
 export class UserService {
   async saveUser(user: User): Promise<void> {
@@ -19,6 +20,26 @@ export class UserService {
       const userRepository = connection.getRepository<User>('User')
       const user = await userRepository.findOne({ email: validEmail })
       return user
+    } finally {
+      connection.close()
+    }
+  }
+
+  async getAll(): Promise<UserDTO[] | undefined> {
+    const connection = await this.getConnection()
+    try {
+      const userRepository = connection.getRepository<User>('User')
+      const users = await userRepository.find({
+        order: {
+          email: 'ASC',
+        },
+      })
+
+      return users.map((user) => ({
+        id: user.id ? user.id : 0,
+        email: user.email,
+        role: user.role,
+      }))
     } finally {
       connection.close()
     }
