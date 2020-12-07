@@ -1,0 +1,45 @@
+@use 'src/styles/colors';
+
+#carer-view {
+  header {
+    h1 {
+      margin: 34px 0;
+      font-size: 18px;
+      color: colors.$grey;
+    }
+  }
+
+  table {
+    width: 100%;
+
+    th {
+      padding: 13px;
+      background-color: colors.$background-white;
+      color: colors.$dark-purple;
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    tr {
+      border-bottom: 1px solid colors.$background-white;
+      td {
+        padding: 10px;
+
+        &.user-information {
+          display: flex;
+          flex-direction: column;
+
+          .user-name {
+            font-size: 14px;
+            color: colors.$black;
+          }
+
+          .last-updated {
+            font-size: 12px;
+            color: colors.$light-grey;
+          }
+        }
+      }
+    }
+  }
+}

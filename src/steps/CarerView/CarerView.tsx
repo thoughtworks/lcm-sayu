@@ -8,6 +8,7 @@ import { Role } from 'src/model/Role'
 import { Carer } from 'src/model/Carer'
 import { UserService } from 'src/services/UserService'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
+import styles from './CarerView.module.scss'
 
 const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
   carerList,
@@ -20,7 +21,7 @@ const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
   })
 
   return (
-    <main>
+    <main id={styles['carer-view']}>
       <header>
         <TitleHeader />
         <h1>Cuidadores</h1>
@@ -28,24 +29,29 @@ const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
       <table>
         <thead>
           <tr>
-            <th>Nombre</th>
+            <th colSpan={2}>Nombre</th>
           </tr>
         </thead>
         <tbody>
           {carerList.map(({ id, name, lastUpdated }) => (
             <tr key={id}>
-              <td>
-                <span>{name}</span>
-                {lastUpdated && (
-                  <span>
-                    Última actualización: {formatLastUpdated(lastUpdated)}
-                  </span>
-                )}
+              <td className={styles['user-information']}>
+                <span className={styles['user-name']}>{name}</span>
+                <span className={styles['last-updated']}>
+                  {(lastUpdated &&
+                    `Última actualización: ${formatLastUpdated(
+                      lastUpdated
+                    )}`) ||
+                    'Sin registro'}
+                </span>
               </td>
               <td>
                 <Link href={`tratante/ver-historial/${id}`}>
                   <a>
-                    <img alt={`Ver registros de ${name}`} />
+                    <img
+                      alt={`Ver registros de ${name}`}
+                      src="/img/right_arrow.png"
+                    />
                   </a>
                 </Link>
               </td>

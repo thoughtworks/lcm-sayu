@@ -73,9 +73,7 @@ describe('<CarerView />', () => {
     const carerList = [{ id: 1, name: 'test1', lastUpdated: null }]
     render(<CarerView carerList={carerList} />)
     expect(screen.getByText(/^test1$/)).toBeInTheDocument()
-    expect(
-      screen.queryByText(/^Última actualización: $/)
-    ).not.toBeInTheDocument()
+    expect(screen.getByText(/^Sin registro$/)).toBeInTheDocument()
 
     const carerRow = within(
       screen.getByText(/test1/).closest('tr') as HTMLElement
