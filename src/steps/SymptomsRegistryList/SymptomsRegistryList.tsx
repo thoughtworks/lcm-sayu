@@ -15,11 +15,15 @@ import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { Role } from 'src/model/Role'
 
 import styles from './SymptomsRegistryList.module.scss'
+import { getSession } from 'next-auth/client'
+import { UserService } from 'src/services/UserService'
 
 type SymptomsRegistryListProp = {
+  registriesOwner?: string | null
   monthRegistries: MonthRegistry[] | null
 }
 const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
+  registriesOwner,
   monthRegistries,
 }) => {
   const router = useRouter()
@@ -38,6 +42,7 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
       <header>
         <TitleHeader closeButton />
         <h1>Historial de síntomas</h1>
+        {registriesOwner && <h2>{registriesOwner}</h2>}
         <SymptomsLegend />
       </header>
 
@@ -231,16 +236,41 @@ const formatTwoDigitNumber = (toFormatNumber: number): string => {
     : toFormatNumber.toString()
 }
 
-export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = async () => {
+export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = async ({
+  req,
+  query,
+}) => {
   let monthRegistries: MonthRegistry[] | null = null
+  let registryOwner: string | null = null
+
+  const session = await getSession({ req })
+  if (!session) {
+    return { props: { monthRegistries } }
+  }
+
   try {
+    let idCarer = parseInt(query['cuidador'] as string)
+    idCarer = isNaN(idCarer) ? -1 : idCarer
+
+    const userService = new UserService()
+    const user = await userService.getById(idCarer)
+    if (
+      !user ||
+      (Role.CUIDADOR === session.role && user?.id !== session.idUser)
+    ) {
+      return { props: { monthRegistries } }
+    } else if (Role.TRATANTE === session.role) {
+      registryOwner = user.name || null
+    }
+
     const registryService = new RegistryService()
-    const symptomsRegistries = await registryService.registriesRetrieval()
+    const symptomsRegistries = await registryService.registriesRetrieval(user)
+
     monthRegistries = toViewRegistries(symptomsRegistries)
   } catch (err) {
     console.error(err)
   }
-  return { props: { monthRegistries } }
+  return { props: { monthRegistries, registryOwner } }
 }
 
 export type ViewRegistry = {
@@ -254,4 +284,4 @@ export type MonthRegistry = {
   viewRegistries: ViewRegistry[]
 }
 
-export default withSession(SymptomsRegistryList, [Role.CUIDADOR])
+export default withSession(SymptomsRegistryList, [Role.CUIDADOR, Role.TRATANTE])

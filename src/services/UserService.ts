@@ -80,4 +80,15 @@ export class UserService extends Service {
       })
     )
   }
+
+  async getById(id: number): Promise<User | undefined> {
+    const connection = await this.getConnection()
+    try {
+      const userRepository = connection.getRepository<User>('User')
+      const user = await userRepository.findOne(id)
+      return user
+    } finally {
+      await connection.close()
+    }
+  }
 }
