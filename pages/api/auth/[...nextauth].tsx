@@ -38,7 +38,7 @@ const NextAuthHandler: NextApiHandler = (req, res) =>
       },
       signIn: async (user) => {
         const userService = new UserService()
-        return userService.existByEmail(user.email)
+        return userService.existByEmailAndUpdateName(user)
       },
       redirect: async () => {
         const redirectTo: string | undefined = '/'

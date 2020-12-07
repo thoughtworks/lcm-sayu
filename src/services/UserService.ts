@@ -1,7 +1,10 @@
+import { User as NextAuthUser } from 'next-auth'
+
+import { Carer } from 'src/model/Carer'
+import { Role } from 'src/model/Role'
 import { getValidEmail, User } from 'src/model/User'
+
 import { Service } from './Service'
-import { Carer } from '../model/Carer'
-import { Role } from '../model/Role'
 import { RegistryService } from './RegistryService'
 
 export class UserService extends Service {
@@ -29,6 +32,24 @@ export class UserService extends Service {
 
   async existByEmail(email: string): Promise<boolean> {
     const user = await this.getByEmail(email)
+    return !!user
+  }
+
+  async existByEmailAndUpdateName({
+    name,
+    email,
+  }: NextAuthUser): Promise<boolean> {
+    const user = await this.getByEmail(email)
+    if (user && !user.name) {
+      const connection = await this.getConnection()
+      try {
+        user.name = name
+        const userRepository = connection.getRepository<User>('User')
+        await userRepository.save(user)
+      } finally {
+        connection.close()
+      }
+    }
     return !!user
   }
 

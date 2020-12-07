@@ -9,6 +9,10 @@ module.exports = new EntitySchema({
       type: 'integer',
       generated: true,
     },
+    name: {
+      type: 'text',
+      nullable: true,
+    },
     email: {
       type: 'text',
       unique: true,
