@@ -4,8 +4,8 @@ import { GenericSuccess } from './GenericSuccess'
 const SuccessfulSymptomRegistry: FunctionComponent = () => (
   <GenericSuccess
     msg="¡Se han guardado los síntomas exitosamente!"
-    msgButton="Ir a historial de síntomas"
-    urlButton="/ver-registros-sintomas"
+    labelBackButton="Ir a historial de síntomas"
+    urlBackButton="/ver-registros-sintomas"
   />
 )
 
