@@ -40,6 +40,8 @@ export class UserService {
         email: user.email,
         role: user.role,
       }))
+    } catch (err) {
+      console.error(err)
     } finally {
       connection.close()
     }

@@ -20,7 +20,10 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
 
   useEffect(() => {
     if (users === undefined) {
-      router.push(`/_error?error=${ErrorCodes.FAILED_SYMPTOMS_RETRIEVAL}`)
+      router.push(`/_error?error=${ErrorCodes.USER_LIST_ERROR}`)
+    }
+    if (users !== undefined && users.length === 0) {
+      router.push('/tratante/agregar-usuario')
     }
   })
   if (users === undefined) {
