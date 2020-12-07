@@ -69,7 +69,7 @@ describe('<CarerView />', () => {
     )
   })
 
-  test('should show show last updated when it is null', async () => {
+  test('should not show last updated when it is null', async () => {
     const carerList = [{ id: 1, name: 'test1', lastUpdated: null }]
     render(<CarerView carerList={carerList} />)
     expect(screen.getByText(/^test1$/)).toBeInTheDocument()
