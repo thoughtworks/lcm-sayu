@@ -25,9 +25,14 @@ describe('_success', () => {
       expect(successMessage).toBeInTheDocument()
     })
 
-    test('should show face scale screen when button is clicked', () => {
+    test('should show return to home page button', () => {
       const returnButton = screen.getByText(/^Volver al inicio$/)
       expect(returnButton).toHaveAttribute('href', '/')
+    })
+
+    test("shouldn't show another button but return to home page button", () => {
+      const anchorElements = screen.getAllByRole('link')
+      expect(anchorElements.length).toBe(1)
     })
   })
 

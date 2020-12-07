@@ -27,7 +27,7 @@ jest.mock('next-auth/client', () => ({
   useSession: jest.fn().mockReturnValue([{ role: 'tutor' }, false]),
 }))
 
-describe('Home page', () => {
+describe('<SymptomsRegistry />', () => {
   beforeEach(() => {
     clearMocks()
   })
