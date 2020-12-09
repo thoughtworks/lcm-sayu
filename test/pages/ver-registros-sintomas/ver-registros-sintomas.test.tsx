@@ -166,7 +166,7 @@ describe('<SymptomsRegistryList />', () => {
   test('should render name when it is present', async () => {
     render(
       <SymptomsRegistryList
-        registriesOwner="Registry Owner"
+        registryOwner="Registry Owner"
         monthRegistries={oneDayMonthRegistries}
       />
     )
@@ -522,6 +522,50 @@ describe('<SymptomsRegistryList /> server side', () => {
     })
   })
 
+  test('should return null registry owner if role is cuidador', async () => {
+    mockNextAuthClient.getSession.mockResolvedValue(({
+      user: { name: 'Test 1' },
+      role: Role.CUIDADOR,
+    } as unknown) as Session)
+
+    mockFindOne.mockResolvedValue({ name: 'Test 2' })
+    mockFind.mockResolvedValue(onlyOneHourSymptoms)
+
+    const result = await getServerSideProps(context)
+
+    expect(result).toEqual({
+      props: {
+        registryOwner: null,
+        monthRegistries: [
+          {
+            month: 10,
+            viewRegistries: [
+              {
+                day: 1605932313000,
+                registries: [
+                  {
+                    airLevel: 5,
+                    appetiteLevel: 4,
+                    depositionLevel: true,
+                    feverLevel: true,
+                    id: 9,
+                    nauseaLevel: 3,
+                    painLevel: 4,
+                    rescueLevel: true,
+                    swallowLevel: 6,
+                    symptomDate: 1605932313000,
+                    tireLevel: 1,
+                  },
+                ],
+              },
+            ],
+            year: 2020,
+          },
+        ],
+      },
+    })
+  })
+
   test('should return null when user is not logged in', async () => {
     mockNextAuthClient.getSession.mockResolvedValue(null)
 
@@ -536,6 +580,17 @@ describe('<SymptomsRegistryList /> server side', () => {
     mockFindOne.mockResolvedValue({ id: 1 })
 
     context.query = { cuidador: '2' }
+    const viewMonthSymptomsRegistries = await getServerSideProps(context)
+
+    expect(viewMonthSymptomsRegistries).toEqual({
+      props: { monthRegistries: null },
+    })
+  })
+
+  test('should return null when query is not a number', async () => {
+    mockFindOne.mockResolvedValue({ id: 1 })
+
+    context.query = { cuidador: 'test' }
     const viewMonthSymptomsRegistries = await getServerSideProps(context)
 
     expect(viewMonthSymptomsRegistries).toEqual({
