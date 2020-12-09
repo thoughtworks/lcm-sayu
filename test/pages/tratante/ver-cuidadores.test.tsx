@@ -65,7 +65,7 @@ describe('<CarerView />', () => {
       .closest('a')
     expect(detailedRegistryButton).toHaveAttribute(
       'href',
-      '/tratante/ver-historial/1'
+      '/ver-registros-sintomas?cuidador=1'
     )
   })
 
@@ -83,7 +83,7 @@ describe('<CarerView />', () => {
       .closest('a')
     expect(detailedRegistryButton).toHaveAttribute(
       'href',
-      '/tratante/ver-historial/1'
+      '/ver-registros-sintomas?cuidador=1'
     )
   })
 })
