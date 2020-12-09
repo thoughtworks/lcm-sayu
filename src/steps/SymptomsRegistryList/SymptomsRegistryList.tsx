@@ -19,11 +19,11 @@ import { getSession } from 'next-auth/client'
 import { UserService } from 'src/services/UserService'
 
 type SymptomsRegistryListProp = {
-  registriesOwner?: string | null
+  registryOwner?: string | null
   monthRegistries: MonthRegistry[] | null
 }
 const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
-  registriesOwner,
+  registryOwner,
   monthRegistries,
 }) => {
   const router = useRouter()
@@ -42,7 +42,7 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
       <header>
         <TitleHeader closeButton />
         <h1>Historial de síntomas</h1>
-        {registriesOwner && <h2>{registriesOwner}</h2>}
+        {registryOwner && <h2 id={styles['registryOwner']}>{registryOwner}</h2>}
         <SymptomsLegend />
       </header>
 
