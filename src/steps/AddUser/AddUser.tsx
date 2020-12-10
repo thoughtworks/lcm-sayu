@@ -25,7 +25,6 @@ const AddUser = () => {
   const userRole = router.query.role
 
   const addUserMode = userEmail ? 'Editar' : 'Agregar'
-  const readOnly = addUserMode === 'Editar' ? true : false
   return (
     <main id={styles['add-user']}>
       <TitleHeader />
@@ -49,7 +48,11 @@ const AddUser = () => {
           })}
         >
           <div className={styles['user-email']}>
-            <UserEmail autoFocus defaultValue={userEmail} readOnly={readOnly} />
+            <UserEmail
+              autoFocus
+              defaultValue={userEmail}
+              readOnly={userEmail ? true : false}
+            />
           </div>
           <div className={styles['roles']}>
             <RoleRadioButton selectedRole={userRole as string} />
