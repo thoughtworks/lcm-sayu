@@ -4,7 +4,9 @@ import { Radio, RadioGroup } from '@chakra-ui/core'
 import { Role } from 'src/model/Role'
 import styles from './RoleRadioButton.module.scss'
 
-const RoleRadioButton: FunctionComponent = () => {
+const RoleRadioButton: FunctionComponent<{ selectedRole: string }> = ({
+  selectedRole,
+}) => {
   const { control } = useFormContext()
   return (
     <div className={styles['role']}>
@@ -13,7 +15,7 @@ const RoleRadioButton: FunctionComponent = () => {
         <Controller
           control={control}
           name="role"
-          defaultValue={Role.CUIDADOR}
+          defaultValue={selectedRole !== '' ? selectedRole : Role.CUIDADOR}
           render={({ onChange, onBlur, value }) => (
             <RadioGroup
               isInline

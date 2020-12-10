@@ -19,11 +19,17 @@ const AddUser = () => {
   const methods = useForm({
     mode: 'onBlur',
   })
+
   const router = useRouter()
+  const userEmail = router.query.email
+  const userRole = router.query.role
+
+  const addUserMode = userEmail ? 'Editar' : 'Agregar'
+
   return (
     <main id={styles['add-user']}>
       <TitleHeader />
-      <h1>Agregar usuario</h1>
+      <h1>{addUserMode} usuario</h1>
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(async ({ userEmail, role }: any) => {
@@ -43,10 +49,10 @@ const AddUser = () => {
           })}
         >
           <div className={styles['user-email']}>
-            <UserEmail autoFocus />
+            <UserEmail autoFocus defaultValue={userEmail} />
           </div>
           <div className={styles['roles']}>
-            <RoleRadioButton />
+            <RoleRadioButton selectedRole={userRole as string} />
           </div>
           <SubmitButton label="Guardar" />
           <div className={styles['cancel-link']}>

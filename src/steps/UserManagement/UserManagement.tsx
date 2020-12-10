@@ -66,7 +66,11 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
                     <div className={styles['role']}>{user.role}</div>
                   </td>
                   <td>
-                    <Icon name="chevron-right" size={'25px'} />
+                    <Link
+                      href={`/tratante/agregar-usuario?email=${user.email}&role=${user.role}`}
+                    >
+                      <Icon name="chevron-right" size={'25px'} />
+                    </Link>
                   </td>
                 </tr>
                 <tr>
