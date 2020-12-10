@@ -38,7 +38,24 @@ export class UserService {
       connection.close()
     }
   }
-
+  async getById(id: number): Promise<UserDTO | undefined> {
+    const connection = await this.getConnection()
+    let userDTO: UserDTO | undefined = undefined
+    try {
+      const userRepository = connection.getRepository<User>('User')
+      const user = await userRepository.findOne({ id: id })
+      if (user) {
+        userDTO = {
+          id: user.id ? user.id : 0,
+          email: user.email,
+          role: user.role,
+        }
+      }
+      return userDTO
+    } finally {
+      connection.close()
+    }
+  }
   async getAll(): Promise<UserDTO[] | undefined> {
     const connection = await this.getConnection()
     try {

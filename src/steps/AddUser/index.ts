@@ -1,1 +1,1 @@
-export { default } from './AddUser'
+export { default, getServerSideProps } from './AddUser'

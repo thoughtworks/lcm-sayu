@@ -1,9 +1,33 @@
 import React from 'react'
+import { GetServerSidePropsContext } from 'next'
+import typeorm from 'typeorm'
 import { cleanup, clearMocks, render, screen } from 'test/testUtils'
 
-import UserManagement from 'pages/tratante/gestion-usuario'
+import UserManagement, {
+  getServerSideProps,
+} from 'pages/tratante/gestion-usuario'
 import { Role } from 'src/model/Role'
-
+import { UserDTO } from 'src/dto/UserDTO'
+const usersModel = [
+  {
+    createdAt: new Date(),
+    id: 1,
+    email: 'test1@mail.com',
+    role: Role.CUIDADOR,
+  },
+  {
+    createdAt: new Date(),
+    id: 2,
+    email: 'test2@mail.com',
+    role: Role.TRATANTE,
+  },
+  {
+    createdAt: new Date(),
+    id: 3,
+    email: 'test3@mail.com',
+    role: Role.CUIDADOR,
+  },
+]
 jest.mock('next-auth/client', () => ({
   useSession: jest.fn().mockReturnValue([{ role: 'tratante' }, false]),
 }))
@@ -13,6 +37,14 @@ jest.mock('next/router', () => ({
   useRouter: () => ({ push: mockPush }),
 }))
 
+const mockFind = jest.fn().mockResolvedValue(usersModel)
+
+jest.mock('typeorm', () => ({
+  createConnection: () => ({
+    getRepository: () => ({ find: mockFind }),
+    close: jest.fn(),
+  }),
+}))
 describe('<UserManagement />', () => {
   beforeEach(() => {
     clearMocks()
@@ -53,5 +85,36 @@ describe('<UserManagement />', () => {
   test('should show a message error when User List is undefined', () => {
     render(<UserManagement users={undefined} />)
     expect(mockPush).toHaveBeenCalledWith('/_error?error=UserListError')
+  })
+})
+describe('<UserManagement /> server side', () => {
+  beforeEach(() => {
+    clearMocks()
+  })
+
+  afterEach(cleanup)
+
+  test('should return users', async () => {
+    const users: UserDTO[] = [
+      { id: 1, email: 'test1@mail.com', role: Role.CUIDADOR },
+      { id: 2, email: 'test2@mail.com', role: Role.TRATANTE },
+      { id: 3, email: 'test3@mail.com', role: Role.CUIDADOR },
+    ]
+    const expectedUsers = { props: { users } }
+    const actualUsers = await getServerSideProps(
+      (null as unknown) as GetServerSidePropsContext
+    )
+    expect(actualUsers).toEqual(expectedUsers)
+  })
+
+  test('should return undefined when an error happened', async () => {
+    jest
+      .spyOn(typeorm, 'createConnection')
+      .mockRejectedValue('Connection error')
+    global.console.error = jest.fn()
+    const actualUsers = await getServerSideProps(
+      (null as unknown) as GetServerSidePropsContext
+    )
+    expect(actualUsers).toEqual({ props: { users: undefined } })
   })
 })

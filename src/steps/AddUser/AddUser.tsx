@@ -1,3 +1,4 @@
+import React, { useEffect, FunctionComponent } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { useForm, FormProvider } from 'react-hook-form'
@@ -6,6 +7,7 @@ import { SubmitButton } from 'src/components/SubmitButton'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import UserEmail from 'src/components/UserEmail'
 import RoleRadioButton from 'src/components/RoleRadioButton'
+import UserStateRadioButton from 'src/components/UserStateRadioButton'
 import ButtonLink from 'src/components/ButtonLink'
 import { SuccessCodes } from 'src/components/Success'
 import { ErrorCodes } from 'src/components/Error'
@@ -14,17 +16,22 @@ import withSession from 'src/hoc/WithSession'
 import { Role } from 'src/model/Role'
 
 import styles from './AddUser.module.scss'
+import { GetServerSideProps } from 'next'
+import { UserDTO } from 'src/dto/UserDTO'
+import { UserService } from 'src/services/UserService'
 
-const AddUser = () => {
+type UserProp = {
+  user: UserDTO | undefined
+}
+const AddUser: FunctionComponent<UserProp> = ({ user }) => {
   const methods = useForm({
     mode: 'onBlur',
   })
 
   const router = useRouter()
-  const userEmail = router.query.email
-  const userRole = router.query.role
 
-  const addUserMode = userEmail ? 'Editar' : 'Agregar'
+  const addUserMode = user ? 'Editar' : 'Agregar'
+  const readOnly = user ? true : false
   return (
     <main id={styles['add-user']}>
       <TitleHeader />
@@ -50,12 +57,15 @@ const AddUser = () => {
           <div className={styles['user-email']}>
             <UserEmail
               autoFocus
-              defaultValue={userEmail}
-              readOnly={userEmail ? true : false}
+              defaultValue={user?.email}
+              readOnly={readOnly}
             />
           </div>
           <div className={styles['roles']}>
-            <RoleRadioButton selectedRole={userRole as string} />
+            <RoleRadioButton selectedRole={user?.role as string} />
+          </div>
+          <div>
+            <UserStateRadioButton />
           </div>
           <SubmitButton label="Guardar" />
           <div className={styles['cancel-link']}>
@@ -70,5 +80,18 @@ const AddUser = () => {
     </main>
   )
 }
-
+export const getServerSideProps: GetServerSideProps<UserProp> = async ({
+  req,
+  query,
+}) => {
+  let user: UserDTO | undefined = undefined
+  try {
+    const userId = parseInt(query['usuario'] as string)
+    const userService = new UserService()
+    user = await userService.getById(userId)
+  } catch (err) {
+    console.error(err)
+  }
+  return { props: { user } }
+}
 export default withSession(AddUser, [Role.TRATANTE])

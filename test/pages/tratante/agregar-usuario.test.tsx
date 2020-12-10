@@ -10,6 +10,9 @@ import {
   waitFor,
 } from 'test/testUtils'
 import AddUser from 'pages/tratante/agregar-usuario'
+import { GetServerSidePropsContext } from 'next'
+import { Role } from 'src/model/Role'
+import { UserDTO } from 'src/dto/UserDTO'
 
 jest.mock('axios')
 
@@ -21,6 +24,35 @@ const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
   useRouter: () => ({
     push: mockPush,
+  }),
+}))
+
+const mockQuery: { userId: string | undefined } = {
+  userId: '0',
+}
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    query: mockQuery,
+    push: mockPush,
+  }),
+}))
+const userModel = {
+  createdAt: new Date(),
+  id: 1,
+  email: 'test1@mail.com',
+  role: Role.CUIDADOR,
+}
+const mockFindOne = jest.fn().mockResolvedValue(userModel)
+
+const context = ({
+  req: {},
+  query: { email: 'test1@mail.com', role: Role.TRATANTE },
+} as unknown) as GetServerSidePropsContext
+
+jest.mock('typeorm', () => ({
+  createConnection: () => ({
+    getRepository: () => ({ findOne: mockFindOne }),
+    close: jest.fn(),
   }),
 }))
 
@@ -114,7 +146,6 @@ describe('<AddUser />', () => {
     jest
       .spyOn(axios, 'post')
       .mockResolvedValueOnce({ data: { emailAlreadyExist: true } })
-
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')
     userEvent.tab()
@@ -123,5 +154,25 @@ describe('<AddUser />', () => {
         /^Debes ingresar un correo que no esté duplicado$/
       )
     ).toBeInTheDocument()
+  })
+
+  test('should have a radiobutton to change user state', () => {
+    expect(screen.getByText(/^Estado$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Activo$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Inactivo$/)).toBeInTheDocument()
+  })
+})
+
+describe('<AddUser/> Server Side', () => {
+  test('should return a user', async () => {
+    const user: UserDTO = {
+      id: 1,
+      email: 'test1@mail.com',
+      role: Role.CUIDADOR,
+    }
+
+    const expectedUser = { props: { user } }
+    const actualUser = await getServerSideProps(context)
+    expect(actualUser).toEqual(expectedUser)
   })
 })
