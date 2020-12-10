@@ -225,7 +225,7 @@ export class RegistryService extends Service {
       case 'Apetito':
         registryDTO.appetiteLevel = registry.value
         break
-      case 'Náuseas':
+      case 'Náusea':
         registryDTO.nauseaLevel = registry.value
         break
       case 'Dificultad para tragar':

@@ -282,7 +282,7 @@ const threeDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -372,7 +372,7 @@ const threeDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -462,7 +462,7 @@ const threeDaySymptoms: Registry[] = [
     value: 6,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -555,7 +555,7 @@ const differentMonthSymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -645,7 +645,7 @@ const differentMonthSymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -738,7 +738,7 @@ const oneDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -828,7 +828,7 @@ const oneDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -921,7 +921,7 @@ const onlyOneHourSymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -1014,7 +1014,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -1094,7 +1094,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -1174,7 +1174,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -1254,7 +1254,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -1334,7 +1334,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -1414,7 +1414,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -1494,7 +1494,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
@@ -1574,7 +1574,7 @@ const sevenDaySymptoms: Registry[] = [
     value: 3,
     symptom: {
       id: 7,
-      name: 'Náuseas',
+      name: 'Náusea',
     },
     user,
   },
