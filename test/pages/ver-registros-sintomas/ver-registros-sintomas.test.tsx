@@ -1,10 +1,6 @@
 import React from 'react'
 import { GetServerSidePropsContext } from 'next'
 import nextauthclient, { Session } from 'next-auth/client'
-<<<<<<< HEAD
-=======
-import typeorm from 'typeorm'
->>>>>>> 1d0e91c... [Benja, Dani C] 117 Added styles to carer view
 
 import SymptomsRegistryList, {
   getServerSideProps,

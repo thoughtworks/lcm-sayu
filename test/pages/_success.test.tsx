@@ -1,7 +1,10 @@
 import React from 'react'
-import { screen, cleanup, render, clearMocks } from 'test/testUtils'
+import nextauthclient, { Session } from 'next-auth/client'
+
 import SuccessPage from 'pages/_success'
 import { SuccessCodes } from 'src/components/Success'
+
+import { screen, cleanup, render, clearMocks } from 'test/testUtils'
 
 const mockPush = jest.fn().mockResolvedValue(null)
 const mockQuery = {
@@ -10,6 +13,13 @@ const mockQuery = {
 jest.mock('next/router', () => ({
   useRouter: () => ({ query: mockQuery, push: mockPush }),
 }))
+
+jest.mock('next-auth/client')
+const mockNextAuthClient = nextauthclient as jest.Mocked<typeof nextauthclient>
+mockNextAuthClient.useSession.mockReturnValue([
+  ({ idUser: 1, role: 'cuidador' } as unknown) as Session,
+  false,
+])
 
 describe('_success', () => {
   describe('<GenericSuccess />', () => {
@@ -50,6 +60,10 @@ describe('_success', () => {
         /^¡Se han guardado los síntomas exitosamente!$/
       )
       expect(successMessage).toBeInTheDocument()
+      expect(screen.getByText(/^Ir a historial de síntomas$/)).toHaveAttribute(
+        'href',
+        '/ver-registros-sintomas?cuidador=1'
+      )
     })
   })
 
