@@ -58,7 +58,7 @@ const WelcomeSayu = () => {
             </div>
             <div>
               <ButtonLink
-                href="/ver-registros-sintomas"
+                href={`/ver-registros-sintomas?cuidador=${session.idUser}`}
                 label="Ver historial de síntomas"
                 secondaryStyle
               />

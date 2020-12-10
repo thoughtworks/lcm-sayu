@@ -34,7 +34,7 @@ export class RegistryService extends Service {
     }
   }
 
-  async registriesRetrieval(): Promise<RegistryDTO[]> {
+  async registriesRetrieval(user: User): Promise<RegistryDTO[]> {
     const connection = await this.getConnection()
     const toDate = new Date()
     const fromDate = new Date(
@@ -51,6 +51,7 @@ export class RegistryService extends Service {
         },
         where: {
           creationDate: Between(fromDate, toDate),
+          user: user,
         },
       })
       return this.toRegistriesDTO(symptomsRegistries)
@@ -224,7 +225,7 @@ export class RegistryService extends Service {
       case 'Apetito':
         registryDTO.appetiteLevel = registry.value
         break
-      case 'Náuseas':
+      case 'Náusea':
         registryDTO.nauseaLevel = registry.value
         break
       case 'Dificultad para tragar':
