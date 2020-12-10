@@ -8,7 +8,6 @@ const UserEmail: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = (
   props
 ) => {
   const { register, errors } = useFormContext()
-
   let errorMsg = ''
   switch (errors.userEmail?.type) {
     case 'required':
@@ -23,6 +22,7 @@ const UserEmail: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = (
   }
 
   const inputName = 'userEmail'
+  const edit = props.readOnly ? true : false
   return (
     <div className={styles['user-email']}>
       <label htmlFor={inputName}>Correo electrónico</label>
@@ -34,7 +34,7 @@ const UserEmail: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = (
         aria-invalid={!!errors[inputName]}
         {...props}
         ref={register({
-          required: true,
+          required: edit,
           pattern: validEmailPattern,
           validate: async (email: string) => {
             const {
