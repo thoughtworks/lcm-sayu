@@ -254,19 +254,17 @@ export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = 
 
     const userService = new UserService()
     const user = await userService.getById(idCarer)
-    if (
-      !user ||
-      (Role.CUIDADOR === session.role && user?.id !== session.idUser)
-    ) {
+    if (Role.CUIDADOR === session.role && user?.id !== session.idUser) {
       return { props: { monthRegistries } }
     } else if (Role.TRATANTE === session.role) {
-      registryOwner = user.name || null
+      registryOwner = user?.name || null
     }
 
-    const registryService = new RegistryService()
-    const symptomsRegistries = await registryService.registriesRetrieval(user)
-
-    monthRegistries = toViewRegistries(symptomsRegistries)
+    if (user) {
+      const registryService = new RegistryService()
+      const symptomsRegistries = await registryService.registriesRetrieval(user)
+      monthRegistries = toViewRegistries(symptomsRegistries)
+    }
   } catch (err) {
     console.error(err)
   }

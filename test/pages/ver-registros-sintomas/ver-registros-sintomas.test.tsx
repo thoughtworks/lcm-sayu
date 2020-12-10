@@ -522,13 +522,13 @@ describe('<SymptomsRegistryList /> server side', () => {
     })
   })
 
-  test('should return null registry owner if role is cuidador', async () => {
+  test('should return null registry owner if no user is found and user is tratante', async () => {
     mockNextAuthClient.getSession.mockResolvedValue(({
       user: { name: 'Test 1' },
-      role: Role.CUIDADOR,
+      role: Role.TRATANTE,
     } as unknown) as Session)
 
-    mockFindOne.mockResolvedValue({ name: 'Test 2' })
+    mockFindOne.mockResolvedValue(null)
     mockFind.mockResolvedValue(onlyOneHourSymptoms)
 
     const result = await getServerSideProps(context)
@@ -536,32 +536,7 @@ describe('<SymptomsRegistryList /> server side', () => {
     expect(result).toEqual({
       props: {
         registryOwner: null,
-        monthRegistries: [
-          {
-            month: 10,
-            viewRegistries: [
-              {
-                day: 1605932313000,
-                registries: [
-                  {
-                    airLevel: 5,
-                    appetiteLevel: 4,
-                    depositionLevel: true,
-                    feverLevel: true,
-                    id: 9,
-                    nauseaLevel: 3,
-                    painLevel: 4,
-                    rescueLevel: true,
-                    swallowLevel: 6,
-                    symptomDate: 1605932313000,
-                    tireLevel: 1,
-                  },
-                ],
-              },
-            ],
-            year: 2020,
-          },
-        ],
+        monthRegistries: null,
       },
     })
   })
