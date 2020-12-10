@@ -4,10 +4,24 @@ import { getValidEmail, User } from 'src/model/User'
 
 export class UserService {
   async saveUser(user: User): Promise<void> {
+    const existingUser = (await (this.getByEmail(
+      user.email
+    ) as unknown)) as User
+
     const connection = await this.getConnection()
     try {
       const userRepository = connection.getRepository('User')
-      await userRepository.save(user)
+
+      if (existingUser) {
+        await userRepository.save({
+          id: existingUser.id,
+          email: existingUser.email,
+          role: user.role,
+          createdAt: existingUser.createdAt,
+        })
+      } else {
+        await userRepository.save(user)
+      }
     } finally {
       connection.close()
     }
