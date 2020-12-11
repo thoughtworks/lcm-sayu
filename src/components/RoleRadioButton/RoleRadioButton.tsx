@@ -8,6 +8,7 @@ const RoleRadioButton: FunctionComponent<{ selectedRole: string }> = ({
   selectedRole,
 }) => {
   const { control } = useFormContext()
+
   return (
     <div className={styles['role']}>
       <h2>Rol de la persona</h2>
@@ -15,7 +16,7 @@ const RoleRadioButton: FunctionComponent<{ selectedRole: string }> = ({
         <Controller
           control={control}
           name="role"
-          defaultValue={selectedRole !== '' ? selectedRole : Role.CUIDADOR}
+          defaultValue={selectedRole ? selectedRole : Role.CUIDADOR}
           render={({ onChange, onBlur, value }) => (
             <RadioGroup
               isInline
