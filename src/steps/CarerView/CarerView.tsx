@@ -51,14 +51,16 @@ const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
                   </span>
                 </td>
                 <td>
-                  <Link href={`/ver-registros-sintomas?cuidador=${id}`}>
-                    <a>
-                      <img
-                        alt={`Ver registros de ${name}`}
-                        src="/img/right_arrow.png"
-                      />
-                    </a>
-                  </Link>
+                  {lastUpdated && (
+                    <Link href={`/ver-registros-sintomas?cuidador=${id}`}>
+                      <a>
+                        <img
+                          alt={`Ver registros de ${name}`}
+                          src="/img/right_arrow.png"
+                        />
+                      </a>
+                    </Link>
+                  )}
                 </td>
               </tr>
             ))}

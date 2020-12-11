@@ -78,13 +78,9 @@ describe('<CarerView />', () => {
     const carerRow = within(
       screen.getByText(/test1/).closest('tr') as HTMLElement
     )
-    const detailedRegistryButton = carerRow
-      .getByAltText(/^Ver registros de test1$/)
-      .closest('a')
-    expect(detailedRegistryButton).toHaveAttribute(
-      'href',
-      '/ver-registros-sintomas?cuidador=1'
-    )
+    expect(
+      carerRow.queryByAltText(/^Ver registros de test1$/)
+    ).not.toBeInTheDocument()
   })
 
   test('should sort carers by last updated', async () => {
