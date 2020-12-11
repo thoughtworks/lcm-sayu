@@ -9,7 +9,7 @@ import {
   userEvent,
   waitFor,
 } from 'test/testUtils'
-import AddUser from 'pages/tratante/agregar-usuario'
+import AddUser, { getServerSideProps } from 'pages/tratante/agregar-usuario'
 import { GetServerSidePropsContext } from 'next'
 import { Role } from 'src/model/Role'
 import { UserDTO } from 'src/dto/UserDTO'
@@ -21,28 +21,19 @@ jest.mock('next-auth/client', () => ({
 }))
 
 const mockPush = jest.fn().mockResolvedValue(null)
-const mockQuery: { userId: string | undefined } = {
-  userId: '0',
-}
 jest.mock('next/router', () => ({
   useRouter: () => ({
-    query: mockQuery,
     push: mockPush,
   }),
 }))
+
 const userModel = {
   createdAt: new Date(),
   id: 1,
   email: 'test1@mail.com',
   role: Role.CUIDADOR,
 }
-const mockFindOne = jest.fn().mockResolvedValue(userModel)
-
-const context = ({
-  req: {},
-  query: { email: 'test1@mail.com', role: Role.TRATANTE },
-} as unknown) as GetServerSidePropsContext
-
+let mockFindOne = jest.fn().mockResolvedValue(userModel)
 jest.mock('typeorm', () => ({
   createConnection: () => ({
     getRepository: () => ({ findOne: mockFindOne }),
@@ -117,7 +108,7 @@ describe('<AddUser /> create', () => {
     expect(cancelButton).toHaveAttribute('href', '/tratante/gestion-usuario')
   })
 
-  test.only('should redirect to error page when there is an error', async () => {
+  test('should redirect to error page when there is an error', async () => {
     jest
       .spyOn(axios, 'post')
       .mockResolvedValueOnce({ data: { emailAlreadyExist: false } })
@@ -131,14 +122,14 @@ describe('<AddUser /> create', () => {
     userEvent.click(tratanteRadioButton)
 
     const submitButton = screen.getByText(/^Guardar$/)
-    await waitFor(() => userEvent.click(submitButton))
+    userEvent.click(submitButton)
 
-    // await waitFor(() =>
-    //   expect(axios.post).toHaveBeenCalledWith('/api/user-save', {
-    //     userEmail: 'test@test.com',
-    //     role: 'tratante',
-    //   })
-    // )
+    await waitFor(() =>
+      expect(axios.post).toHaveBeenCalledWith('/api/user-save', {
+        userEmail: 'test@test.com',
+        role: 'tratante',
+      })
+    )
 
     expect(mockPush).toHaveBeenCalledWith('/_error?error=UserRegistryError')
   })
@@ -166,14 +157,44 @@ describe('<AddUser /> create', () => {
 
 describe('<AddUser/> Server Side', () => {
   test('should return a user', async () => {
+    const context = ({
+      req: {},
+      query: { usuario: 1 },
+    } as unknown) as GetServerSidePropsContext
     const user: UserDTO = {
       id: 1,
       email: 'test1@mail.com',
       role: Role.CUIDADOR,
     }
-
     const expectedUser = { props: { user } }
+
     const actualUser = await getServerSideProps(context)
     expect(actualUser).toEqual(expectedUser)
+  })
+
+  test('should return a null user when a service error happens', async () => {
+    global.parseInt = jest.fn().mockResolvedValue(null)
+    const context = ({
+      req: {},
+      query: { usuario: 1 },
+    } as unknown) as GetServerSidePropsContext
+    const expectedNullUser = { props: { user: null } }
+    //mockFindOne = jest.fn().mockResolvedValue(null)
+
+    const actualUser = await getServerSideProps(context)
+
+    expect(actualUser).toEqual(expectedNullUser)
+  })
+
+  test('should return a null user when a GET vars retrieve error happens', async () => {
+    const context = ({
+      req: {},
+      query: { wrongUsuario: 1 },
+    } as unknown) as GetServerSidePropsContext
+    const expectedNullUser = { props: { user: null } }
+
+    const actualUser = await getServerSideProps(context)
+
+    expect(actualUser).toEqual(expectedNullUser)
   })
 })
