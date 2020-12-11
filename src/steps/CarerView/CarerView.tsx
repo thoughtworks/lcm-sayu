@@ -33,30 +33,35 @@ const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
           </tr>
         </thead>
         <tbody>
-          {carerList.map(({ id, name, lastUpdated }) => (
-            <tr key={id}>
-              <td className={styles['user-information']}>
-                <span className={styles['user-name']}>{name}</span>
-                <span className={styles['last-updated']}>
-                  {(lastUpdated &&
-                    `Última actualización: ${formatLastUpdated(
-                      lastUpdated
-                    )}`) ||
-                    'Sin registro'}
-                </span>
-              </td>
-              <td>
-                <Link href={`/ver-registros-sintomas?cuidador=${id}`}>
-                  <a>
-                    <img
-                      alt={`Ver registros de ${name}`}
-                      src="/img/right_arrow.png"
-                    />
-                  </a>
-                </Link>
-              </td>
-            </tr>
-          ))}
+          {carerList
+            .sort(
+              (currentCarer, nextCarer) =>
+                (nextCarer.lastUpdated || 0) - (currentCarer.lastUpdated || 0)
+            )
+            .map(({ id, name, lastUpdated }) => (
+              <tr key={id}>
+                <td className={styles['user-information']}>
+                  <span className={styles['user-name']}>{name}</span>
+                  <span className={styles['last-updated']}>
+                    {(lastUpdated &&
+                      `Última actualización: ${formatLastUpdated(
+                        lastUpdated
+                      )}`) ||
+                      'Sin registro'}
+                  </span>
+                </td>
+                <td>
+                  <Link href={`/ver-registros-sintomas?cuidador=${id}`}>
+                    <a>
+                      <img
+                        alt={`Ver registros de ${name}`}
+                        src="/img/right_arrow.png"
+                      />
+                    </a>
+                  </Link>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </main>

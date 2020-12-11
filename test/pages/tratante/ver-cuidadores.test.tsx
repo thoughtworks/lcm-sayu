@@ -86,6 +86,21 @@ describe('<CarerView />', () => {
       '/ver-registros-sintomas?cuidador=1'
     )
   })
+
+  test('should sort carers by last updated', async () => {
+    const carerList = [
+      { id: 1, name: 'test1', lastUpdated: null },
+      { id: 2, name: 'test2', lastUpdated: null },
+      { id: 3, name: 'test3', lastUpdated: dateNow },
+    ]
+    render(<CarerView carerList={carerList} />)
+
+    const carers = screen.getAllByText(/^test\d/)
+
+    expect(carers[0]).toHaveTextContent('test3')
+    expect(carers[1]).toHaveTextContent('test1')
+    expect(carers[2]).toHaveTextContent('test2')
+  })
 })
 
 describe('<CarerView /> server side', () => {
