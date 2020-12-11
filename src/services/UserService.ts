@@ -17,6 +17,7 @@ export class UserService {
           id: existingUser.id,
           email: existingUser.email,
           role: user.role,
+          state: user.state,
           createdAt: existingUser.createdAt,
         })
       } else {
@@ -44,6 +45,7 @@ export class UserService {
     try {
       const userRepository = connection.getRepository<User>('User')
       const user = await userRepository.findOne({ id: id })
+
       if (user) {
         userDTO = {
           id: user.id ? user.id : 0,

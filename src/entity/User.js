@@ -16,6 +16,9 @@ module.exports = new EntitySchema({
     role: {
       type: 'text',
     },
+    status: {
+      type: 'text',
+    },
     createdAt: {
       type: 'timestamp',
     },

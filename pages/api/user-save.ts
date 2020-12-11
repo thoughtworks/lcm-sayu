@@ -9,7 +9,7 @@ const handler: NextApiHandler = async (req, res) => {
   const user = req.body
 
   try {
-    const userToSave: User = new User(user.userEmail, user.role)
+    const userToSave: User = new User(user.userEmail, user.role, user.state)
 
     const userService = new UserService()
     await userService.saveUser(userToSave)
