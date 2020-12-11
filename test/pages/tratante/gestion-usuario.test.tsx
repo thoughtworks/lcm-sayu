@@ -1,13 +1,23 @@
 import React from 'react'
 import { GetServerSidePropsContext } from 'next'
 import typeorm from 'typeorm'
-import { cleanup, clearMocks, render, screen } from 'test/testUtils'
 
+import { cleanup, clearMocks, render, screen } from 'test/testUtils'
 import UserManagement, {
   getServerSideProps,
 } from 'pages/tratante/gestion-usuario'
 import { Role } from 'src/model/Role'
 import { UserDTO } from 'src/dto/UserDTO'
+
+jest.mock('next-auth/client', () => ({
+  useSession: jest.fn().mockReturnValue([{ role: 'tratante' }, false]),
+}))
+
+const mockPush = jest.fn().mockResolvedValue(null)
+jest.mock('next/router', () => ({
+  useRouter: () => ({ push: mockPush }),
+}))
+
 const usersModel = [
   {
     createdAt: new Date(),
@@ -28,23 +38,14 @@ const usersModel = [
     role: Role.CUIDADOR,
   },
 ]
-jest.mock('next-auth/client', () => ({
-  useSession: jest.fn().mockReturnValue([{ role: 'tratante' }, false]),
-}))
-
-const mockPush = jest.fn().mockResolvedValue(null)
-jest.mock('next/router', () => ({
-  useRouter: () => ({ push: mockPush }),
-}))
-
 const mockFind = jest.fn().mockResolvedValue(usersModel)
-
 jest.mock('typeorm', () => ({
   createConnection: () => ({
     getRepository: () => ({ find: mockFind }),
     close: jest.fn(),
   }),
 }))
+
 describe('<UserManagement />', () => {
   beforeEach(() => {
     clearMocks()
