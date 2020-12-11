@@ -21,7 +21,7 @@ import { UserDTO } from 'src/dto/UserDTO'
 import { UserService } from 'src/services/UserService'
 
 type UserProp = {
-  user: UserDTO | undefined
+  user: UserDTO | undefined | null
 }
 const AddUser: FunctionComponent<UserProp> = ({ user }) => {
   const methods = useForm({
@@ -84,11 +84,15 @@ export const getServerSideProps: GetServerSideProps<UserProp> = async ({
   req,
   query,
 }) => {
-  let user: UserDTO | undefined = undefined
+  let user: UserDTO | undefined | null = null
   try {
     const userId = parseInt(query['usuario'] as string)
-    const userService = new UserService()
-    user = await userService.getById(userId)
+    if (userId) {
+      const userService = new UserService()
+      user = await userService.getById(userId)
+    }
+
+    user = user === undefined ? null : user
   } catch (err) {
     console.error(err)
   }

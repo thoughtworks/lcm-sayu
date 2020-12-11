@@ -21,12 +21,6 @@ jest.mock('next-auth/client', () => ({
 }))
 
 const mockPush = jest.fn().mockResolvedValue(null)
-jest.mock('next/router', () => ({
-  useRouter: () => ({
-    push: mockPush,
-  }),
-}))
-
 const mockQuery: { userId: string | undefined } = {
   userId: '0',
 }
@@ -56,10 +50,10 @@ jest.mock('typeorm', () => ({
   }),
 }))
 
-describe('<AddUser />', () => {
+describe('<AddUser /> create', () => {
   beforeEach(() => {
     clearMocks()
-    render(<AddUser />)
+    render(<AddUser user={undefined} />)
   })
 
   afterEach(cleanup)
@@ -94,7 +88,7 @@ describe('<AddUser />', () => {
     )
   })
 
-  test('should show required email error when when email is empty', async () => {
+  test('should show required email error when email is empty', async () => {
     expect(
       screen.queryByText(/^Debes ingresar correo electrónico$/)
     ).not.toBeInTheDocument()
@@ -123,7 +117,7 @@ describe('<AddUser />', () => {
     expect(cancelButton).toHaveAttribute('href', '/tratante/gestion-usuario')
   })
 
-  test('should redirect to error page when there is an error', async () => {
+  test.only('should redirect to error page when there is an error', async () => {
     jest
       .spyOn(axios, 'post')
       .mockResolvedValueOnce({ data: { emailAlreadyExist: false } })
@@ -138,6 +132,13 @@ describe('<AddUser />', () => {
 
     const submitButton = screen.getByText(/^Guardar$/)
     await waitFor(() => userEvent.click(submitButton))
+
+    // await waitFor(() =>
+    //   expect(axios.post).toHaveBeenCalledWith('/api/user-save', {
+    //     userEmail: 'test@test.com',
+    //     role: 'tratante',
+    //   })
+    // )
 
     expect(mockPush).toHaveBeenCalledWith('/_error?error=UserRegistryError')
   })
