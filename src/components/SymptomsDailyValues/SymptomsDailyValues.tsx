@@ -1,6 +1,6 @@
 import styles from './symptomsDailyValues.module.scss'
 import React from 'react'
-import { Box, Text, Icon } from '@chakra-ui/core'
+import { Box, Text } from '@chakra-ui/core'
 
 type SymptomsLevel = {
   symptomDate: string
@@ -79,7 +79,6 @@ const SymptomsDailyValues = ({
         {feverLevel ? 'SI' : 'NO'}
       </div>
     </Box>
-    <Icon name="delete" ml={1} mt={'3px'} />
   </div>
 )
 
