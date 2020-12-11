@@ -38,21 +38,24 @@ const AddUser: FunctionComponent<UserProp> = ({ user }) => {
       <h1>{addUserMode} usuario</h1>
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit(async ({ userEmail, role }: any) => {
-            const userData = {
-              userEmail,
-              role,
-            }
+          onSubmit={methods.handleSubmit(
+            async ({ userEmail, role, state }: any) => {
+              const userData = {
+                userEmail,
+                role,
+                state,
+              }
 
-            try {
-              await axios.post('/api/user-save', userData)
-              router.push(
-                `/_success?key=${SuccessCodes.SUCCESSFUL_USER_REGISTRY}`
-              )
-            } catch (err) {
-              router.push(`/_error?error=${ErrorCodes.USER_REGISTRY_ERROR}`)
+              try {
+                await axios.post('/api/user-save', userData)
+                router.push(
+                  `/_success?key=${SuccessCodes.SUCCESSFUL_USER_REGISTRY}`
+                )
+              } catch (err) {
+                router.push(`/_error?error=${ErrorCodes.USER_REGISTRY_ERROR}`)
+              }
             }
-          })}
+          )}
         >
           <div className={styles['user-email']}>
             <UserEmail
@@ -64,8 +67,8 @@ const AddUser: FunctionComponent<UserProp> = ({ user }) => {
           <div className={styles['roles']}>
             <RoleRadioButton selectedRole={user?.role as string} />
           </div>
-          <div>
-            <UserStateRadioButton />
+          <div className={styles['state']}>
+            <UserStateRadioButton selectedState="activo" />
           </div>
           <SubmitButton label="Guardar" />
           <div className={styles['cancel-link']}>
@@ -81,12 +84,12 @@ const AddUser: FunctionComponent<UserProp> = ({ user }) => {
   )
 }
 export const getServerSideProps: GetServerSideProps<UserProp> = async ({
-  req,
   query,
 }) => {
   let user: UserDTO | undefined | null = null
   try {
     const userId = parseInt(query['usuario'] as string)
+
     if (userId) {
       const userService = new UserService()
       user = await userService.getById(userId)

@@ -1,0 +1,17 @@
+@use 'src/styles/colors';
+
+.state {
+  .state-values {
+    display: inline-flex;
+    color: colors.$light-grey;
+    font-size: 12px;
+
+    .state-value {
+      font-size: 12px;
+    }
+  }
+
+  h2 {
+    margin-bottom: 5px;
+  }
+}
