@@ -601,7 +601,7 @@ describe('<SymptomsRegistryList /> server side', () => {
             month: 10,
             viewRegistries: [
               {
-                day: 1605932313000,
+                day: date.getTime(),
                 registries: [
                   {
                     airLevel: 5,
@@ -613,7 +613,7 @@ describe('<SymptomsRegistryList /> server side', () => {
                     painLevel: 4,
                     rescueLevel: true,
                     swallowLevel: 6,
-                    symptomDate: 1605932313000,
+                    symptomDate: date.getTime(),
                     tireLevel: 1,
                   },
                 ],
