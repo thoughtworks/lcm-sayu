@@ -17,7 +17,7 @@ export class UserService {
           id: existingUser.id,
           email: existingUser.email,
           role: user.role,
-          state: user.state,
+          status: user.status,
           createdAt: existingUser.createdAt,
         })
       } else {

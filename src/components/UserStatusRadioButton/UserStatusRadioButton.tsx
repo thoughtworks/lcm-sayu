@@ -1,21 +1,21 @@
 import { FunctionComponent } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { Radio, RadioGroup } from '@chakra-ui/core'
-import styles from './UserStateRadioButton.module.scss'
+import styles from './UserStatusRadioButton.module.scss'
 
-const RoleRadioButton: FunctionComponent<{ selectedState: string }> = ({
-  selectedState,
+const UserStatusRadioButton: FunctionComponent<{ selectedStatus: string }> = ({
+  selectedStatus,
 }) => {
   const { control } = useFormContext()
 
   return (
-    <div className={styles['state']}>
+    <div className={styles['status']}>
       <h2>Estado</h2>
-      <div className={styles['state-values']}>
+      <div className={styles['status-values']}>
         <Controller
           control={control}
-          name="state"
-          defaultValue={selectedState ? selectedState : 'activo'}
+          name="status"
+          defaultValue={selectedStatus ? selectedStatus : 'activo'}
           render={({ onChange, onBlur, value }) => (
             <RadioGroup
               isInline
@@ -24,7 +24,7 @@ const RoleRadioButton: FunctionComponent<{ selectedState: string }> = ({
               onBlur={onBlur}
             >
               <Radio id="activo" variantColor="blue" value="activo" size="lg">
-                <span className={styles['state-value']}>Activo</span>
+                <span className={styles['status-value']}>Activo</span>
               </Radio>
               <Radio
                 id="inactivo"
@@ -32,7 +32,7 @@ const RoleRadioButton: FunctionComponent<{ selectedState: string }> = ({
                 value="inactivo"
                 size="lg"
               >
-                <span className={styles['state-value']}>Inactivo</span>
+                <span className={styles['status-value']}>Inactivo</span>
               </Radio>
             </RadioGroup>
           )}
@@ -42,4 +42,4 @@ const RoleRadioButton: FunctionComponent<{ selectedState: string }> = ({
   )
 }
 
-export default RoleRadioButton
+export default UserStatusRadioButton

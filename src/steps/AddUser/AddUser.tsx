@@ -7,7 +7,7 @@ import { SubmitButton } from 'src/components/SubmitButton'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import UserEmail from 'src/components/UserEmail'
 import RoleRadioButton from 'src/components/RoleRadioButton'
-import UserStateRadioButton from 'src/components/UserStateRadioButton'
+import UserStatusRadioButton from 'src/components/UserStatusRadioButton'
 import ButtonLink from 'src/components/ButtonLink'
 import { SuccessCodes } from 'src/components/Success'
 import { ErrorCodes } from 'src/components/Error'
@@ -39,11 +39,11 @@ const AddUser: FunctionComponent<UserProp> = ({ user }) => {
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(
-            async ({ userEmail, role, state }: any) => {
+            async ({ userEmail, role, status }: any) => {
               const userData = {
                 userEmail,
                 role,
-                state,
+                status,
               }
 
               try {
@@ -68,7 +68,7 @@ const AddUser: FunctionComponent<UserProp> = ({ user }) => {
             <RoleRadioButton selectedRole={user?.role as string} />
           </div>
           <div className={styles['state']}>
-            <UserStateRadioButton selectedState="activo" />
+            <UserStatusRadioButton selectedStatus="activo" />
           </div>
           <SubmitButton label="Guardar" />
           <div className={styles['cancel-link']}>
