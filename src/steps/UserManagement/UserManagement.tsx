@@ -58,7 +58,11 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
                 <tr>
                   <td>
                     <div
-                      className={`${styles['user-state']} ${styles['active']}`}
+                      className={`${styles['user-status']} ${
+                        user.status === 'activo'
+                          ? styles['active']
+                          : styles['inactive']
+                      }`}
                     ></div>
                   </td>
                   <td>
