@@ -53,10 +53,30 @@ describe('<AddUser /> create', () => {
     expect(screen.getByText(/^agregar usuario$/i)).toBeInTheDocument()
   })
 
-  test('should show add user form', async () => {
+  test('should validate email', async () => {
     jest
       .spyOn(axios, 'post')
       .mockResolvedValue({ data: { emailAlreadyExist: false } })
+    const emailInput = screen.getByText(/^Correo electrónico$/)
+    userEvent.type(emailInput, 'test@test.com')
+
+    expect(screen.getByText(/^Rol de la persona$/)).toBeInTheDocument()
+    const tratanteRadioButton = screen.getByText(/^Profesional tratante$/)
+    userEvent.click(tratanteRadioButton)
+
+    const submitButton = screen.getByText(/^Guardar$/)
+    userEvent.click(submitButton)
+    await waitFor(() =>
+      expect(axios.post).toHaveBeenCalledWith('/api/validate-email', {
+        email: 'test@test.com',
+      })
+    )
+  })
+  test.only('should add user successfully', async () => {
+    jest
+      .spyOn(axios, 'post')
+      .mockResolvedValue({ data: { emailAlreadyExist: false } })
+
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')
 
@@ -78,7 +98,6 @@ describe('<AddUser /> create', () => {
       '/_success?key=SuccessfulUserRegistry'
     )
   })
-
   test('should show required email error when email is empty', async () => {
     expect(
       screen.queryByText(/^Debes ingresar correo electrónico$/)

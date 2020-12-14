@@ -4,13 +4,16 @@ import typeorm from 'typeorm'
 import handler from 'pages/api/user-save'
 import { Role } from 'src/model/Role'
 import { clearMocks } from 'test/testUtils'
+import { Status } from 'src/model/Status'
 
 const mockFind = jest.fn().mockResolvedValue(null)
 const mockSave = jest.fn().mockResolvedValue(null)
+const mockFindOne = jest.fn().mockResolvedValue(null)
 const mockConnection = {
   getRepository: () => ({
     find: mockFind,
     save: mockSave,
+    findOne: mockFindOne,
   }),
   close: jest.fn(),
 }
@@ -32,6 +35,7 @@ describe('Symptom api', () => {
     const user = {
       userEmail: 'test@test.com',
       role: Role.CUIDADOR,
+      status: Status.ACTIVO,
     }
 
     const request: NextApiRequest = ({
@@ -48,6 +52,7 @@ describe('Symptom api', () => {
       email: 'test@test.com',
       role: Role.CUIDADOR,
       createdAt: new Date(dateNow),
+      status: Status.ACTIVO,
     })
   })
 
@@ -55,6 +60,7 @@ describe('Symptom api', () => {
     const user = {
       userEmail: 'test@test.com',
       role: Role.TRATANTE,
+      status: Status.ACTIVO,
     }
 
     const request: NextApiRequest = ({
@@ -70,6 +76,7 @@ describe('Symptom api', () => {
     expect(mockSave).toHaveBeenCalledWith({
       email: 'test@test.com',
       role: Role.TRATANTE,
+      status: Status.ACTIVO,
       createdAt: new Date(dateNow),
     })
   })
@@ -160,6 +167,7 @@ describe('Symptom api', () => {
     const user = {
       userEmail: 'test@test.com',
       role: Role.CUIDADOR,
+      status: Status.ACTIVO,
     }
 
     const request: NextApiRequest = ({
@@ -175,6 +183,7 @@ describe('Symptom api', () => {
     expect(global.console.error).toHaveBeenCalledWith('custom error', {
       role: 'cuidador',
       userEmail: 'test@test.com',
+      status: Status.ACTIVO,
     })
     expect(mockStatus).toHaveBeenCalledWith(500)
   })
@@ -183,6 +192,7 @@ describe('Symptom api', () => {
     const user = {
       userEmail: 'test.TEST.teSt@test.com',
       role: Role.CUIDADOR,
+      status: Status.ACTIVO,
     }
 
     const request: NextApiRequest = ({
@@ -199,6 +209,7 @@ describe('Symptom api', () => {
       email: 'testtesttest@test.com',
       role: 'cuidador',
       createdAt: new Date(dateNow),
+      status: Status.ACTIVO,
     })
   })
 })
