@@ -7,11 +7,11 @@ export class User {
   public id?: number
   readonly email: string
   readonly role: Role
-  readonly state: Status
+  readonly status: Status
   constructor(email: string, role: string, status: string) {
     this.email = this.getValidEmail(email)
     this.role = this.getValidRole(role)
-    this.state = this.getValidStatus(status)
+    this.status = this.getValidStatus(status)
   }
 
   public getValidEmail(email: string): string {

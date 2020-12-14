@@ -1,12 +1,12 @@
 @use 'src/styles/colors';
 
-.state {
-  .state-values {
+.status {
+  .status-values {
     display: inline-flex;
     color: colors.$light-grey;
     font-size: 12px;
 
-    .state-value {
+    .status-value {
       font-size: 12px;
     }
   }

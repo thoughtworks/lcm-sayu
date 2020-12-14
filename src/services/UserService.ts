@@ -17,7 +17,7 @@ export class UserService {
           id: existingUser.id,
           email: existingUser.email,
           role: user.role,
-          state: user.state,
+          status: user.status,
           createdAt: existingUser.createdAt,
         })
       } else {
@@ -51,6 +51,7 @@ export class UserService {
           id: user.id ? user.id : 0,
           email: user.email,
           role: user.role,
+          status: user.status,
         }
       }
       return userDTO
@@ -72,6 +73,7 @@ export class UserService {
         id: user.id ? user.id : 0,
         email: user.email,
         role: user.role,
+        status: user.status,
       }))
     } catch (err) {
       console.error(err)
