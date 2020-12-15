@@ -3,12 +3,12 @@ import typeorm from 'typeorm'
 
 import handler from 'pages/api/user-save'
 import { Role } from 'src/model/Role'
-import { clearMocks } from 'test/testUtils'
+import { clearMocks, cleanup } from 'test/testUtils'
 import { Status } from 'src/model/Status'
 
 const mockFind = jest.fn().mockResolvedValue(null)
 const mockSave = jest.fn().mockResolvedValue(null)
-const mockFindOne = jest.fn().mockResolvedValue(null)
+let mockFindOne = jest.fn().mockResolvedValue(null)
 const mockConnection = {
   getRepository: () => ({
     find: mockFind,
@@ -28,10 +28,12 @@ jest.mock('next-auth/client', () => ({
   getSession: jest.fn().mockReturnValue({ role: 'tratante' }),
 }))
 
-describe('Symptom api', () => {
+describe('User save', () => {
   beforeEach(clearMocks)
 
-  test('should save user', async () => {
+  afterEach(cleanup)
+
+  test('should save active user', async () => {
     const user = {
       userEmail: 'test@test.com',
       role: Role.CUIDADOR,
@@ -56,6 +58,31 @@ describe('Symptom api', () => {
     })
   })
 
+  test('should save inactive user', async () => {
+    const user = {
+      userEmail: 'test@test.com',
+      role: Role.CUIDADOR,
+      status: Status.INACTIVO,
+    }
+
+    const request: NextApiRequest = ({
+      body: user,
+    } as unknown) as NextApiRequest
+    const response: NextApiResponse = ({
+      send: jest.fn(),
+      status: jest.fn(),
+    } as unknown) as NextApiResponse
+
+    await handler(request, response)
+
+    expect(mockSave).toHaveBeenCalledWith({
+      email: 'test@test.com',
+      role: Role.CUIDADOR,
+      createdAt: new Date(dateNow),
+      status: Status.INACTIVO,
+    })
+  })
+
   test('should create user with role tratante', async () => {
     const user = {
       userEmail: 'test@test.com',
@@ -74,6 +101,39 @@ describe('Symptom api', () => {
     await handler(request, response)
 
     expect(mockSave).toHaveBeenCalledWith({
+      email: 'test@test.com',
+      role: Role.TRATANTE,
+      status: Status.ACTIVO,
+      createdAt: new Date(dateNow),
+    })
+  })
+
+  test('should update when user already exists', async () => {
+    const user = {
+      userEmail: 'test@test.com',
+      role: Role.TRATANTE,
+      status: Status.ACTIVO,
+    }
+    mockFindOne = jest.fn().mockResolvedValue({
+      id: 1,
+      email: user.userEmail,
+      status: Status.INACTIVO,
+      role: user.role,
+      createdAt: new Date(dateNow),
+    })
+
+    const request: NextApiRequest = ({
+      body: user,
+    } as unknown) as NextApiRequest
+    const response: NextApiResponse = ({
+      send: jest.fn(),
+      status: jest.fn(),
+    } as unknown) as NextApiResponse
+
+    await handler(request, response)
+
+    expect(mockSave).toHaveBeenCalledWith({
+      id: 1,
       email: 'test@test.com',
       role: Role.TRATANTE,
       status: Status.ACTIVO,
@@ -138,7 +198,6 @@ describe('Symptom api', () => {
       userEmail: 'test@test.com',
       role: 'invalid',
     }
-
     const request: NextApiRequest = ({
       body: user,
     } as unknown) as NextApiRequest
@@ -151,6 +210,31 @@ describe('Symptom api', () => {
 
     expect(global.console.error).toHaveBeenCalledWith('Role is invalid', {
       role: 'invalid',
+      userEmail: 'test@test.com',
+    })
+    expect(mockStatus).toHaveBeenCalledWith(500)
+  })
+  test('should return error message when status is invalid', async () => {
+    global.console.error = jest.fn()
+    const mockStatus = jest.fn()
+    const user = {
+      userEmail: 'test@test.com',
+      role: Role.CUIDADOR,
+      status: 'invalid',
+    }
+    const request: NextApiRequest = ({
+      body: user,
+    } as unknown) as NextApiRequest
+    const response: NextApiResponse = ({
+      send: jest.fn(),
+      status: mockStatus,
+    } as unknown) as NextApiResponse
+
+    await handler(request, response)
+
+    expect(global.console.error).toHaveBeenCalledWith('Status is invalid', {
+      status: 'invalid',
+      role: Role.CUIDADOR,
       userEmail: 'test@test.com',
     })
     expect(mockStatus).toHaveBeenCalledWith(500)

@@ -55,7 +55,7 @@ describe('_success', () => {
 
     afterEach(cleanup)
 
-    test.only('should show success message when symptom is register', () => {
+    test('should show success message when symptom is register', () => {
       const successMessage = screen.getByText(
         /^¡Se han guardado los síntomas exitosamente!$/
       )

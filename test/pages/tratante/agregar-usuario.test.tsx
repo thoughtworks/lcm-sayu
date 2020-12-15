@@ -192,6 +192,36 @@ describe('<AddUser /> edit', () => {
     render(<AddUser user={null} error={true} />)
     expect(mockPush).toHaveBeenCalledWith('/_error?error=UserEditError')
   })
+  test('should edit user successfully', async () => {
+    const UserDTO = {
+      id: 1,
+      email: 'test1@mail.com',
+      role: Role.CUIDADOR,
+      status: Status.ACTIVO,
+    }
+    render(<AddUser user={UserDTO} error={false} />)
+    expect(screen.getByText(/^Rol de la persona$/)).toBeInTheDocument()
+    const tratanteRadioButton = screen.getByText(/^Profesional tratante$/)
+    userEvent.click(tratanteRadioButton)
+
+    const statusRadioButton = screen.getByText(/^Inactivo$/)
+    userEvent.click(statusRadioButton)
+
+    const submitButton = screen.getByText(/^Guardar$/)
+    userEvent.click(submitButton)
+
+    await waitFor(() =>
+      expect(axios.post).toHaveBeenCalledWith('/api/user-save', {
+        userEmail: 'test1@mail.com',
+        role: 'tratante',
+        status: 'inactivo',
+      })
+    )
+
+    expect(mockPush).toHaveBeenCalledWith(
+      '/_success?key=SuccessfulUserRegistry'
+    )
+  })
 })
 
 describe('<AddUser/> Server Side', () => {
