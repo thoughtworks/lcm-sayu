@@ -1,10 +1,13 @@
 import React from 'react'
 import { GetServerSidePropsContext } from 'next'
-import typeorm from 'typeorm'
-import { render, screen, cleanup, clearMocks } from 'test/testUtils'
+import nextauthclient, { Session } from 'next-auth/client'
+
 import SymptomsRegistryList, {
   getServerSideProps,
 } from 'src/steps/SymptomsRegistryList'
+
+import { render, screen, cleanup, clearMocks } from 'test/testUtils'
+
 import {
   date,
   secondDate,
@@ -20,6 +23,7 @@ import {
   monday,
   tuesday,
 } from './ver-registros-sintomas-data'
+import { Role } from 'src/model/Role'
 
 const mockPush = jest.fn().mockResolvedValue(null)
 jest.mock('next/router', () => ({
@@ -28,19 +32,31 @@ jest.mock('next/router', () => ({
   }),
 }))
 
-let mockFind = jest.fn().mockResolvedValue(threeDaySymptoms)
+const mockFind = jest.fn().mockResolvedValue(threeDaySymptoms)
+const mockFindOne = jest.fn().mockResolvedValue(null)
 const mockBetween = jest.fn().mockResolvedValue(null)
-jest.mock('typeorm', () => ({
-  createConnection: () => ({
-    getRepository: () => ({ find: mockFind }),
-    close: jest.fn(),
+const mockConnection = {
+  getRepository: () => ({
+    find: mockFind,
+    findOne: mockFindOne,
   }),
+  close: jest.fn(),
+}
+jest.mock('typeorm', () => ({
+  createConnection: () => mockConnection,
+  getConnection: () => mockConnection,
   Between: () => ({ Between: mockBetween }),
 }))
 
-jest.mock('next-auth/client', () => ({
-  useSession: jest.fn().mockReturnValue([{ role: 'tutor' }, false]),
-}))
+jest.mock('next-auth/client')
+const mockNextAuthClient = nextauthclient as jest.Mocked<typeof nextauthclient>
+mockNextAuthClient.useSession.mockReturnValue([
+  ({ role: 'cuidador' } as unknown) as Session,
+  false,
+])
+mockNextAuthClient.getSession.mockResolvedValue(({
+  role: 'cuidador',
+} as unknown) as Session)
 
 describe('<SymptomsRegistryList />', () => {
   beforeEach(clearMocks)
@@ -142,16 +158,41 @@ describe('<SymptomsRegistryList />', () => {
       '/_error?error=FailedSymptomsRetrieval'
     )
   })
+
+  test('should render name when it is present', async () => {
+    render(
+      <SymptomsRegistryList
+        registryOwner="Registry Owner"
+        monthRegistries={oneDayMonthRegistries}
+      />
+    )
+
+    expect(screen.getByText(/Registry Owner/)).toBeInTheDocument()
+  })
 })
 
 describe('<SymptomsRegistryList /> server side', () => {
-  beforeEach(clearMocks)
+  const context = ({
+    req: {},
+    query: { cuidador: '2' },
+  } as unknown) as GetServerSidePropsContext
+  beforeEach(() => {
+    clearMocks()
+
+    mockNextAuthClient.getSession.mockResolvedValue(({
+      user: { name: 'Test 1' },
+      role: Role.CUIDADOR,
+    } as unknown) as Session)
+
+    mockFindOne.mockResolvedValue({ name: 'Test 1' })
+  })
 
   afterEach(cleanup)
 
   test('should return symptoms from different dates', async () => {
     const expectedViewSymptomRegistries = {
       props: {
+        registryOwner: null,
         monthRegistries: [
           {
             month: 10,
@@ -217,17 +258,16 @@ describe('<SymptomsRegistryList /> server side', () => {
       },
     }
 
-    const viewSymptomsRegistries = await getServerSideProps(
-      (null as unknown) as GetServerSidePropsContext
-    )
+    const viewSymptomsRegistries = await getServerSideProps(context)
 
     expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
 
   test('should return symptoms from different months', async () => {
-    mockFind = jest.fn().mockResolvedValue(differentMonthSymptoms)
+    mockFind.mockResolvedValue(differentMonthSymptoms)
     const expectedViewSymptomRegistries = {
       props: {
+        registryOwner: null,
         monthRegistries: [
           {
             month: 10,
@@ -281,16 +321,15 @@ describe('<SymptomsRegistryList /> server side', () => {
       },
     }
 
-    const viewSymptomsRegistries = await getServerSideProps(
-      (null as unknown) as GetServerSidePropsContext
-    )
+    const viewSymptomsRegistries = await getServerSideProps(context)
     expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
 
   test('should return symptoms from same date', async () => {
-    mockFind = jest.fn().mockResolvedValue(oneDaySymptoms)
+    mockFind.mockResolvedValue(oneDaySymptoms)
     const expectedViewSymptomRegistries = {
       props: {
+        registryOwner: null,
         monthRegistries: [
           {
             month: 10,
@@ -333,17 +372,16 @@ describe('<SymptomsRegistryList /> server side', () => {
       },
     }
 
-    const viewSymptomsRegistries = await getServerSideProps(
-      (null as unknown) as GetServerSidePropsContext
-    )
+    const viewSymptomsRegistries = await getServerSideProps(context)
 
     expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
 
   test('should return symptoms for only one day and hour', async () => {
-    mockFind = jest.fn().mockResolvedValue(onlyOneHourSymptoms)
+    mockFind.mockResolvedValue(onlyOneHourSymptoms)
     const expectedViewSymptomRegistries = {
       props: {
+        registryOwner: null,
         monthRegistries: [
           {
             month: 10,
@@ -373,39 +411,218 @@ describe('<SymptomsRegistryList /> server side', () => {
       },
     }
 
-    const viewSymptomsRegistries = await getServerSideProps(
-      (null as unknown) as GetServerSidePropsContext
-    )
+    const viewSymptomsRegistries = await getServerSideProps(context)
 
     expect(viewSymptomsRegistries).toEqual(expectedViewSymptomRegistries)
   })
 
   test('should log error and return 500 HTTP code when there is an error', async () => {
-    jest
-      .spyOn(typeorm, 'createConnection')
-      .mockRejectedValue('Connection error')
+    mockFindOne.mockRejectedValue('Connection error')
     global.console.error = jest.fn()
 
-    const response = await getServerSideProps(
-      (null as unknown) as GetServerSidePropsContext
-    )
+    const response = await getServerSideProps(context)
 
     expect(response).toEqual({
       props: {
         monthRegistries: null,
+        registryOwner: null,
       },
     })
   })
 
   test('should return nothing when no symptoms are registered', async () => {
-    mockFind = jest.fn().mockResolvedValue([])
+    mockFind.mockResolvedValue([])
 
-    const viewMonthSymptomsRegistries = await getServerSideProps(
-      (null as unknown) as GetServerSidePropsContext
-    )
+    const viewMonthSymptomsRegistries = await getServerSideProps(context)
 
     expect(viewMonthSymptomsRegistries).toEqual({
-      props: { monthRegistries: [] },
+      props: { monthRegistries: [], registryOwner: null },
+    })
+  })
+
+  test('should return null when user is not logged in', async () => {
+    mockNextAuthClient.getSession.mockResolvedValue(null)
+
+    const viewMonthSymptomsRegistries = await getServerSideProps(context)
+
+    expect(viewMonthSymptomsRegistries).toEqual({
+      props: { monthRegistries: null },
+    })
+  })
+
+  test('should return null when is logged in, but user is incorrect', async () => {
+    mockFindOne.mockResolvedValue({ id: 1 })
+
+    context.query = { cuidador: '2' }
+    const viewMonthSymptomsRegistries = await getServerSideProps(context)
+
+    expect(viewMonthSymptomsRegistries).toEqual({
+      props: { monthRegistries: null },
+    })
+  })
+
+  test('should return only registries belonging to cuidador user', async () => {
+    await getServerSideProps(context)
+
+    expect(mockFind).toHaveBeenCalledWith({
+      order: { creationDate: 'DESC' },
+      relations: ['symptom'],
+      where: {
+        creationDate: { Between: expect.any(Function) },
+        user: { name: 'Test 1' },
+      },
+    })
+  })
+
+  test('should return registries belonging to any user if role is tratante', async () => {
+    mockNextAuthClient.getSession.mockResolvedValue(({
+      user: { name: 'Test 1' },
+      role: Role.TRATANTE,
+    } as unknown) as Session)
+
+    mockFindOne.mockResolvedValue({ name: 'Test 2' })
+    mockFind.mockResolvedValue(onlyOneHourSymptoms)
+
+    const result = await getServerSideProps(context)
+
+    expect(result).toEqual({
+      props: {
+        registryOwner: 'Test 2',
+        monthRegistries: [
+          {
+            month: 10,
+            viewRegistries: [
+              {
+                day: date.getTime(),
+                registries: [
+                  {
+                    airLevel: 5,
+                    appetiteLevel: 4,
+                    depositionLevel: true,
+                    feverLevel: true,
+                    id: 9,
+                    nauseaLevel: 3,
+                    painLevel: 4,
+                    rescueLevel: true,
+                    swallowLevel: 6,
+                    symptomDate: date.getTime(),
+                    tireLevel: 1,
+                  },
+                ],
+              },
+            ],
+            year: 2020,
+          },
+        ],
+      },
+    })
+  })
+
+  test('should return null registry owner if no user is found and user is tratante', async () => {
+    mockNextAuthClient.getSession.mockResolvedValue(({
+      user: { name: 'Test 1' },
+      role: Role.TRATANTE,
+    } as unknown) as Session)
+
+    mockFindOne.mockResolvedValue(null)
+    mockFind.mockResolvedValue(onlyOneHourSymptoms)
+
+    const result = await getServerSideProps(context)
+
+    expect(result).toEqual({
+      props: {
+        registryOwner: null,
+        monthRegistries: null,
+      },
+    })
+  })
+
+  test('should return null when user is not logged in', async () => {
+    mockNextAuthClient.getSession.mockResolvedValue(null)
+
+    const viewMonthSymptomsRegistries = await getServerSideProps(context)
+
+    expect(viewMonthSymptomsRegistries).toEqual({
+      props: { monthRegistries: null },
+    })
+  })
+
+  test('should return null when is logged in, but user is incorrect', async () => {
+    mockFindOne.mockResolvedValue({ id: 1 })
+
+    context.query = { cuidador: '2' }
+    const viewMonthSymptomsRegistries = await getServerSideProps(context)
+
+    expect(viewMonthSymptomsRegistries).toEqual({
+      props: { monthRegistries: null },
+    })
+  })
+
+  test('should return null when query is not a number', async () => {
+    mockFindOne.mockResolvedValue({ id: 1 })
+
+    context.query = { cuidador: 'test' }
+    const viewMonthSymptomsRegistries = await getServerSideProps(context)
+
+    expect(viewMonthSymptomsRegistries).toEqual({
+      props: { monthRegistries: null },
+    })
+  })
+
+  test('should return only registries belonging to cuidador user', async () => {
+    await getServerSideProps(context)
+
+    expect(mockFind).toHaveBeenCalledWith({
+      order: { creationDate: 'DESC' },
+      relations: ['symptom'],
+      where: {
+        creationDate: { Between: expect.any(Function) },
+        user: { name: 'Test 1' },
+      },
+    })
+  })
+
+  test('should return registries belonging to any user if role is tratante', async () => {
+    mockNextAuthClient.getSession.mockResolvedValue(({
+      user: { name: 'Test 1' },
+      role: Role.TRATANTE,
+    } as unknown) as Session)
+
+    mockFindOne.mockResolvedValue({ name: 'Test 2' })
+    mockFind.mockResolvedValue(onlyOneHourSymptoms)
+
+    const result = await getServerSideProps(context)
+
+    expect(result).toEqual({
+      props: {
+        registryOwner: 'Test 2',
+        monthRegistries: [
+          {
+            month: 10,
+            viewRegistries: [
+              {
+                day: date.getTime(),
+                registries: [
+                  {
+                    airLevel: 5,
+                    appetiteLevel: 4,
+                    depositionLevel: true,
+                    feverLevel: true,
+                    id: 9,
+                    nauseaLevel: 3,
+                    painLevel: 4,
+                    rescueLevel: true,
+                    swallowLevel: 6,
+                    symptomDate: date.getTime(),
+                    tireLevel: 1,
+                  },
+                ],
+              },
+            ],
+            year: 2020,
+          },
+        ],
+      },
     })
   })
 })

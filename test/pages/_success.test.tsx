@@ -1,7 +1,10 @@
 import React from 'react'
-import { screen, cleanup, render, clearMocks } from 'test/testUtils'
+import nextauthclient, { Session } from 'next-auth/client'
+
 import SuccessPage from 'pages/_success'
 import { SuccessCodes } from 'src/components/Success'
+
+import { screen, cleanup, render, clearMocks } from 'test/testUtils'
 
 const mockPush = jest.fn().mockResolvedValue(null)
 const mockQuery = {
@@ -10,6 +13,13 @@ const mockQuery = {
 jest.mock('next/router', () => ({
   useRouter: () => ({ query: mockQuery, push: mockPush }),
 }))
+
+jest.mock('next-auth/client')
+const mockNextAuthClient = nextauthclient as jest.Mocked<typeof nextauthclient>
+mockNextAuthClient.useSession.mockReturnValue([
+  ({ idUser: 1, role: 'cuidador' } as unknown) as Session,
+  false,
+])
 
 describe('_success', () => {
   describe('<GenericSuccess />', () => {
@@ -25,9 +35,14 @@ describe('_success', () => {
       expect(successMessage).toBeInTheDocument()
     })
 
-    test('should show face scale screen when button is clicked', () => {
+    test('should show return to home page button', () => {
       const returnButton = screen.getByText(/^Volver al inicio$/)
       expect(returnButton).toHaveAttribute('href', '/')
+    })
+
+    test("shouldn't show another button but return to home page button", () => {
+      const anchorElements = screen.getAllByRole('link')
+      expect(anchorElements.length).toBe(1)
     })
   })
 
@@ -40,11 +55,15 @@ describe('_success', () => {
 
     afterEach(cleanup)
 
-    test('should show access denied message', () => {
+    test.only('should show success message when symptom is register', () => {
       const successMessage = screen.getByText(
         /^¡Se han guardado los síntomas exitosamente!$/
       )
       expect(successMessage).toBeInTheDocument()
+      expect(screen.getByText(/^Ir a historial de síntomas$/)).toHaveAttribute(
+        'href',
+        '/ver-registros-sintomas?cuidador=1'
+      )
     })
   })
 
@@ -57,7 +76,7 @@ describe('_success', () => {
 
     afterEach(cleanup)
 
-    test('should show access denied message', () => {
+    test('should show success message when user is register', () => {
       const successMessage = screen.getByText(
         /^¡Se ha registrado el usuario de manera exitosa!$/
       )

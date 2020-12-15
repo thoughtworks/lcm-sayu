@@ -38,11 +38,12 @@ const NextAuthHandler: NextApiHandler = (req, res) =>
           ...session,
           role: allowedUser.role,
           status: allowedUser.status,
+          idUser: allowedUser.id,
         }
       },
       signIn: async (user) => {
         const userService = new UserService()
-        return userService.existByEmail(user.email)
+        return userService.existByEmailAndUpdateName(user)
       },
       redirect: async () => {
         const redirectTo: string | undefined = '/'

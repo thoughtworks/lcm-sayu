@@ -67,9 +67,9 @@ const WelcomeSayu = () => {
                 label="Registrar síntomas"
               />
             </div>
-            <div className={styles['symptom-registry-list-link']}>
+            <div>
               <ButtonLink
-                href="/ver-registros-sintomas"
+                href={`/ver-registros-sintomas?cuidador=${session.idUser}`}
                 label="Ver historial de síntomas"
                 secondaryStyle
               />
@@ -77,11 +77,21 @@ const WelcomeSayu = () => {
           </div>
         )}
         {Role.TRATANTE === session?.role && (
-          <ButtonLink
-            href="/tratante/gestion-usuario"
-            label="Gestionar usuarios"
-            secondaryStyle
-          />
+          <div className={styles.actions}>
+            <div>
+              <ButtonLink
+                href="/tratante/ver-cuidadores"
+                label="Ver cuidadores"
+              />
+            </div>
+            <div>
+              <ButtonLink
+                href="/tratante/gestion-usuario"
+                label="Gestionar usuarios"
+                secondaryStyle
+              />
+            </div>
+          </div>
         )}
       </Stack>
     </Flex>

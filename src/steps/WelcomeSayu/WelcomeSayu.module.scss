@@ -41,7 +41,8 @@ $img-size: 21px;
 
 .actions {
   width: 100%;
-  .symptom-registry-list-link {
+
+  div:nth-child(2) {
     margin-top: 3px;
   }
 }

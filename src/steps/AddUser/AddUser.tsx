@@ -99,12 +99,12 @@ export const getServerSideProps: GetServerSideProps<UserProp> = async ({
   try {
     const userId = parseInt(query['usuario'] as string)
 
-    if (userId) {
+    if (!isNaN(userId)) {
       const userService = new UserService()
       user = await userService.getById(userId)
     }
 
-    user = user === undefined ? null : user
+    user = isNaN(userId) ? undefined : user
   } catch (err) {
     console.error(err)
   }

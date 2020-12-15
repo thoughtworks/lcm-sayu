@@ -5,6 +5,7 @@ import { Status } from './Status'
 export class User {
   readonly createdAt = new Date(Date.now())
   public id?: number
+  public name?: string
   readonly email: string
   readonly role: Role
   readonly status: Status
@@ -14,7 +15,7 @@ export class User {
     this.status = this.getValidStatus(status)
   }
 
-  public getValidEmail(email: string): string {
+  private getValidEmail(email: string): string {
     return getValidEmail(email)
   }
 

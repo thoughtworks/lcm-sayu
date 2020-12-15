@@ -1,11 +1,12 @@
 import { Between } from 'typeorm'
+
 import { RegistryDTO } from 'src/dto/RegistryDTO'
 import { Registry } from 'src/model/Registry'
 import { Symptom } from 'src/model/Symptom'
 import { User } from 'src/model/User'
 
-import { UserService } from './UserService'
 import { Service } from './Service'
+import { UserService } from './UserService'
 import { SymptomService } from './SymptomService'
 
 export class RegistryService extends Service {
@@ -33,7 +34,7 @@ export class RegistryService extends Service {
     }
   }
 
-  async registriesRetrieval(): Promise<RegistryDTO[]> {
+  async registriesRetrieval(user: User): Promise<RegistryDTO[]> {
     const connection = await this.getConnection()
     const toDate = new Date()
     const fromDate = new Date(
@@ -50,9 +51,30 @@ export class RegistryService extends Service {
         },
         where: {
           creationDate: Between(fromDate, toDate),
+          user: user,
         },
       })
       return this.toRegistriesDTO(symptomsRegistries)
+    } finally {
+      connection.close()
+    }
+  }
+
+  async getLastRegistryByUser(user: User): Promise<Registry | undefined> {
+    const connection = await this.getConnection()
+    try {
+      const registryRepository = connection.getRepository<Registry>('Registry')
+      const userLastRegistry = await registryRepository.findOne({
+        join: {
+          alias: 'registry',
+          innerJoin: {
+            user: 'registry.user',
+          },
+        },
+        where: { user: user },
+        order: { creationDate: 'DESC' },
+      })
+      return userLastRegistry
     } finally {
       connection.close()
     }
@@ -83,6 +105,7 @@ export class RegistryService extends Service {
         return parseInt(symptomsToRegister['painlevel'], 10)
     }
   }
+
   private validateSymptom(symptom: Symptom, symptomsToRegister: any) {
     switch (symptom.name) {
       case 'Rescate':
@@ -202,7 +225,7 @@ export class RegistryService extends Service {
       case 'Apetito':
         registryDTO.appetiteLevel = registry.value
         break
-      case 'Náuseas':
+      case 'Náusea':
         registryDTO.nauseaLevel = registry.value
         break
       case 'Dificultad para tragar':

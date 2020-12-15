@@ -1,8 +1,14 @@
-import { Connection, createConnection, getConnection } from 'typeorm'
 import { UserDTO } from 'src/dto/UserDTO'
+import { User as NextAuthUser } from 'next-auth'
+
+import { Carer } from 'src/model/Carer'
+import { Role } from 'src/model/Role'
 import { getValidEmail, User } from 'src/model/User'
 
-export class UserService {
+import { Service } from './Service'
+import { RegistryService } from './RegistryService'
+
+export class UserService extends Service {
   async saveUser(user: User): Promise<void> {
     const existingUser = (await (this.getByEmail(
       user.email
@@ -87,11 +93,60 @@ export class UserService {
     return !!user
   }
 
-  private async getConnection(): Promise<Connection> {
+  async existByEmailAndUpdateName({
+    name,
+    email,
+  }: NextAuthUser): Promise<boolean> {
+    const user = await this.getByEmail(email)
+    if (user && !user.name) {
+      const connection = await this.getConnection()
+      try {
+        user.name = name
+        const userRepository = connection.getRepository<User>('User')
+        await userRepository.save(user)
+      } finally {
+        connection.close()
+      }
+    }
+    return !!user
+  }
+
+  async getCarers(): Promise<Carer[]> {
+    const connection = await this.getConnection()
+
+    let users = []
     try {
-      return await createConnection()
-    } catch (err) {
-      return getConnection()
+      const userRepository = connection.getRepository<User>('User')
+      users = await userRepository.find({
+        where: { role: Role.CUIDADOR },
+      })
+    } finally {
+      await connection.close()
+    }
+
+    const registryService = new RegistryService()
+    return Promise.all(
+      users.map(async (user) => {
+        const lastUserRegistry = await registryService.getLastRegistryByUser(
+          user
+        )
+        return {
+          id: user.id as number,
+          name: user.name || user.email,
+          lastUpdated: lastUserRegistry?.creationDate.getTime() || null,
+        }
+      })
+    )
+  }
+
+  async getUserById(id: number): Promise<User | undefined> {
+    const connection = await this.getConnection()
+    try {
+      const userRepository = connection.getRepository<User>('User')
+      const user = await userRepository.findOne(id)
+      return user
+    } finally {
+      await connection.close()
     }
   }
 }

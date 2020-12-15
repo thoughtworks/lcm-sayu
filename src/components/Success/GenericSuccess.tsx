@@ -13,7 +13,7 @@ const GenericSuccess: FunctionComponent<{
     <p>{msg}</p>
     {backUrl && (
       <div className={styles.back}>
-        <ButtonLink href={backUrl} label={`Volver a  ${backLabel}`} />
+        <ButtonLink href={backUrl} label={`${backLabel}`} />
       </div>
     )}
     <ButtonLink href="/" label="Volver al inicio" secondaryStyle />
