@@ -29,7 +29,9 @@ jest.mock('next-auth/client', () => ({
 }))
 
 describe('User save', () => {
-  beforeEach(clearMocks)
+  beforeEach(() => {
+    clearMocks()
+  })
 
   afterEach(cleanup)
 
