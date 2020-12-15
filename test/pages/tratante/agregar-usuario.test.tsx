@@ -181,6 +181,19 @@ describe('<AddUser /> create', () => {
   })
 })
 
+describe('<AddUser /> edit', () => {
+  beforeEach(() => {
+    clearMocks()
+  })
+
+  afterEach(cleanup)
+
+  test('should redirect to error page on error', async () => {
+    render(<AddUser user={null} />)
+    expect(mockPush).toHaveBeenCalledWith('/_error?error=UserEditError')
+  })
+})
+
 describe('<AddUser/> Server Side', () => {
   test('should return a user', async () => {
     const context = ({
