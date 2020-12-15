@@ -7,4 +7,5 @@ export enum ErrorCodes {
   USER_REGISTRY_ERROR = 'UserRegistryError',
   USER_LIST_ERROR = 'UserListError',
   INACTIVE_USER = 'InactiveUser',
+  USER_EDIT_ERROR = 'UserEditError',
 }

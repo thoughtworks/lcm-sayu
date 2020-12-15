@@ -29,9 +29,18 @@ const AddUser: FunctionComponent<UserProp> = ({ user }) => {
   })
 
   const router = useRouter()
-
   const addUserMode = user ? 'Editar' : 'Agregar'
   const readOnly = user ? true : false
+
+  useEffect(() => {
+    if (user === null) {
+      router.push(`/_error?error=${ErrorCodes.USER_EDIT_ERROR}`)
+    }
+  })
+
+  if (user === null) {
+    return null
+  }
   return (
     <main id={styles['add-user']}>
       <TitleHeader />

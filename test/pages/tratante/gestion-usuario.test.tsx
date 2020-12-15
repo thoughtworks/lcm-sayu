@@ -7,6 +7,7 @@ import UserManagement, {
   getServerSideProps,
 } from 'pages/tratante/gestion-usuario'
 import { Role } from 'src/model/Role'
+import { Status } from 'src/model/Status'
 import { UserDTO } from 'src/dto/UserDTO'
 
 jest.mock('next-auth/client', () => ({
@@ -24,18 +25,21 @@ const usersModel = [
     id: 1,
     email: 'test1@mail.com',
     role: Role.CUIDADOR,
+    status: Status.ACTIVO,
   },
   {
     createdAt: new Date(),
     id: 2,
     email: 'test2@mail.com',
     role: Role.TRATANTE,
+    status: Status.INACTIVO,
   },
   {
     createdAt: new Date(),
     id: 3,
     email: 'test3@mail.com',
     role: Role.CUIDADOR,
+    status: Status.ACTIVO,
   },
 ]
 const mockFind = jest.fn().mockResolvedValue(usersModel)
@@ -68,8 +72,18 @@ describe('<UserManagement />', () => {
 
   test('should show User List', () => {
     const userList = [
-      { id: 1, email: 'test1@mail.com', role: Role.CUIDADOR },
-      { id: 2, email: 'test2@mail.com', role: Role.TRATANTE },
+      {
+        id: 1,
+        email: 'test1@mail.com',
+        role: Role.CUIDADOR,
+        status: Status.ACTIVO,
+      },
+      {
+        id: 2,
+        email: 'test2@mail.com',
+        role: Role.TRATANTE,
+        status: Status.ACTIVO,
+      },
     ]
     render(<UserManagement users={userList} />)
     expect(screen.getByText(/^test1@mail.com$/)).toBeInTheDocument()
@@ -97,9 +111,24 @@ describe('<UserManagement /> server side', () => {
 
   test('should return users', async () => {
     const users: UserDTO[] = [
-      { id: 1, email: 'test1@mail.com', role: Role.CUIDADOR },
-      { id: 2, email: 'test2@mail.com', role: Role.TRATANTE },
-      { id: 3, email: 'test3@mail.com', role: Role.CUIDADOR },
+      {
+        id: 1,
+        email: 'test1@mail.com',
+        role: Role.CUIDADOR,
+        status: Status.ACTIVO,
+      },
+      {
+        id: 2,
+        email: 'test2@mail.com',
+        role: Role.TRATANTE,
+        status: Status.INACTIVO,
+      },
+      {
+        id: 3,
+        email: 'test3@mail.com',
+        role: Role.CUIDADOR,
+        status: Status.ACTIVO,
+      },
     ]
     const expectedUsers = { props: { users } }
     const actualUsers = await getServerSideProps(
