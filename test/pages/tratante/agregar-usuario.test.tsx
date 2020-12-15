@@ -13,6 +13,7 @@ import AddUser, { getServerSideProps } from 'pages/tratante/agregar-usuario'
 import { GetServerSidePropsContext } from 'next'
 import { Role } from 'src/model/Role'
 import { UserDTO } from 'src/dto/UserDTO'
+import { Status } from 'src/model/Status'
 
 jest.mock('axios')
 
@@ -32,6 +33,7 @@ const userModel = {
   id: 1,
   email: 'test1@mail.com',
   role: Role.CUIDADOR,
+  status: Status.ACTIVO,
 }
 let mockFindOne = jest.fn().mockResolvedValue(userModel)
 jest.mock('typeorm', () => ({
@@ -72,7 +74,8 @@ describe('<AddUser /> create', () => {
       })
     )
   })
-  test.only('should add user successfully', async () => {
+
+  test('should add user successfully', async () => {
     jest
       .spyOn(axios, 'post')
       .mockResolvedValue({ data: { emailAlreadyExist: false } })
@@ -91,6 +94,7 @@ describe('<AddUser /> create', () => {
       expect(axios.post).toHaveBeenCalledWith('/api/user-save', {
         userEmail: 'test@test.com',
         role: 'tratante',
+        status: 'activo',
       })
     )
 
@@ -98,6 +102,7 @@ describe('<AddUser /> create', () => {
       '/_success?key=SuccessfulUserRegistry'
     )
   })
+
   test('should show required email error when email is empty', async () => {
     expect(
       screen.queryByText(/^Debes ingresar correo electrónico$/)
@@ -133,6 +138,7 @@ describe('<AddUser /> create', () => {
       .mockResolvedValueOnce({ data: { emailAlreadyExist: false } })
       .mockResolvedValueOnce({ data: { emailAlreadyExist: false } })
       .mockRejectedValueOnce(null)
+
     const emailInput = screen.getByText(/^Correo electrónico$/)
     userEvent.type(emailInput, 'test@test.com')
 
@@ -147,6 +153,7 @@ describe('<AddUser /> create', () => {
       expect(axios.post).toHaveBeenCalledWith('/api/user-save', {
         userEmail: 'test@test.com',
         role: 'tratante',
+        status: 'activo',
       })
     )
 
@@ -184,6 +191,7 @@ describe('<AddUser/> Server Side', () => {
       id: 1,
       email: 'test1@mail.com',
       role: Role.CUIDADOR,
+      status: Status.ACTIVO,
     }
     const expectedUser = { props: { user } }
 
@@ -192,13 +200,12 @@ describe('<AddUser/> Server Side', () => {
   })
 
   test('should return a null user when a service error happens', async () => {
-    global.parseInt = jest.fn().mockResolvedValue(null)
     const context = ({
       req: {},
       query: { usuario: 1 },
     } as unknown) as GetServerSidePropsContext
+    mockFindOne = jest.fn().mockResolvedValue(null)
     const expectedNullUser = { props: { user: null } }
-    //mockFindOne = jest.fn().mockResolvedValue(null)
 
     const actualUser = await getServerSideProps(context)
 
@@ -206,9 +213,10 @@ describe('<AddUser/> Server Side', () => {
   })
 
   test('should return a null user when a GET vars retrieve error happens', async () => {
+    //global.parseInt = jest.fn().mockResolvedValue(null)
     const context = ({
       req: {},
-      query: { wrongUsuario: 1 },
+      query: { wrongUsuario: 'nonanumber' },
     } as unknown) as GetServerSidePropsContext
     const expectedNullUser = { props: { user: null } }
 
