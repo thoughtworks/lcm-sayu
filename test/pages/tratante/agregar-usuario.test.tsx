@@ -46,7 +46,7 @@ jest.mock('typeorm', () => ({
 describe('<AddUser /> create', () => {
   beforeEach(() => {
     clearMocks()
-    render(<AddUser user={undefined} />)
+    render(<AddUser user={undefined} error={false} />)
   })
 
   afterEach(cleanup)
@@ -189,7 +189,7 @@ describe('<AddUser /> edit', () => {
   afterEach(cleanup)
 
   test('should redirect to error page on error', async () => {
-    render(<AddUser user={null} />)
+    render(<AddUser user={null} error={true} />)
     expect(mockPush).toHaveBeenCalledWith('/_error?error=UserEditError')
   })
 })
@@ -206,32 +206,20 @@ describe('<AddUser/> Server Side', () => {
       role: Role.CUIDADOR,
       status: Status.ACTIVO,
     }
-    const expectedUser = { props: { user } }
+    const error = false
+    const expectedUser = { props: { user, error } }
 
     const actualUser = await getServerSideProps(context)
     expect(actualUser).toEqual(expectedUser)
   })
 
-  test('should return a null user when a service error happens', async () => {
+  test('should return a null user and a true error flag when a service error happens', async () => {
     const context = ({
       req: {},
       query: { usuario: 1 },
     } as unknown) as GetServerSidePropsContext
     mockFindOne = jest.fn().mockResolvedValue(null)
-    const expectedNullUser = { props: { user: null } }
-
-    const actualUser = await getServerSideProps(context)
-
-    expect(actualUser).toEqual(expectedNullUser)
-  })
-
-  test('should return a null user when a GET vars retrieve error happens', async () => {
-    //global.parseInt = jest.fn().mockResolvedValue(null)
-    const context = ({
-      req: {},
-      query: { wrongUsuario: 'nonanumber' },
-    } as unknown) as GetServerSidePropsContext
-    const expectedNullUser = { props: { user: null } }
+    const expectedNullUser = { props: { user: null, error: true } }
 
     const actualUser = await getServerSideProps(context)
 

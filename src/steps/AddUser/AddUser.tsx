@@ -22,8 +22,9 @@ import { UserService } from 'src/services/UserService'
 
 type UserProp = {
   user: UserDTO | undefined | null
+  error: boolean
 }
-const AddUser: FunctionComponent<UserProp> = ({ user }) => {
+const AddUser: FunctionComponent<UserProp> = ({ user, error }) => {
   const methods = useForm({
     mode: 'onBlur',
   })
@@ -33,14 +34,15 @@ const AddUser: FunctionComponent<UserProp> = ({ user }) => {
   const readOnly = user ? true : false
 
   useEffect(() => {
-    if (user === null) {
+    if (error) {
       router.push(`/_error?error=${ErrorCodes.USER_EDIT_ERROR}`)
     }
   })
 
-  if (user === null) {
+  if (error) {
     return null
   }
+
   return (
     <main id={styles['add-user']}>
       <TitleHeader />
@@ -92,10 +94,12 @@ const AddUser: FunctionComponent<UserProp> = ({ user }) => {
     </main>
   )
 }
+
 export const getServerSideProps: GetServerSideProps<UserProp> = async ({
   query,
 }) => {
   let user: UserDTO | undefined | null = null
+  let error = false
   try {
     const userId = parseInt(query['usuario'] as string)
 
@@ -104,10 +108,14 @@ export const getServerSideProps: GetServerSideProps<UserProp> = async ({
       user = await userService.getById(userId)
     }
 
-    user = isNaN(userId) ? undefined : user
+    if (user === undefined) {
+      user = null
+      error = true
+    }
   } catch (err) {
+    error = true
     console.error(err)
   }
-  return { props: { user } }
+  return { props: { user, error } }
 }
 export default withSession(AddUser, [Role.TRATANTE])
