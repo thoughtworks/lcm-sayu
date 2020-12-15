@@ -118,7 +118,7 @@ export class UserService extends Service {
     try {
       const userRepository = connection.getRepository<User>('User')
       users = await userRepository.find({
-        where: { role: Role.CUIDADOR },
+        where: { role: Role.CUIDADOR, status: 'activo' },
       })
     } finally {
       await connection.close()
