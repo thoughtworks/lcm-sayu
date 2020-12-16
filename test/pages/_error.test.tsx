@@ -163,6 +163,9 @@ describe('_error', () => {
         /^Ha ocurrido un error al intentar guardar el usuario.$/
       )
       expect(failureMessage).toBeInTheDocument()
+
+      const retryButton = screen.getByText(/^Volver a lista de usuarios$/)
+      expect(retryButton).toHaveAttribute('href', '/tratante/gestion-usuario')
     })
   })
 
