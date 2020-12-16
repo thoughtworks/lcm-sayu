@@ -1,4 +1,3 @@
-import { UserDTO } from 'src/dto/UserDTO'
 import { User as NextAuthUser } from 'next-auth'
 
 import { Carer } from 'src/model/Carer'
@@ -10,9 +9,7 @@ import { RegistryService } from './RegistryService'
 
 export class UserService extends Service {
   async saveUser(user: User): Promise<void> {
-    const existingUser = (await (this.getByEmail(
-      user.email
-    ) as unknown)) as User
+    const existingUser = await this.getByEmail(user.email)
 
     const connection = await this.getConnection()
     try {
@@ -21,10 +18,8 @@ export class UserService extends Service {
       if (existingUser) {
         await userRepository.save({
           id: existingUser.id,
-          email: existingUser.email,
           role: user.role,
           status: user.status,
-          createdAt: existingUser.createdAt,
         })
       } else {
         await userRepository.save(user)
@@ -45,44 +40,16 @@ export class UserService extends Service {
       connection.close()
     }
   }
-  async getById(id: number): Promise<UserDTO | undefined> {
-    const connection = await this.getConnection()
-    let userDTO: UserDTO | undefined = undefined
-    try {
-      const userRepository = connection.getRepository<User>('User')
-      const user = await userRepository.findOne({ id: id })
 
-      if (user) {
-        userDTO = {
-          id: user.id ? user.id : 0,
-          email: user.email,
-          role: user.role,
-          status: user.status,
-        }
-      }
-      return userDTO
-    } finally {
-      connection.close()
-    }
-  }
-  async getAll(): Promise<UserDTO[] | undefined> {
+  async getAll(): Promise<User[] | undefined> {
     const connection = await this.getConnection()
     try {
       const userRepository = connection.getRepository<User>('User')
-      const users = await userRepository.find({
+      return await userRepository.find({
         order: {
           email: 'ASC',
         },
       })
-
-      return users.map((user) => ({
-        id: user.id ? user.id : 0,
-        email: user.email,
-        role: user.role,
-        status: user.status,
-      }))
-    } catch (err) {
-      console.error(err)
     } finally {
       connection.close()
     }

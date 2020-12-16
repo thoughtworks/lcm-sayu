@@ -10,6 +10,7 @@ import { ErrorCodes } from 'src/components/Error'
 import styles from './UserManagement.module.scss'
 import { UserService } from 'src/services/UserService'
 import { UserDTO } from 'src/dto/UserDTO'
+import { Status } from 'src/model/Status'
 
 type UsersProp = {
   users: UserDTO[] | undefined
@@ -59,7 +60,7 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
                   <td>
                     <div
                       className={`${styles['user-status']} ${
-                        user.status === 'activo'
+                        user.status === Status.ACTIVO
                           ? styles['active']
                           : styles['inactive']
                       }`}
@@ -90,14 +91,20 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
 }
 
 export const getServerSideProps: GetServerSideProps<UsersProp> = async () => {
-  let users: UserDTO[] | undefined = undefined
+  let usersDTO: UserDTO[] | undefined = undefined
   try {
     const userService = new UserService()
-    users = await userService.getAll()
+    const users = await userService.getAll()
+    usersDTO = users?.map((user) => ({
+      id: user.id as number,
+      email: user.email,
+      role: user.role,
+      status: user.status,
+    }))
   } catch (err) {
     console.error(err)
   }
-  return { props: { users } }
+  return { props: { users: usersDTO } }
 }
 
 export default withSession(UserManagement, [Role.TRATANTE])

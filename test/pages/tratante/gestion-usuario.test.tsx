@@ -82,7 +82,7 @@ describe('<UserManagement />', () => {
         id: 2,
         email: 'test2@mail.com',
         role: Role.TRATANTE,
-        status: Status.ACTIVO,
+        status: Status.INACTIVO,
       },
     ]
     render(<UserManagement users={userList} />)

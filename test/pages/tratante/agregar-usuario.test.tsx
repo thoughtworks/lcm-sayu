@@ -46,7 +46,7 @@ jest.mock('typeorm', () => ({
 describe('<AddUser /> create', () => {
   beforeEach(() => {
     clearMocks()
-    render(<AddUser user={undefined} error={false} />)
+    render(<AddUser user={null} error={false} />)
   })
 
   afterEach(cleanup)
@@ -244,15 +244,29 @@ describe('<AddUser/> Server Side', () => {
   })
 
   test('should return a null user and a true error flag when a service error happens', async () => {
+    global.console.error = jest.fn()
     const context = ({
       req: {},
       query: { usuario: 1 },
     } as unknown) as GetServerSidePropsContext
     mockFindOne = jest.fn().mockResolvedValue(null)
-    const expectedNullUser = { props: { user: null, error: true } }
 
     const actualUser = await getServerSideProps(context)
 
-    expect(actualUser).toEqual(expectedNullUser)
+    expect(actualUser).toEqual({ props: { user: null, error: true } })
+    expect(global.console.error).toHaveBeenCalledWith(
+      new Error('User not found: 1')
+    )
+  })
+  test('should return a null when userId is not present', async () => {
+    global.console.error = jest.fn()
+    const context = ({
+      req: {},
+      query: {},
+    } as unknown) as GetServerSidePropsContext
+
+    const actualUser = await getServerSideProps(context)
+
+    expect(actualUser).toEqual({ props: { user: null, error: false } })
   })
 })

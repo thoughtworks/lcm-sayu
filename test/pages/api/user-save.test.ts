@@ -136,10 +136,8 @@ describe('User save', () => {
 
     expect(mockSave).toHaveBeenCalledWith({
       id: 1,
-      email: 'test@test.com',
       role: Role.TRATANTE,
       status: Status.ACTIVO,
-      createdAt: new Date(dateNow),
     })
   })
 
@@ -275,12 +273,12 @@ describe('User save', () => {
   })
 
   test('should save email in lower case without dots', async () => {
+    mockFindOne.mockResolvedValueOnce(null)
     const user = {
       userEmail: 'test.TEST.teSt@test.com',
       role: Role.CUIDADOR,
       status: Status.ACTIVO,
     }
-
     const request: NextApiRequest = ({
       body: user,
     } as unknown) as NextApiRequest

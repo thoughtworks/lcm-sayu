@@ -21,7 +21,7 @@ import { UserDTO } from 'src/dto/UserDTO'
 import { UserService } from 'src/services/UserService'
 
 type UserProp = {
-  user: UserDTO | undefined | null
+  user: UserDTO | null
   error: boolean
 }
 const AddUser: FunctionComponent<UserProp> = ({ user, error }) => {
@@ -98,24 +98,30 @@ const AddUser: FunctionComponent<UserProp> = ({ user, error }) => {
 export const getServerSideProps: GetServerSideProps<UserProp> = async ({
   query,
 }) => {
-  let user: UserDTO | undefined | null = null
+  let userDTO: UserDTO | null = null
   let error = false
   try {
     const userId = parseInt(query['usuario'] as string)
 
     if (!isNaN(userId)) {
       const userService = new UserService()
-      user = await userService.getById(userId)
-    }
+      const user = (await userService.getUserById(userId)) || null
 
-    if (user === undefined) {
-      user = null
-      error = true
+      if (!user) {
+        throw new Error(`User not found: ${userId}`)
+      }
+
+      userDTO = {
+        id: user.id as number,
+        email: user.email,
+        role: user.role,
+        status: user.status,
+      }
     }
   } catch (err) {
     error = true
     console.error(err)
   }
-  return { props: { user, error } }
+  return { props: { user: userDTO, error } }
 }
 export default withSession(AddUser, [Role.TRATANTE])

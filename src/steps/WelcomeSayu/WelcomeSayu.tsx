@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import React from 'react'
 
 import { signOut, useSession } from 'next-auth/client'
 import { Flex, Image, Text, Stack } from '@chakra-ui/core'
@@ -7,20 +6,10 @@ import { Flex, Image, Text, Stack } from '@chakra-ui/core'
 import ButtonLink from 'src/components/ButtonLink'
 import withSession from 'src/hoc/WithSession'
 import { Role } from 'src/model/Role'
-import { ErrorCodes } from 'src/components/Error'
 import styles from './WelcomeSayu.module.scss'
 
 const WelcomeSayu = () => {
   const [session, loading] = useSession()
-  const router = useRouter()
-  useEffect(() => {
-    if (!loading && session?.status === 'inactivo') {
-      router.push(`/_error?error=${ErrorCodes.INACTIVE_USER}`)
-      setTimeout(function () {
-        signOut()
-      }, 2000)
-    }
-  })
 
   return (
     <Flex direction="column">
