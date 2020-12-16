@@ -165,4 +165,53 @@ describe('_error', () => {
       expect(failureMessage).toBeInTheDocument()
     })
   })
+
+  describe('<UserManagementError />', () => {
+    beforeEach(() => {
+      clearMocks()
+      mockQuery.error = 'UserListError'
+      render(<ErrorPage statusCode={0} />)
+    })
+
+    afterEach(cleanup)
+
+    test('should show user registry error message', () => {
+      const failureMessage = screen.getByText(
+        /^Ha ocurrido un error al intentar mostrar los usuarios.$/
+      )
+      expect(failureMessage).toBeInTheDocument()
+    })
+  })
+
+  describe('<InactiveUser />', () => {
+    beforeEach(() => {
+      clearMocks()
+      mockQuery.error = 'InactiveUser'
+      render(<ErrorPage statusCode={0} />)
+    })
+
+    afterEach(cleanup)
+
+    test('should show user registry error message', () => {
+      const failureMessage = screen.getByText(/^Usuario inactivo$/)
+      expect(failureMessage).toBeInTheDocument()
+    })
+  })
+
+  describe('<UserEditError />', () => {
+    beforeEach(() => {
+      clearMocks()
+      mockQuery.error = 'UserEditError'
+      render(<ErrorPage statusCode={0} />)
+    })
+
+    afterEach(cleanup)
+
+    test('should show user registry error message', () => {
+      const failureMessage = screen.getByText(
+        /^Ha ocurrido un error al intentar editar el usuario$/
+      )
+      expect(failureMessage).toBeInTheDocument()
+    })
+  })
 })

@@ -55,7 +55,7 @@ describe('_success', () => {
 
     afterEach(cleanup)
 
-    test('should show access denied message', () => {
+    test('should show success message when symptom is register', () => {
       const successMessage = screen.getByText(
         /^¡Se han guardado los síntomas exitosamente!$/
       )
@@ -76,7 +76,7 @@ describe('_success', () => {
 
     afterEach(cleanup)
 
-    test('should show access denied message', () => {
+    test('should show success message when user is register', () => {
       const successMessage = screen.getByText(
         /^¡Se ha registrado el usuario de manera exitosa!$/
       )

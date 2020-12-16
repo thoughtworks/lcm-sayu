@@ -5,8 +5,9 @@ import { User } from 'src/model/User'
 import handler from 'pages/api/validate-email'
 import { Role } from 'src/model/Role'
 import { clearMocks } from 'test/testUtils'
+import { Status } from 'src/model/Status'
 
-const user = new User('test@test.com', Role.CUIDADOR)
+const user = new User('test@test.com', Role.CUIDADOR, Status.ACTIVO)
 const mockFind = jest.fn().mockResolvedValue(user)
 jest.mock('typeorm', () => ({
   createConnection: () => ({

@@ -1,1 +1,1 @@
-export { default } from 'src/steps/AddUser'
+export { default, getServerSideProps } from 'src/steps/AddUser'

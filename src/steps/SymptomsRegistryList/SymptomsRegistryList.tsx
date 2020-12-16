@@ -253,7 +253,7 @@ export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = 
     idCarer = isNaN(idCarer) ? -1 : idCarer
 
     const userService = new UserService()
-    const user = await userService.getById(idCarer)
+    const user = await userService.getUserById(idCarer)
     if (Role.CUIDADOR === session.role && user?.id !== session.idUser) {
       return { props: { monthRegistries } }
     } else if (Role.TRATANTE === session.role) {

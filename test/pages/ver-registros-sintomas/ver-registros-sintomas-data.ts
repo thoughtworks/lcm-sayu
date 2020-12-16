@@ -2,8 +2,9 @@ import { MonthRegistry } from 'src/steps/SymptomsRegistryList'
 import { Registry } from 'src/model/Registry'
 import { User } from 'src/model/User'
 import { Role } from 'src/model/Role'
+import { Status } from 'src/model/Status'
 
-const user = new User('test@test.com', Role.CUIDADOR)
+const user = new User('test@test.com', Role.CUIDADOR, Status.ACTIVO)
 
 const date = new Date(2020, 10, 21, 1, 18, 33)
 const secondDate = new Date(2020, 10, 22, 1, 18, 33)

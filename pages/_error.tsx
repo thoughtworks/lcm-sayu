@@ -10,6 +10,9 @@ import {
   FailedSymptomsRegistry,
   FailedSymptomsRetrieval,
   UserRegistryError,
+  UserManagementError,
+  InactiveUser,
+  UserEditError,
 } from 'src/components/Error'
 
 const Error: FunctionComponent<{ statusCode: number }> = ({ statusCode }) => {
@@ -27,6 +30,12 @@ const Error: FunctionComponent<{ statusCode: number }> = ({ statusCode }) => {
       return <FailedSymptomsRetrieval />
     case ErrorCodes.USER_REGISTRY_ERROR:
       return <UserRegistryError />
+    case ErrorCodes.USER_LIST_ERROR:
+      return <UserManagementError />
+    case ErrorCodes.INACTIVE_USER:
+      return <InactiveUser />
+    case ErrorCodes.USER_EDIT_ERROR:
+      return <UserEditError />
     default:
       switch (statusCode) {
         default:
