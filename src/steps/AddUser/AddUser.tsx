@@ -31,11 +31,10 @@ const AddUser: FunctionComponent<UserProp> = ({ user, error }) => {
 
   const router = useRouter()
   const addUserMode = user ? 'Editar' : 'Agregar'
-  const readOnly = user ? true : false
 
   useEffect(() => {
     if (error) {
-      router.push(`/_error?error=${ErrorCodes.USER_EDIT_ERROR}`)
+      router.push(`/_error?error=${ErrorCodes.USER_REGISTRY_ERROR}`)
     }
   })
 
@@ -69,11 +68,7 @@ const AddUser: FunctionComponent<UserProp> = ({ user, error }) => {
           )}
         >
           <div className={styles['user-email']}>
-            <UserEmail
-              autoFocus
-              defaultValue={user?.email}
-              readOnly={readOnly}
-            />
+            <UserEmail autoFocus defaultValue={user?.email} readOnly={!!user} />
           </div>
           <div className={styles.roles}>
             <RoleRadioButton selectedRole={user?.role as string} />

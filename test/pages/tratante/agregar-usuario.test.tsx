@@ -190,7 +190,7 @@ describe('<AddUser /> edit', () => {
 
   test('should redirect to error page on error', async () => {
     render(<AddUser user={null} error={true} />)
-    expect(mockPush).toHaveBeenCalledWith('/_error?error=UserEditError')
+    expect(mockPush).toHaveBeenCalledWith('/_error?error=UserRegistryError')
   })
   test('should edit user successfully', async () => {
     const UserDTO = {

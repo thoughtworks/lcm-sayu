@@ -197,21 +197,4 @@ describe('_error', () => {
       expect(failureMessage).toBeInTheDocument()
     })
   })
-
-  describe('<UserEditError />', () => {
-    beforeEach(() => {
-      clearMocks()
-      mockQuery.error = 'UserEditError'
-      render(<ErrorPage statusCode={0} />)
-    })
-
-    afterEach(cleanup)
-
-    test('should show user registry error message', () => {
-      const failureMessage = screen.getByText(
-        /^Ha ocurrido un error al intentar editar el usuario$/
-      )
-      expect(failureMessage).toBeInTheDocument()
-    })
-  })
 })
