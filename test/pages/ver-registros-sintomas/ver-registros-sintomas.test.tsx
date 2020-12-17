@@ -1,12 +1,14 @@
 import React from 'react'
 import { GetServerSidePropsContext } from 'next'
 import nextauthclient, { Session } from 'next-auth/client'
+import axios from 'axios'
 
 import SymptomsRegistryList, {
   getServerSideProps,
 } from 'src/steps/SymptomsRegistryList'
+import { Role } from 'src/model/Role'
 
-import { render, screen, cleanup, clearMocks } from 'test/testUtils'
+import { render, screen, cleanup, clearMocks, userEvent } from 'test/testUtils'
 
 import {
   date,
@@ -23,12 +25,13 @@ import {
   monday,
   tuesday,
 } from './ver-registros-sintomas-data'
-import { Role } from 'src/model/Role'
 
 const mockPush = jest.fn().mockResolvedValue(null)
+const mockReload = jest.fn()
 jest.mock('next/router', () => ({
   useRouter: () => ({
     push: mockPush,
+    reload: mockReload,
   }),
 }))
 
@@ -57,6 +60,12 @@ mockNextAuthClient.useSession.mockReturnValue([
 mockNextAuthClient.getSession.mockResolvedValue(({
   role: 'cuidador',
 } as unknown) as Session)
+
+jest.mock('axios')
+const mockAxios = axios as jest.Mocked<typeof axios>
+mockAxios.delete.mockResolvedValue(null)
+
+global.console.error = jest.fn()
 
 describe('<SymptomsRegistryList />', () => {
   beforeEach(clearMocks)
@@ -168,6 +177,41 @@ describe('<SymptomsRegistryList />', () => {
     )
 
     expect(screen.getByText(/Registry Owner/)).toBeInTheDocument()
+  })
+
+  test('should show symptom names in legend', async () => {
+    render(<SymptomsRegistryList monthRegistries={[]} />)
+
+    expect(screen.getByText(/^Dolor$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Cansancio$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Apetito$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Náuseas$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Dificultad para tragar$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Falta de aire$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Deposiciones$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Fiebre$/)).toBeInTheDocument()
+    expect(screen.getByText(/^Rescate de analgesia$/)).toBeInTheDocument()
+  })
+
+  test('should remove registry when delete button is clicked', async () => {
+    render(<SymptomsRegistryList monthRegistries={symptomsMonthRegistries} />)
+    const deleteButton = screen.getByTitle(
+      /^Borrar registro Miércoles,18 12:09$/
+    )
+    userEvent.click(deleteButton)
+    expect(screen.getByText(/^Eliminar registro$/)).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        /^Confirmas que deseas eliminar el registro de síntomas del día\sMiércoles,18\sde\sNoviembre\sdel\s2020\sa las\s12:09$/
+      )
+    ).toBeInTheDocument()
+    const definetelyDeleteButton = screen.getByText(/^Eliminar$/)
+    userEvent.click(definetelyDeleteButton)
+
+    expect(mockAxios.delete).toHaveBeenCalledWith(
+      '/api/remove-registries/2020/11/18/12/9/40'
+    )
+    expect(mockReload).toHaveBeenCalled()
   })
 })
 
@@ -624,27 +668,5 @@ describe('<SymptomsRegistryList /> server side', () => {
         ],
       },
     })
-  })
-})
-
-describe('<SymptomsRegistryList /> legend', () => {
-  beforeEach(() => {
-    jest.restoreAllMocks()
-  })
-
-  afterEach(cleanup)
-
-  test('should show symptom names in legend', async () => {
-    render(<SymptomsRegistryList monthRegistries={[]} />)
-
-    expect(screen.getByText(/^Dolor$/)).toBeInTheDocument()
-    expect(screen.getByText(/^Cansancio$/)).toBeInTheDocument()
-    expect(screen.getByText(/^Apetito$/)).toBeInTheDocument()
-    expect(screen.getByText(/^Náuseas$/)).toBeInTheDocument()
-    expect(screen.getByText(/^Dificultad para tragar$/)).toBeInTheDocument()
-    expect(screen.getByText(/^Falta de aire$/)).toBeInTheDocument()
-    expect(screen.getByText(/^Deposiciones$/)).toBeInTheDocument()
-    expect(screen.getByText(/^Fiebre$/)).toBeInTheDocument()
-    expect(screen.getByText(/^Rescate de analgesia$/)).toBeInTheDocument()
   })
 })
