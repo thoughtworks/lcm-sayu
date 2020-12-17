@@ -213,6 +213,21 @@ describe('<SymptomsRegistryList />', () => {
     )
     expect(mockReload).toHaveBeenCalled()
   })
+
+  test('should hide modal when cancel button is clicked', async () => {
+    render(<SymptomsRegistryList monthRegistries={symptomsMonthRegistries} />)
+    const deleteButton = screen.getByTitle(
+      /^Borrar registro Miércoles,18 12:09$/
+    )
+    userEvent.click(deleteButton)
+
+    expect(screen.getByText(/^Eliminar registro$/)).toBeInTheDocument()
+
+    const cancelButton = screen.getByText(/^Cancelar$/)
+    userEvent.click(cancelButton)
+
+    expect(screen.queryByText(/^Eliminar registro$/)).not.toBeInTheDocument()
+  })
 })
 
 describe('<SymptomsRegistryList /> server side', () => {

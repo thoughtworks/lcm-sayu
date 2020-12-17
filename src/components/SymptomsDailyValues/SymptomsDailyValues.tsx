@@ -140,7 +140,7 @@ const SymptomsDailyValues = ({
           </ModalBody>
 
           <ModalFooter>
-            <button onClick={onClose}>Cerrar</button>
+            <button onClick={onClose}>Cancelar</button>
             <button
               onClick={() => {
                 const year = symptomDate.getFullYear()
