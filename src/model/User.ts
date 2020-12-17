@@ -1,5 +1,6 @@
 import { validEmailPattern } from 'src/components/UserEmail/UserEmail'
 import { Role } from './Role'
+import { Status } from './Status'
 
 export class User {
   readonly createdAt = new Date(Date.now())
@@ -7,9 +8,11 @@ export class User {
   public name?: string
   readonly email: string
   readonly role: Role
-  constructor(email: string, role: string) {
+  readonly status: Status
+  constructor(email: string, role: string, status: string) {
     this.email = this.getValidEmail(email)
     this.role = this.getValidRole(role)
+    this.status = this.getValidStatus(status)
   }
 
   private getValidEmail(email: string): string {
@@ -22,6 +25,14 @@ export class User {
     }
 
     return Role.CUIDADOR === role ? Role.CUIDADOR : Role.TRATANTE
+  }
+
+  private getValidStatus(status: string): Status {
+    if (Status.ACTIVO !== status && Status.INACTIVO !== status) {
+      throw new Error('Status is invalid')
+    }
+
+    return Status.ACTIVO === status ? Status.ACTIVO : Status.INACTIVO
   }
 }
 

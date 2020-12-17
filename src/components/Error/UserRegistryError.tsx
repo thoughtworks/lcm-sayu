@@ -4,7 +4,8 @@ import { GenericError } from './GenericError'
 const UserRegistryError: FunctionComponent = () => (
   <GenericError
     msg="Ha ocurrido un error al intentar guardar el usuario."
-    retryUrl="/tratante/agregar-usuario"
+    retryLabel="Volver a lista de usuarios"
+    retryUrl="/tratante/gestion-usuario"
   />
 )
 

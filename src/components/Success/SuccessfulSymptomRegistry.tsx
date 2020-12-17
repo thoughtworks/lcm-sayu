@@ -8,8 +8,8 @@ const SuccessfulSymptomRegistry: FunctionComponent = () => {
   return (
     <GenericSuccess
       msg="¡Se han guardado los síntomas exitosamente!"
-      labelBackButton="Ir a historial de síntomas"
-      urlBackButton={`/ver-registros-sintomas?cuidador=${session?.idUser}`}
+      backLabel="Ir a historial de síntomas"
+      backUrl={`/ver-registros-sintomas?cuidador=${session?.idUser}`}
     />
   )
 }

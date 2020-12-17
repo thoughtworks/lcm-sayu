@@ -5,20 +5,18 @@ import styles from './GenericSuccess.module.scss'
 
 const GenericSuccess: FunctionComponent<{
   msg?: string
-  labelBackButton?: string
-  urlBackButton?: string
-}> = ({ msg = '¡Todo ha salido bien! ✅', labelBackButton, urlBackButton }) => (
-  <main id={styles.success}>
+  backUrl?: string
+  backLabel?: string
+}> = ({ msg = '¡Todo ha salido bien! ✅', backUrl, backLabel }) => (
+  <main id={styles['success']}>
     <img src="/img/checkmark.svg" alt="éxito" width={122} height={122} />
     <p>{msg}</p>
-    {urlBackButton && labelBackButton && (
-      <ButtonLink href={urlBackButton} label={labelBackButton} />
+    {backUrl && (
+      <div className={styles.back}>
+        <ButtonLink href={backUrl} label={`${backLabel}`} />
+      </div>
     )}
-    <ButtonLink
-      href="/"
-      label="Volver al inicio"
-      secondaryStyle={urlBackButton && labelBackButton ? true : false}
-    />
+    <ButtonLink href="/" label="Volver al inicio" secondaryStyle />
   </main>
 )
 

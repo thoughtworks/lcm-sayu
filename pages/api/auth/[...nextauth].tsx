@@ -34,7 +34,12 @@ const NextAuthHandler: NextApiHandler = (req, res) =>
           return session
         }
 
-        return { ...session, role: allowedUser.role, idUser: allowedUser.id }
+        return {
+          ...session,
+          role: allowedUser.role,
+          status: allowedUser.status,
+          idUser: allowedUser.id,
+        }
       },
       signIn: async (user) => {
         const userService = new UserService()

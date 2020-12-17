@@ -4,11 +4,10 @@ import axios from 'axios'
 
 import styles from './UserEmail.module.scss'
 
-const UserEmail: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = (
-  props
-) => {
+const UserEmail: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = ({
+  ...props
+}) => {
   const { register, errors } = useFormContext()
-
   let errorMsg = ''
   switch (errors.userEmail?.type) {
     case 'required':
@@ -37,10 +36,13 @@ const UserEmail: FunctionComponent<InputHTMLAttributes<HTMLInputElement>> = (
           required: true,
           pattern: validEmailPattern,
           validate: async (email: string) => {
-            const {
-              data: { emailAlreadyExist },
-            } = await axios.post('/api/validate-email', { email })
-            return !emailAlreadyExist
+            if (!props.readOnly) {
+              const {
+                data: { emailAlreadyExist },
+              } = await axios.post('/api/validate-email', { email })
+              return !emailAlreadyExist
+            }
+            return true
           },
         })}
       />

@@ -1,1 +1,1 @@
-export { default } from 'src/steps/UserManagement'
+export { default, getServerSideProps } from 'src/steps/UserManagement'

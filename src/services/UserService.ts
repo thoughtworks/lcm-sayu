@@ -9,10 +9,21 @@ import { RegistryService } from './RegistryService'
 
 export class UserService extends Service {
   async saveUser(user: User): Promise<void> {
+    const existingUser = await this.getByEmail(user.email)
+
     const connection = await this.getConnection()
     try {
       const userRepository = connection.getRepository('User')
-      await userRepository.save(user)
+
+      if (existingUser) {
+        await userRepository.save({
+          id: existingUser.id,
+          role: user.role,
+          status: user.status,
+        })
+      } else {
+        await userRepository.save(user)
+      }
     } finally {
       connection.close()
     }
@@ -25,6 +36,20 @@ export class UserService extends Service {
       const userRepository = connection.getRepository<User>('User')
       const user = await userRepository.findOne({ email: validEmail })
       return user
+    } finally {
+      connection.close()
+    }
+  }
+
+  async getAll(): Promise<User[] | undefined> {
+    const connection = await this.getConnection()
+    try {
+      const userRepository = connection.getRepository<User>('User')
+      return await userRepository.find({
+        order: {
+          email: 'ASC',
+        },
+      })
     } finally {
       connection.close()
     }
@@ -60,7 +85,7 @@ export class UserService extends Service {
     try {
       const userRepository = connection.getRepository<User>('User')
       users = await userRepository.find({
-        where: { role: Role.CUIDADOR },
+        where: { role: Role.CUIDADOR, status: 'activo' },
       })
     } finally {
       await connection.close()
@@ -81,7 +106,7 @@ export class UserService extends Service {
     )
   }
 
-  async getById(id: number): Promise<User | undefined> {
+  async getUserById(id: number): Promise<User | undefined> {
     const connection = await this.getConnection()
     try {
       const userRepository = connection.getRepository<User>('User')

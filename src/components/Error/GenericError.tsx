@@ -3,8 +3,13 @@ import ButtonLink from 'src/components/ButtonLink'
 
 import styles from './GenericError.module.scss'
 
-const GenericError: FunctionComponent<{ msg?: string; retryUrl?: string }> = ({
+const GenericError: FunctionComponent<{
+  msg?: string
+  retryUrl?: string
+  retryLabel?: string
+}> = ({
   msg = 'Ha ocurrido un error ❌.',
+  retryLabel = 'Volver a intentarlo',
   retryUrl,
 }) => (
   <main className={styles['error']}>
@@ -13,7 +18,7 @@ const GenericError: FunctionComponent<{ msg?: string; retryUrl?: string }> = ({
 
     {retryUrl && (
       <div className={styles['retry']}>
-        <ButtonLink href={retryUrl} label="Volver a intentarlo" />{' '}
+        <ButtonLink href={retryUrl} label={retryLabel} />
       </div>
     )}
 
