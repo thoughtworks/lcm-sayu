@@ -17,9 +17,10 @@ import { useSession } from 'next-auth/client'
 import axios from 'axios'
 
 import { Role } from 'src/model/Role'
+import { DateService } from 'src/services/DateService'
+import { ErrorCodes } from 'src/components/Error'
 
 import styles from './symptomsDailyValues.module.scss'
-import { DateService } from '../../services/DateService'
 
 type SymptomsLevel = {
   symptomTimeStamp: number
@@ -142,17 +143,23 @@ const SymptomsDailyValues = ({
           <ModalFooter>
             <button onClick={onClose}>Cancelar</button>
             <button
-              onClick={() => {
+              onClick={async () => {
                 const year = symptomDate.getFullYear()
                 const month = symptomDate.getMonth() + 1
                 const day = symptomDate.getDate()
                 const hour = symptomDate.getHours()
                 const minute = symptomDate.getMinutes()
                 const seconds = symptomDate.getSeconds()
-                axios.delete(
-                  `/api/remove-registries/${year}/${month}/${day}/${hour}/${minute}/${seconds}`
-                )
-                router.reload()
+                try {
+                  await axios.delete(
+                    `/api/remove-registries/${year}/${month}/${day}/${hour}/${minute}/${seconds}`
+                  )
+                  router.reload()
+                } catch (err) {
+                  router.push(
+                    `/_error?error=${ErrorCodes.FAILED_REGISTRY_REMOVE}`
+                  )
+                }
               }}
             >
               Eliminar

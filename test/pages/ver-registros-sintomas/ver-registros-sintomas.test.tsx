@@ -8,7 +8,14 @@ import SymptomsRegistryList, {
 } from 'src/steps/SymptomsRegistryList'
 import { Role } from 'src/model/Role'
 
-import { render, screen, cleanup, clearMocks, userEvent } from 'test/testUtils'
+import {
+  render,
+  screen,
+  cleanup,
+  clearMocks,
+  userEvent,
+  waitFor,
+} from 'test/testUtils'
 
 import {
   date,
@@ -208,9 +215,12 @@ describe('<SymptomsRegistryList />', () => {
     const definetelyDeleteButton = screen.getByText(/^Eliminar$/)
     userEvent.click(definetelyDeleteButton)
 
-    expect(mockAxios.delete).toHaveBeenCalledWith(
-      '/api/remove-registries/2020/11/18/12/9/40'
+    await waitFor(() =>
+      expect(mockAxios.delete).toHaveBeenCalledWith(
+        '/api/remove-registries/2020/11/18/12/9/40'
+      )
     )
+
     expect(mockReload).toHaveBeenCalled()
   })
 
@@ -227,6 +237,22 @@ describe('<SymptomsRegistryList />', () => {
     userEvent.click(cancelButton)
 
     expect(screen.queryByText(/^Eliminar registro$/)).not.toBeInTheDocument()
+  })
+
+  test('should redirect to error page when there is an error', async () => {
+    mockAxios.delete.mockRejectedValueOnce(null)
+    render(<SymptomsRegistryList monthRegistries={symptomsMonthRegistries} />)
+    const deleteButton = screen.getByTitle(
+      /^Borrar registro Miércoles,18 12:09$/
+    )
+    userEvent.click(deleteButton)
+
+    const definetelyDeleteButton = screen.getByText(/^Eliminar$/)
+    userEvent.click(definetelyDeleteButton)
+
+    await waitFor(() => expect(axios.delete).toHaveBeenCalled())
+
+    expect(mockPush).toHaveBeenCalledWith('/_error?error=FailedRegistryRemove')
   })
 })
 
