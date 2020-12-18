@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Box,
-  Icon,
   Text,
   Modal,
   ModalOverlay,
@@ -11,7 +10,9 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-} from '@chakra-ui/core'
+  Button,
+} from '@chakra-ui/react'
+import { DeleteIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/client'
 import axios from 'axios'
@@ -126,7 +127,7 @@ const SymptomsDailyValues = ({
             title={`Borrar registro ${symptomDay} ${symptomHour}`}
             onClick={onOpen}
           >
-            <Icon name="delete" />
+            <DeleteIcon />
           </button>
         </Box>
       )}
@@ -137,23 +138,28 @@ const SymptomsDailyValues = ({
           <ModalCloseButton />
           <ModalBody>
             Confirmas que deseas eliminar el registro de síntomas del día{' '}
-            {symptomDay} de {symptomMonth} del {symptomYear} a las {symptomHour}
+            <strong>
+              {symptomDay} de {symptomMonth} del {symptomYear} a las{' '}
+              {symptomHour}
+            </strong>
           </ModalBody>
 
           <ModalFooter>
-            <button onClick={onClose}>Cancelar</button>
-            <button
+            <Button
+              colorScheme="teal"
+              variant="outline"
+              mr={3}
+              onClick={onClose}
+            >
+              Cancelar
+            </Button>
+            <Button
+              colorScheme="teal"
+              variant="solid"
               onClick={async () => {
-                const year = symptomDate.getFullYear()
-                const month = symptomDate.getMonth() + 1
-                const day = symptomDate.getDate()
-                const hour = symptomDate.getHours()
-                const minute = symptomDate.getMinutes()
-                const seconds = symptomDate.getSeconds()
-                const milliseconds = symptomDate.getMilliseconds()
                 try {
                   await axios.delete(
-                    `/api/remove-registries/${year}/${month}/${day}/${hour}/${minute}/${seconds}/${milliseconds}`
+                    `/api/remove-registries?registry-timestamp=${symptomTimeStamp}`
                   )
                   router.reload()
                 } catch (err) {
@@ -164,7 +170,7 @@ const SymptomsDailyValues = ({
               }}
             >
               Eliminar
-            </button>
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

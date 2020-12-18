@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { signOut, useSession } from 'next-auth/client'
-import { Flex, Image, Text, Stack } from '@chakra-ui/core'
+import { Flex, Image, Text, Stack } from '@chakra-ui/react'
 
 import ButtonLink from 'src/components/ButtonLink'
 import withSession from 'src/hoc/WithSession'
@@ -34,7 +34,7 @@ const WelcomeSayu = () => {
           </a>
         </div>
       </header>
-      <Stack width="100%" marginTop={60} align="center">
+      <Stack width="100%" marginTop="100px" align="center">
         <Stack isInline>
           <Text fontWeight="bold" fontSize={['xl']}>
             Hola {!loading && session && session.user.name.split(' ')[0]}

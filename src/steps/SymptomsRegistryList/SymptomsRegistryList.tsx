@@ -1,7 +1,7 @@
 import React, { useEffect, FunctionComponent } from 'react'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
-import { Text, Stack, Box } from '@chakra-ui/core'
+import { Text, Stack, Box } from '@chakra-ui/react'
 import { getSession } from 'next-auth/client'
 
 import SymptomsLegend from 'src/components/SymptomsLegend/SymptomsLegend'

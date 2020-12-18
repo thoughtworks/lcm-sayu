@@ -1,6 +1,6 @@
 import styles from './dateBox.module.scss'
 import React from 'react'
-import { Box } from '@chakra-ui/core'
+import { Box } from '@chakra-ui/react'
 
 type DateBoxProps = {
   symptomDate: string

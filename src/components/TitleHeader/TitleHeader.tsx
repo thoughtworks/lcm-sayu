@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Image, Box, Flex, Text } from '@chakra-ui/core'
+import { Image, Box, Flex, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
 type TitleHeaderProps = {

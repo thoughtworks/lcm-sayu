@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Radio, RadioGroup } from '@chakra-ui/core'
+import { Radio, RadioGroup } from '@chakra-ui/react'
 import { Role } from 'src/model/Role'
 import styles from './RoleRadioButton.module.scss'
 
@@ -20,7 +20,7 @@ const RoleRadioButton: FunctionComponent<{ selectedRole: string }> = ({
           render={({ onChange, onBlur, value }) => (
             <RadioGroup
               isInline
-              onChange={(_, value) => onChange(value)}
+              onChange={onChange}
               value={value}
               onBlur={onBlur}
             >

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Button } from '@chakra-ui/core'
+import { Button } from '@chakra-ui/react'
 
 type SubmitButtonProps = {
   label: string

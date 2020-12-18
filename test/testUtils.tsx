@@ -1,9 +1,10 @@
-import { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { render } from '@testing-library/react'
-import { ThemeProvider } from '@chakra-ui/core'
+import { ThemeProvider } from '@chakra-ui/react'
+import { customTheme } from 'src/theme/CustomTheme'
 
 const customRender = (ui: ReactElement, options = {}) =>
-  render(<ThemeProvider>{ui}</ThemeProvider>, options)
+  render(<ThemeProvider theme={customTheme}>{ui}</ThemeProvider>, options)
 
 const clearMocks = () => {
   jest.clearAllMocks()

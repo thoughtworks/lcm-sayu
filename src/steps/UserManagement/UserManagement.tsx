@@ -1,6 +1,6 @@
 import React, { useEffect, FunctionComponent } from 'react'
 import { useRouter } from 'next/router'
-import { Icon } from '@chakra-ui/core'
+import { ChevronRightIcon } from '@chakra-ui/icons'
 import Link from 'next/link'
 import { GetServerSideProps } from 'next'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
@@ -72,7 +72,7 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
                   </td>
                   <td>
                     <Link href={`/tratante/agregar-usuario?usuario=${user.id}`}>
-                      <Icon name="chevron-right" size={'25px'} />
+                      <ChevronRightIcon />
                     </Link>
                   </td>
                 </tr>

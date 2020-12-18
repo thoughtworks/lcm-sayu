@@ -1,6 +1,6 @@
 import React from 'react'
 import { Control, Controller } from 'react-hook-form'
-import { Radio, RadioGroup, Text } from '@chakra-ui/core'
+import { Radio, RadioGroup, Text } from '@chakra-ui/react'
 
 const symptonInfo: { [key: string]: any } = {
   Deposiciones: {
@@ -39,7 +39,7 @@ function SymptomRadioButton({
           </Text>
           <RadioGroup
             isInline
-            onChange={(_, value) => onChange(value as number)}
+            onChange={onChange}
             value={value}
             onBlur={onBlur}
           >

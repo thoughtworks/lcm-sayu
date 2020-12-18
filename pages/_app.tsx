@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
-import { CSSReset, ThemeProvider } from '@chakra-ui/core'
+import { CSSReset, ChakraProvider } from '@chakra-ui/react'
 import { Provider } from 'next-auth/client'
 
 import 'public/fonts/fonts.css'
@@ -16,11 +16,11 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
         <title>SAYU</title>
       </Head>
       <main className="content">
-        <ThemeProvider theme={customTheme}>
+        <ChakraProvider theme={customTheme}>
           <CSSReset />
 
           <Component {...pageProps} />
-        </ThemeProvider>
+        </ChakraProvider>
       </main>
     </Provider>
   )

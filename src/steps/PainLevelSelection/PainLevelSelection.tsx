@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '@chakra-ui/core'
+import { Text } from '@chakra-ui/react'
 
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { FaceButton } from 'src/components/FaceButton/FaceButton'
