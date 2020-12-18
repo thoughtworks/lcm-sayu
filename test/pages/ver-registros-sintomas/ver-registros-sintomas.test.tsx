@@ -217,7 +217,7 @@ describe('<SymptomsRegistryList />', () => {
 
     await waitFor(() =>
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        '/api/remove-registries/2020/11/18/12/9/40'
+        '/api/remove-registries/2020/11/18/12/9/40/0'
       )
     )
 

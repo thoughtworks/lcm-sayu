@@ -80,6 +80,22 @@ export class RegistryService extends Service {
     }
   }
 
+  async removeRegistries(registryDate: Date, email: string): Promise<void> {
+    const userService = new UserService()
+    const user = await userService.getByEmail(email)
+
+    const connection = await this.getConnection()
+    try {
+      const registryRepository = connection.getRepository<Registry>('Registry')
+      await registryRepository.delete({
+        creationDate: registryDate,
+        user,
+      })
+    } finally {
+      connection.close()
+    }
+  }
+
   private getSymptomValue(
     symptom: Symptom,
     symptomsToRegister: any

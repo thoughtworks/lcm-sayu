@@ -150,9 +150,10 @@ const SymptomsDailyValues = ({
                 const hour = symptomDate.getHours()
                 const minute = symptomDate.getMinutes()
                 const seconds = symptomDate.getSeconds()
+                const milliseconds = symptomDate.getMilliseconds()
                 try {
                   await axios.delete(
-                    `/api/remove-registries/${year}/${month}/${day}/${hour}/${minute}/${seconds}`
+                    `/api/remove-registries/${year}/${month}/${day}/${hour}/${minute}/${seconds}/${milliseconds}`
                   )
                   router.reload()
                 } catch (err) {
