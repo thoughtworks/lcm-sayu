@@ -1,9 +1,29 @@
-import styles from './symptomsDailyValues.module.scss'
 import React from 'react'
-import { Box, Text } from '@chakra-ui/core'
+import {
+  Box,
+  Icon,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from '@chakra-ui/core'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/client'
+import axios from 'axios'
+
+import { Role } from 'src/model/Role'
+import { DateService } from 'src/services/DateService'
+import { ErrorCodes } from 'src/components/Error'
+
+import styles from './symptomsDailyValues.module.scss'
 
 type SymptomsLevel = {
-  symptomDate: string
+  symptomTimeStamp: number
   painLevel: number
   tireLevel: number
   appetiteLevel: number
@@ -16,7 +36,7 @@ type SymptomsLevel = {
 }
 
 const SymptomsDailyValues = ({
-  symptomDate,
+  symptomTimeStamp,
   painLevel,
   tireLevel,
   appetiteLevel,
@@ -26,60 +46,130 @@ const SymptomsDailyValues = ({
   depositionLevel,
   feverLevel,
   rescueLevel,
-}: SymptomsLevel) => (
-  <div
-    className={`${styles['symptom-list']} ${
-      rescueLevel && styles['with-rescue']
-    }`}
-  >
-    <Text fontSize={'xs'} ml={1} lineHeight={'tall'}>
-      {symptomDate}
-    </Text>
-    <Box ml={1}>
-      <div className={`${styles['dolor-value']} ${styles['symptom-circle']}`}>
-        {painLevel}
-      </div>
-    </Box>
-    <Box>
-      <div
-        className={`${styles['cansancio-value']} ${styles['symptom-circle']}`}
-      >
-        {tireLevel}
-      </div>
-    </Box>
-    <Box>
-      <div className={`${styles['apetito-value']} ${styles['symptom-circle']}`}>
-        {appetiteLevel}
-      </div>
-    </Box>
-    <Box>
-      <div className={`${styles['nauseas-value']} ${styles['symptom-circle']}`}>
-        {nauseaLevel}
-      </div>
-    </Box>
-    <Box>
-      <div className={`${styles['tragar-value']} ${styles['symptom-circle']}`}>
-        {swallowLevel}
-      </div>
-    </Box>
-    <Box>
-      <div className={`${styles['aire-value']} ${styles['symptom-circle']}`}>
-        {airLevel}
-      </div>
-    </Box>
-    <Box>
-      <div
-        className={`${styles['deposicion-value']} ${styles['symptom-circle']}`}
-      >
-        {depositionLevel ? 'SI' : 'NO'}
-      </div>
-    </Box>
-    <Box>
-      <div className={`${styles['fiebre-value']} ${styles['symptom-circle']}`}>
-        {feverLevel ? 'SI' : 'NO'}
-      </div>
-    </Box>
-  </div>
-)
+}: SymptomsLevel) => {
+  const [session] = useSession()
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
+
+  const dateService = new DateService()
+  const symptomDate = new Date(symptomTimeStamp)
+
+  const symptomDay = dateService.formatDayAndNumberDate(symptomTimeStamp)
+  const symptomHour = dateService.formatHourAndMinutes(symptomTimeStamp)
+  const symptomMonth = dateService.getMonthName(symptomDate.getMonth())
+  const symptomYear = symptomDate.getFullYear()
+
+  return (
+    <div
+      className={`${styles['symptom-list']} ${
+        rescueLevel && styles['with-rescue']
+      }`}
+    >
+      <Text fontSize={'xs'} ml={1} lineHeight={'tall'}>
+        {symptomHour}
+      </Text>
+      <Box ml={1}>
+        <div className={`${styles['dolor-value']} ${styles['symptom-circle']}`}>
+          {painLevel}
+        </div>
+      </Box>
+      <Box>
+        <div
+          className={`${styles['cansancio-value']} ${styles['symptom-circle']}`}
+        >
+          {tireLevel}
+        </div>
+      </Box>
+      <Box>
+        <div
+          className={`${styles['apetito-value']} ${styles['symptom-circle']}`}
+        >
+          {appetiteLevel}
+        </div>
+      </Box>
+      <Box>
+        <div
+          className={`${styles['nauseas-value']} ${styles['symptom-circle']}`}
+        >
+          {nauseaLevel}
+        </div>
+      </Box>
+      <Box>
+        <div
+          className={`${styles['tragar-value']} ${styles['symptom-circle']}`}
+        >
+          {swallowLevel}
+        </div>
+      </Box>
+      <Box>
+        <div className={`${styles['aire-value']} ${styles['symptom-circle']}`}>
+          {airLevel}
+        </div>
+      </Box>
+      <Box>
+        <div
+          className={`${styles['deposicion-value']} ${styles['symptom-circle']}`}
+        >
+          {depositionLevel ? 'SI' : 'NO'}
+        </div>
+      </Box>
+      <Box>
+        <div
+          className={`${styles['fiebre-value']} ${styles['symptom-circle']}`}
+        >
+          {feverLevel ? 'SI' : 'NO'}
+        </div>
+      </Box>
+      {session?.role === Role.CUIDADOR && (
+        <Box>
+          <button
+            title={`Borrar registro ${symptomDay} ${symptomHour}`}
+            onClick={onOpen}
+          >
+            <Icon name="delete" />
+          </button>
+        </Box>
+      )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Eliminar registro</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Confirmas que deseas eliminar el registro de síntomas del día{' '}
+            {symptomDay} de {symptomMonth} del {symptomYear} a las {symptomHour}
+          </ModalBody>
+
+          <ModalFooter>
+            <button onClick={onClose}>Cancelar</button>
+            <button
+              onClick={async () => {
+                const year = symptomDate.getFullYear()
+                const month = symptomDate.getMonth() + 1
+                const day = symptomDate.getDate()
+                const hour = symptomDate.getHours()
+                const minute = symptomDate.getMinutes()
+                const seconds = symptomDate.getSeconds()
+                const milliseconds = symptomDate.getMilliseconds()
+                try {
+                  await axios.delete(
+                    `/api/remove-registries/${year}/${month}/${day}/${hour}/${minute}/${seconds}/${milliseconds}`
+                  )
+                  router.reload()
+                } catch (err) {
+                  router.push(
+                    `/_error?error=${ErrorCodes.FAILED_REGISTRY_REMOVE}`
+                  )
+                }
+              }}
+            >
+              Eliminar
+            </button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </div>
+  )
+}
 
 export default SymptomsDailyValues

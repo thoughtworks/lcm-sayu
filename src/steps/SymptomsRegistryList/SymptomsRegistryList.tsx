@@ -2,21 +2,24 @@ import React, { useEffect, FunctionComponent } from 'react'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import { Text, Stack, Box } from '@chakra-ui/core'
+import { getSession } from 'next-auth/client'
 
 import SymptomsLegend from 'src/components/SymptomsLegend/SymptomsLegend'
 import SymptomsDailyValues from 'src/components/SymptomsDailyValues/SymptomsDailyValues'
 import { DateBox } from 'src/components/DateBox/DateBox'
+import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { ErrorCodes } from 'src/components/Error'
 
 import { RegistryDTO } from 'src/dto/RegistryDTO'
-import { RegistryService } from 'src/services/RegistryService'
-import withSession from 'src/hoc/WithSession'
-import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { Role } from 'src/model/Role'
 
-import styles from './SymptomsRegistryList.module.scss'
-import { getSession } from 'next-auth/client'
+import { RegistryService } from 'src/services/RegistryService'
 import { UserService } from 'src/services/UserService'
+import { DateService } from 'src/services/DateService'
+
+import withSession from 'src/hoc/WithSession'
+
+import styles from './SymptomsRegistryList.module.scss'
 
 type SymptomsRegistryListProp = {
   registryOwner?: string | null
@@ -33,9 +36,12 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
       router.push(`/_error?error=${ErrorCodes.FAILED_SYMPTOMS_RETRIEVAL}`)
     }
   })
+
   if (!monthRegistries) {
     return null
   }
+
+  const dateService = new DateService()
 
   return (
     <main id={styles['symptoms-registry-list']}>
@@ -52,15 +58,17 @@ const SymptomsRegistryList: FunctionComponent<SymptomsRegistryListProp> = ({
             monthRegistries?.map(({ month, year, viewRegistries }) => (
               <div key={month + year}>
                 <Text fontSize={['lg']} textAlign="left" width="100%" mt={2}>
-                  {monthValues[month] + ', ' + year}
+                  {dateService.getMonthName(month) + ', ' + year}
                 </Text>
                 {viewRegistries.map(({ day, registries }) => (
                   <div key={day}>
-                    <DateBox symptomDate={formatDayAndNumberDate(day)} />
+                    <DateBox
+                      symptomDate={dateService.formatDayAndNumberDate(day)}
+                    />
                     {registries.map((registry) => (
                       <SymptomsDailyValues
                         key={registry.id}
-                        symptomDate={formatHourAndMinutes(registry.symptomDate)}
+                        symptomTimeStamp={registry.symptomDate}
                         painLevel={registry.painLevel}
                         tireLevel={registry.tireLevel}
                         appetiteLevel={registry.appetiteLevel}
@@ -190,50 +198,6 @@ const toMonthRegistries = (viewRegistries: ViewRegistry[]) => {
     })
   }
   return monthRegistries
-}
-
-const formatHourAndMinutes = (unformattedDate: number) => {
-  const date = new Date(unformattedDate)
-  const hour = formatTwoDigitNumber(date.getHours())
-  const minute = formatTwoDigitNumber(date.getMinutes())
-  return hour + ':' + minute
-}
-
-const formatDayAndNumberDate = (unformattedDate: number) => {
-  const date = new Date(unformattedDate)
-  const day = date.getDay()
-  const numberDate = formatTwoDigitNumber(date.getDate())
-  const dayValues = [
-    'Domingo',
-    'Lunes',
-    'Martes',
-    'Miércoles',
-    'Jueves',
-    'Viernes',
-    'Sábado',
-  ]
-  return dayValues[day] + ',' + numberDate
-}
-
-const monthValues = [
-  'Enero',
-  'Febrero',
-  'Marzo',
-  'Abril',
-  'Mayo',
-  'Junio',
-  'Julio',
-  'Agosto',
-  'Septiembre',
-  'Octubre',
-  'Noviembre',
-  'Diciembre',
-]
-
-const formatTwoDigitNumber = (toFormatNumber: number): string => {
-  return toFormatNumber < 10
-    ? '0' + toFormatNumber.toString()
-    : toFormatNumber.toString()
 }
 
 export const getServerSideProps: GetServerSideProps<SymptomsRegistryListProp> = async ({

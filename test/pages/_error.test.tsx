@@ -1,4 +1,5 @@
 import React from 'react'
+import nextauthclient, { Session } from 'next-auth/client'
 import { screen, cleanup, render, clearMocks } from 'test/testUtils'
 import ErrorPage, { getServerSideProps } from 'pages/_error'
 
@@ -9,6 +10,13 @@ const mockQuery = {
 jest.mock('next/router', () => ({
   useRouter: () => ({ query: mockQuery, push: mockPush }),
 }))
+
+jest.mock('next-auth/client')
+const mockNextAuthClient = nextauthclient as jest.Mocked<typeof nextauthclient>
+mockNextAuthClient.useSession.mockReturnValue([
+  ({ idUser: 1, role: 'cuidador' } as unknown) as Session,
+  false,
+])
 
 describe('_error', () => {
   describe('getServerSideProps', () => {
@@ -198,6 +206,28 @@ describe('_error', () => {
     test('should show user registry error message', () => {
       const failureMessage = screen.getByText(/^Usuario inactivo$/)
       expect(failureMessage).toBeInTheDocument()
+    })
+  })
+
+  describe('<FailedRegistryRemove />', () => {
+    beforeEach(() => {
+      clearMocks()
+      mockQuery.error = 'FailedRegistryRemove'
+      render(<ErrorPage statusCode={0} />)
+    })
+
+    afterEach(cleanup)
+
+    test('should show failed registry remove error message', () => {
+      const failureMessage = screen.getByText(
+        /^Ha ocurrido un error, espera unos minutos e inténtalo nuevamente.$/
+      )
+      const goBackButton = screen.getByText(/^Volver al historial de síntomas$/)
+      expect(failureMessage).toBeInTheDocument()
+      expect(goBackButton).toHaveAttribute(
+        'href',
+        '/ver-registros-sintomas?cuidador=1'
+      )
     })
   })
 })
