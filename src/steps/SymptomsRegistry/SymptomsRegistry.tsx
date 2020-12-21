@@ -1,6 +1,6 @@
 import React from 'react'
 import { NextRouter, useRouter } from 'next/router'
-import { Stack, Box } from '@chakra-ui/react'
+import { Stack, Box } from '@chakra-ui/core'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 

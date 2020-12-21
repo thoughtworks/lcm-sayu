@@ -1,6 +1,6 @@
 import React from 'react'
 import { Control, Controller } from 'react-hook-form'
-import { Radio, RadioGroup, Text } from '@chakra-ui/react'
+import { Radio, RadioGroup, Text } from '@chakra-ui/core'
 
 const symptonInfo: { [key: string]: any } = {
   Deposiciones: {

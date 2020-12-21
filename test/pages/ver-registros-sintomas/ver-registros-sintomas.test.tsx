@@ -209,8 +209,11 @@ describe('<SymptomsRegistryList />', () => {
     expect(screen.getByText(/^Eliminar registro$/)).toBeInTheDocument()
     expect(
       screen.getByText(
-        /^Confirmas que deseas eliminar el registro de síntomas del día\sMiércoles,18\sde\sNoviembre\sdel\s2020\sa las\s12:09$/
+        /^Confirmas que deseas eliminar el registro de síntomas del día$/
       )
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/^Miércoles,18\sde\sNoviembre\sdel\s2020\sa las\s12:09$/)
     ).toBeInTheDocument()
     const definetelyDeleteButton = screen.getByText(/^Eliminar$/)
     userEvent.click(definetelyDeleteButton)

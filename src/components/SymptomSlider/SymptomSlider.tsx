@@ -11,7 +11,7 @@ import {
   FormControl,
   FormLabel,
   Stack,
-} from '@chakra-ui/react'
+} from '@chakra-ui/core'
 
 const symptonInfo: { [key: string]: any } = {
   Cansancio: { min: 'Sin cansancio', max: 'Máximo cansancio' },

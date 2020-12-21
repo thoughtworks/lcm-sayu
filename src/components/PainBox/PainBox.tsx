@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Image, Flex, Text } from '@chakra-ui/react'
+import { Image, Flex, Text } from '@chakra-ui/core'
 import styles from './PainBox.module.scss'
 
 const painInformation: any = {

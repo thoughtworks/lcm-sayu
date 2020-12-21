@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { render } from '@testing-library/react'
-import { ThemeProvider } from '@chakra-ui/react'
+import { ThemeProvider } from '@chakra-ui/core'
 import { customTheme } from 'src/theme/CustomTheme'
 
 const customRender = (ui: ReactElement, options = {}) =>

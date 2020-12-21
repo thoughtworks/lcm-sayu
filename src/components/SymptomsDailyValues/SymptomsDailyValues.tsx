@@ -11,8 +11,8 @@ import {
   ModalFooter,
   useDisclosure,
   Button,
-} from '@chakra-ui/react'
-import { DeleteIcon } from '@chakra-ui/icons'
+  Icon,
+} from '@chakra-ui/core'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/client'
 import axios from 'axios'
@@ -127,11 +127,11 @@ const SymptomsDailyValues = ({
             title={`Borrar registro ${symptomDay} ${symptomHour}`}
             onClick={onOpen}
           >
-            <DeleteIcon />
+            <Icon name="delete" />
           </button>
         </Box>
       )}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="xs">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Eliminar registro</ModalHeader>
@@ -146,15 +146,17 @@ const SymptomsDailyValues = ({
 
           <ModalFooter>
             <Button
-              colorScheme="teal"
               variant="outline"
+              borderColor="lightGreen"
+              color="lightGreen"
               mr={3}
               onClick={onClose}
             >
               Cancelar
             </Button>
             <Button
-              colorScheme="teal"
+              variantColor="teal"
+              backgroundColor="lightGreen"
               variant="solid"
               onClick={async () => {
                 try {

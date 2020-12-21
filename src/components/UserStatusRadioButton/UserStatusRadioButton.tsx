@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
-import { Radio, RadioGroup } from '@chakra-ui/react'
+import { Radio, RadioGroup } from '@chakra-ui/core'
 import styles from './UserStatusRadioButton.module.scss'
 
 const UserStatusRadioButton: FunctionComponent<{ selectedStatus?: string }> = ({
