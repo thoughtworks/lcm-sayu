@@ -1,8 +1,8 @@
 import { NextApiHandler } from 'next'
-import { getSession } from 'next-auth/client'
+import { getSession, Session } from 'next-auth/client'
 
 import { RegistryService } from 'src/services/RegistryService'
-import { Role } from '../../src/model/Role'
+import { Role } from 'src/model/Role'
 import { withSessionServer } from 'src/hoc/WithSession'
 
 const handler: NextApiHandler = async (req, res) => {
@@ -15,10 +15,11 @@ const handler: NextApiHandler = async (req, res) => {
       throw new Error('Invalid registry timestamp')
     }
 
-    const registryDate = new Date(registryTimestamp)
-    const session = await getSession({ req })
-    const email = session?.user.email as string
+    const {
+      user: { email },
+    } = (await getSession({ req })) as Session
 
+    const registryDate = new Date(registryTimestamp)
     const registryService = new RegistryService()
     await registryService.removeRegistries(registryDate, email)
   } catch (err) {
