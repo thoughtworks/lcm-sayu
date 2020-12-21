@@ -1,6 +1,11 @@
 import React, { FunctionComponent } from 'react'
-import { Image, Box, Flex, Text } from '@chakra-ui/core'
+import { Box, Flex, Text } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+
+import { Icon } from 'src/components/Icon'
+
+import styles from './TitleHeader.module.scss'
 
 type TitleHeaderProps = {
   closeButton?: boolean
@@ -17,18 +22,19 @@ const TitleHeader: FunctionComponent<TitleHeaderProps> = ({
   return (
     <Box paddingTop={5}>
       <Flex justify="space-between">
-        <button type="button" onClick={() => router.back()}>
-          <Image src="/img/back_arrow.svg" alt="Ir atrás" />
+        <button
+          className={styles['back-arrow']}
+          type="button"
+          onClick={() => router.back()}
+        >
+          <Icon name="BackArrow" alt="Ir atrás" />
         </button>
         {closeButton && (
-          <button
-            type="button"
-            onClick={() => {
-              router.push('/')
-            }}
-          >
-            <Image src="/img/close_icon.svg" alt="Volver al home" />
-          </button>
+          <Link href="/">
+            <a className={styles['close']}>
+              <Icon name="Close" alt="Volver al home" />
+            </a>
+          </Link>
         )}
       </Flex>
       <Flex direction="column">

@@ -34,7 +34,7 @@ const WelcomeSayu = () => {
           </a>
         </div>
       </header>
-      <Stack width="100%" marginTop="100px" align="center">
+      <Stack width="100%" marginTop={60} align="center">
         <Stack isInline>
           <Text fontWeight="bold" fontSize={['xl']}>
             Hola {!loading && session && session.user.name.split(' ')[0]}

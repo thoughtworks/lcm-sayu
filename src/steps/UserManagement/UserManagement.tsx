@@ -2,10 +2,10 @@ import React, { useEffect, FunctionComponent } from 'react'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { Icon } from '@chakra-ui/core'
 
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { ErrorCodes } from 'src/components/Error'
+import { Icon } from 'src/components/Icon'
 import { Role } from 'src/model/Role'
 import { Status } from 'src/model/Status'
 import { UserDTO } from 'src/dto/UserDTO'
@@ -42,7 +42,7 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
 
           <Link href="/tratante/agregar-usuario">
             <a>
-              <img src="/img/add_icon.svg" alt="agregar usuario" />
+              <Icon name="Add" alt="agregar usuario" />
               Agregar usuario
             </a>
           </Link>
@@ -74,7 +74,12 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
                   </td>
                   <td>
                     <Link href={`/tratante/agregar-usuario?usuario=${user.id}`}>
-                      <Icon name="chevron-right" />
+                      <a>
+                        <Icon
+                          name="ChevronRight"
+                          alt={`Gestionar usuario ${user.email}`}
+                        />
+                      </a>
                     </Link>
                   </td>
                 </tr>
