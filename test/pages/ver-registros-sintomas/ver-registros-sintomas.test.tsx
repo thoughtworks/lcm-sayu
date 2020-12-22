@@ -218,9 +218,10 @@ describe('<SymptomsRegistryList />', () => {
     const definetelyDeleteButton = screen.getByText(/^Eliminar$/)
     userEvent.click(definetelyDeleteButton)
 
+    const expectedTimestamp = symptomsMonthRegistries[0].viewRegistries[0].day
     await waitFor(() =>
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        '/api/remove-registries?registry-timestamp=1605712180000'
+        `/api/remove-registries?registry-timestamp=${expectedTimestamp}`
       )
     )
 
