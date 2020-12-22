@@ -1,16 +1,18 @@
 import React, { useEffect, FunctionComponent } from 'react'
-import { useRouter } from 'next/router'
-import { Icon } from '@chakra-ui/core'
-import Link from 'next/link'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
-import withSession from 'src/hoc/WithSession'
-import { Role } from 'src/model/Role'
 import { ErrorCodes } from 'src/components/Error'
-import styles from './UserManagement.module.scss'
-import { UserService } from 'src/services/UserService'
-import { UserDTO } from 'src/dto/UserDTO'
+import { Icon } from 'src/components/Icon'
+import { Role } from 'src/model/Role'
 import { Status } from 'src/model/Status'
+import { UserDTO } from 'src/dto/UserDTO'
+import withSession from 'src/hoc/WithSession'
+import { UserService } from 'src/services/UserService'
+
+import styles from './UserManagement.module.scss'
 
 type UsersProp = {
   users: UserDTO[] | undefined
@@ -40,7 +42,7 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
 
           <Link href="/tratante/agregar-usuario">
             <a>
-              <img src="/img/add_icon.svg" alt="agregar usuario" />
+              <Icon name="Add" alt="agregar usuario" />
               Agregar usuario
             </a>
           </Link>
@@ -72,7 +74,12 @@ const UserManagement: FunctionComponent<UsersProp> = ({ users }) => {
                   </td>
                   <td>
                     <Link href={`/tratante/agregar-usuario?usuario=${user.id}`}>
-                      <Icon name="chevron-right" size={'25px'} />
+                      <a>
+                        <Icon
+                          name="ChevronRight"
+                          alt={`Gestionar usuario ${user.email}`}
+                        />
+                      </a>
                     </Link>
                   </td>
                 </tr>

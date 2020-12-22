@@ -19,7 +19,7 @@ const UserStatusRadioButton: FunctionComponent<{ selectedStatus?: string }> = ({
           render={({ onChange, onBlur, value }) => (
             <RadioGroup
               isInline
-              onChange={(_, value) => onChange(value)}
+              onChange={onChange}
               value={value}
               onBlur={onBlur}
             >

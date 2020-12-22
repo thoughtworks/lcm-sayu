@@ -8,6 +8,8 @@ import { Role } from 'src/model/Role'
 import { Carer } from 'src/model/Carer'
 import { UserService } from 'src/services/UserService'
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
+import { Icon } from 'src/components/Icon'
+
 import styles from './CarerView.module.scss'
 
 const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
@@ -54,9 +56,9 @@ const CarerView: FunctionComponent<{ carerList: Carer[] }> = ({
                   {lastUpdated && (
                     <Link href={`/ver-registros-sintomas?cuidador=${id}`}>
                       <a>
-                        <img
+                        <Icon
+                          name="ChevronRight"
                           alt={`Ver registros de ${name}`}
-                          src="/img/right_arrow.png"
                         />
                       </a>
                     </Link>

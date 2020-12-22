@@ -48,8 +48,7 @@ describe('<PainLevelSelection />', () => {
   })
 
   test('should go to home page when close button is clicked', () => {
-    const closeButton = screen.getByAltText(/volver al home/i)
-    userEvent.click(closeButton)
-    expect(mockPush).toHaveBeenCalledWith('/')
+    const closeButton = screen.getByAltText(/volver al home/i).closest('a')
+    expect(closeButton).toHaveAttribute('href', '/')
   })
 })

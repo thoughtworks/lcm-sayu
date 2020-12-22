@@ -209,15 +209,18 @@ describe('<SymptomsRegistryList />', () => {
     expect(screen.getByText(/^Eliminar registro$/)).toBeInTheDocument()
     expect(
       screen.getByText(
-        /^Confirmas que deseas eliminar el registro de síntomas del día\sMiércoles,18\sde\sNoviembre\sdel\s2020\sa las\s12:09$/
+        /^Confirmas que deseas eliminar el registro de síntomas del día$/
       )
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/^Miércoles,18\sde\sNoviembre\sdel\s2020\sa las\s12:09$/)
     ).toBeInTheDocument()
     const definetelyDeleteButton = screen.getByText(/^Eliminar$/)
     userEvent.click(definetelyDeleteButton)
 
     await waitFor(() =>
       expect(mockAxios.delete).toHaveBeenCalledWith(
-        '/api/remove-registries/2020/11/18/12/9/40/0'
+        '/api/remove-registries?registry-timestamp=1605712180000'
       )
     )
 

@@ -39,7 +39,7 @@ function SymptomRadioButton({
           </Text>
           <RadioGroup
             isInline
-            onChange={(_, value) => onChange(value as number)}
+            onChange={onChange}
             value={value}
             onBlur={onBlur}
           >

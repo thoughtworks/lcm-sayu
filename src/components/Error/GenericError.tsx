@@ -13,7 +13,7 @@ const GenericError: FunctionComponent<{
   retryUrl,
 }) => (
   <main className={styles['error']}>
-    <img src="/img/failed_login.svg" />
+    <img src="/img/fail.svg" />
     <p>{msg}</p>
 
     {retryUrl && (
