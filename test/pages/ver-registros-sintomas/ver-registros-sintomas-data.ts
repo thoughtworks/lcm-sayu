@@ -24,7 +24,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
     year: 2020,
     viewRegistries: [
       {
-        day: new Date(2020, 10, 18, 12, 9, 40).getTime(),
+        day: new Date(2020, 10, 18, 12, 9, 40, 0).getTime(),
         registries: [
           {
             airLevel: 1,
