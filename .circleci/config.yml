@@ -62,6 +62,7 @@ jobs:
       - image: circleci/python:3.6.1
     environment:
       AWS_DEFAULT_OUTPUT: json
+      TZ: 'America/Santiago'
     steps:
       - setup_remote_docker
       - attach_workspace:
