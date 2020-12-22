@@ -30,4 +30,9 @@ module.exports = new EntitySchema({
       cascade: true,
     },
   },
+  indices: [
+    {
+      columns: ['creationDate'],
+    },
+  ],
 })
