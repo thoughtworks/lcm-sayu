@@ -24,7 +24,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
     year: 2020,
     viewRegistries: [
       {
-        day: new Date(2020, 10, 18, 12, 9, 40).getTime(),
+        day: new Date(2020, 10, 18, 12, 9, 40, 0).getTime(),
         registries: [
           {
             airLevel: 1,
@@ -35,14 +35,14 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             nauseaLevel: 3,
             painLevel: 4,
             swallowLevel: 5,
-            symptomDate: new Date(2020, 10, 18, 12, 9, 40).getTime(),
+            symptomDate: new Date(2020, 10, 18, 12, 9, 40, 0).getTime(),
             tireLevel: 6,
             rescueLevel: true,
           },
         ],
       },
       {
-        day: new Date(2020, 10, 12, 0, 47, 56).getTime(),
+        day: new Date(2020, 10, 12, 0, 47, 56, 0).getTime(),
         registries: [
           {
             airLevel: 7,
@@ -53,7 +53,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             nauseaLevel: 7,
             painLevel: 7,
             swallowLevel: 7,
-            symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
+            symptomDate: new Date(2020, 10, 12, 0, 47, 56, 0).getTime(),
             tireLevel: 7,
             rescueLevel: true,
           },
@@ -66,14 +66,14 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             nauseaLevel: 7,
             painLevel: 7,
             swallowLevel: 7,
-            symptomDate: new Date(2020, 10, 12, 0, 47, 56).getTime(),
+            symptomDate: new Date(2020, 10, 12, 0, 47, 56, 0).getTime(),
             tireLevel: 7,
             rescueLevel: false,
           },
         ],
       },
       {
-        day: new Date(2020, 10, 11, 16, 47, 9).getTime(),
+        day: new Date(2020, 10, 11, 16, 47, 9, 0).getTime(),
         registries: [
           {
             airLevel: 7,
@@ -84,14 +84,14 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             nauseaLevel: 7,
             painLevel: 7,
             swallowLevel: 7,
-            symptomDate: new Date(2020, 10, 11, 16, 47, 9).getTime(),
+            symptomDate: new Date(2020, 10, 11, 16, 47, 9, 0).getTime(),
             tireLevel: 7,
             rescueLevel: true,
           },
         ],
       },
       {
-        day: new Date(2020, 10, 9, 23, 57, 34).getTime(),
+        day: new Date(2020, 10, 9, 23, 57, 34, 0).getTime(),
         registries: [
           {
             airLevel: 7,
@@ -102,7 +102,7 @@ const symptomsMonthRegistries: MonthRegistry[] = [
             nauseaLevel: 7,
             painLevel: 7,
             swallowLevel: 7,
-            symptomDate: new Date(2020, 10, 9, 23, 57, 34).getTime(),
+            symptomDate: new Date(2020, 10, 9, 23, 57, 34, 0).getTime(),
             tireLevel: 7,
             rescueLevel: false,
           },
