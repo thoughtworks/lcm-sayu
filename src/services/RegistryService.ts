@@ -40,7 +40,7 @@ export class RegistryService extends Service {
     const fromDate = new Date(
       toDate.getFullYear(),
       toDate.getMonth(),
-      toDate.getDate() - 6
+      toDate.getDate() - 29
     )
     try {
       const registryRepository = connection.getRepository<Registry>('Registry')
