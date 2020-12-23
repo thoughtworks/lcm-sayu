@@ -9,7 +9,7 @@ import { Icon } from 'src/components/Icon'
 import { Role } from 'src/model/Role'
 import { Status } from 'src/model/Status'
 import { UserDTO } from 'src/dto/UserDTO'
-import withSession from 'src/hoc/WithSession'
+import withSession from 'src/high-order-function/WithSession'
 import { UserService } from 'src/services/UserService'
 
 import styles from './UserManagement.module.scss'

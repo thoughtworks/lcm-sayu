@@ -3,7 +3,7 @@ import { getSession, Session } from 'next-auth/client'
 
 import { RegistryService } from 'src/services/RegistryService'
 import { Role } from 'src/model/Role'
-import { withSessionServer } from 'src/hoc/WithSession'
+import { withSessionServer } from 'src/high-order-function/WithSession'
 
 const handler: NextApiHandler = async (req, res) => {
   try {

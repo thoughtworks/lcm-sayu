@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { withSessionServer } from 'src/hoc/WithSession'
+import { withSessionServer } from 'src/high-order-function/WithSession'
 import { Role } from 'src/model/Role'
 import { UserService } from 'src/services/UserService'
 

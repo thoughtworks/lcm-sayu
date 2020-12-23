@@ -17,7 +17,7 @@ import { RegistryService } from 'src/services/RegistryService'
 import { UserService } from 'src/services/UserService'
 import { DateService } from 'src/services/DateService'
 
-import withSession from 'src/hoc/WithSession'
+import withSession from 'src/high-order-function/WithSession'
 
 import styles from './SymptomsRegistryList.module.scss'
 

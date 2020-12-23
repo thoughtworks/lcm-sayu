@@ -1,6 +1,6 @@
 import { NextApiHandler } from 'next'
 import { getSession, Session } from 'next-auth/client'
-import { withSessionServer } from 'src/hoc/WithSession'
+import { withSessionServer } from 'src/high-order-function/WithSession'
 import { Role } from 'src/model/Role'
 
 import { RegistryService } from 'src/services/RegistryService'

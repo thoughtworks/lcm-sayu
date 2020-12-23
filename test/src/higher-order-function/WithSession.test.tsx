@@ -2,7 +2,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import { render, cleanup } from 'test/testUtils'
 import NextAuth, { Session } from 'next-auth/client'
 
-import { withSessionServer } from 'src/hoc/WithSession'
+import { withSessionServer } from 'src/high-order-function/WithSession'
 import WelcomeSayu from 'pages/index'
 import { Role } from 'src/model/Role'
 import { Status } from 'src/model/Status'

@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-import withSession from 'src/hoc/WithSession'
+import withSession from 'src/high-order-function/WithSession'
 import { Role } from 'src/model/Role'
 import { Carer } from 'src/model/Carer'
 import { UserService } from 'src/services/UserService'
