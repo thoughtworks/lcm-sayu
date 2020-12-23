@@ -2,4 +2,3 @@
 **/out/*
 **/.next/*
 migrations/
-cypress/

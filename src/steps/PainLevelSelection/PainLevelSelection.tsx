@@ -3,7 +3,7 @@ import { Text } from '@chakra-ui/core'
 
 import { TitleHeader } from 'src/components/TitleHeader/TitleHeader'
 import { FaceButton } from 'src/components/FaceButton/FaceButton'
-import withSession from 'src/hoc/WithSession'
+import withSession from 'src/high-order-function/WithSession'
 
 import styles from './PainLevelSelection.module.scss'
 import { Role } from 'src/model/Role'

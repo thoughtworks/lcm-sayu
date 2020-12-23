@@ -12,7 +12,7 @@ import ButtonLink from 'src/components/ButtonLink'
 import { SuccessCodes } from 'src/components/Success'
 import { ErrorCodes } from 'src/components/Error'
 
-import withSession from 'src/hoc/WithSession'
+import withSession from 'src/high-order-function/WithSession'
 import { Role } from 'src/model/Role'
 
 import styles from './AddUser.module.scss'
