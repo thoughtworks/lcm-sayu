@@ -18,6 +18,9 @@ jobs:
           name: Install UI dependencies
           command: yarn
       - run:
+          name: Dependency check
+          command: make audit
+      - run:
           name: UI component tests & coverage
           command: yarn test:coverage
       - run:

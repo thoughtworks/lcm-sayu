@@ -12,3 +12,6 @@ db-up:
 	docker-compose up postgres
 server-dev:
 	yarn dev
+audit:
+	#Ignoring INFO (1) + LOW(2)
+	yarn audit --level moderate || if [ $$? -gt 3 ]; then exit 1; fi
