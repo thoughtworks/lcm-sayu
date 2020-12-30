@@ -1,6 +1,6 @@
 # SAYU: SISTEMA DE AYUDA AL CUIDADOR
 
-SAYU es un sistema desarrollado para el [Hospital de Niños Luis Calvo Mackena](http://www.calvomackenna.cl/) y en particular para su unidad de tratamientos paliativos. El objetivo del proyecto es facilitar la comunicación entre cuidadores de niños con el personal del hospital.
+SAYU es un sistema desarrollado por [Thoughtworks](https://www.thoughtworks.com/) para el [Hospital de Niños Luis Calvo Mackena](http://www.calvomackenna.cl/) y en particular para su unidad de tratamientos paliativos. El objetivo del proyecto es facilitar la comunicación entre cuidadores de niños con el personal del hospital.
 
 **Para** pacientes del hospital, sus familias y el personal a cargo de su tratamiento **que desean** registrar y acceder a información de síntomas del paciente **el** Sayu (Sistema de ayuda al cuidador) es una herramienta a la cual se puede acceder desde un celular con internet **que:**
 
